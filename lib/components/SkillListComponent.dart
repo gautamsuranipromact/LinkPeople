@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../screens/AddSkillsScreen.dart';
 import '../screens/SkillAssessmentsScreen.dart';
 import '../screens/SkillsEditScreen.dart';
@@ -10,6 +11,7 @@ import '../utils/Extensions/decorations.dart';
 import '../utils/Extensions/text_styles.dart';
 
 List<String> skillList = ["Flutter", "Web Development", "Android"];
+
 Widget skillProfileBox(BuildContext context, {isUser = false}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,8 +31,13 @@ Widget skillProfileBox(BuildContext context, {isUser = false}) {
                     },
                     child: Container(
                       padding: EdgeInsets.all(6),
-                      decoration: BoxDecoration(color: context.scaffoldBackgroundColor, border: Border.all(width: 1, color: primaryColor), borderRadius: radius(16)),
-                      child: Text('Take skill quiz', style: primaryTextStyle(color: primaryColor, size: 14)),
+                      decoration: BoxDecoration(
+                          color: context.scaffoldBackgroundColor,
+                          border: Border.all(width: 1, color: primaryColor),
+                          borderRadius: radius(16)),
+                      child: Text('Take skill quiz',
+                          style:
+                              primaryTextStyle(color: primaryColor, size: 14)),
                     ),
                   ),
                   IconButton(
@@ -60,7 +67,8 @@ Widget skillProfileBox(BuildContext context, {isUser = false}) {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Show all", style: secondaryTextStyle()),
-                Icon(Icons.arrow_forward, size: 18, color: textSecondaryColorGlobal),
+                Icon(Icons.arrow_forward,
+                    size: 18, color: textSecondaryColorGlobal),
               ],
             ),
           ),
@@ -78,14 +86,18 @@ Widget skillListComponent({bool isEdit = false}) {
     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
     physics: NeverScrollableScrollPhysics(),
     separatorBuilder: (BuildContext context, int index) {
-      return Divider(thickness: 1,height: isEdit==false?30:10);
+      return Divider(thickness: 1, height: isEdit == false ? 30 : 10);
     },
     itemBuilder: (BuildContext context, int index) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(skillList[index], style: primaryTextStyle()),
-          Visibility(visible: isEdit, child: IconButton(onPressed: () {}, icon: Icon(Icons.edit, color: textSecondaryColorGlobal))),
+          Visibility(
+              visible: isEdit,
+              child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.edit, color: textSecondaryColorGlobal))),
         ],
       );
     },

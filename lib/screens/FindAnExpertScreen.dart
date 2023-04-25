@@ -58,12 +58,14 @@ class _FindAnExpertScreenState extends State<FindAnExpertScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("A few Questions to describe what you're looking for:", style: primaryTextStyle()),
+            Text("A few Questions to describe what you're looking for:",
+                style: primaryTextStyle()),
             SizedBox(height: 8),
             Text('What do you need help with?*', style: secondaryTextStyle()),
             DropdownButton<String>(
               isExpanded: true,
-              underline: Divider(thickness: 0.5, height: 2, color: context.iconColor),
+              underline:
+                  Divider(thickness: 0.5, height: 2, color: context.iconColor),
               icon: Icon(Ionicons.md_chevron_down, size: 24),
               style: primaryTextStyle(),
               items: <String>[
@@ -73,9 +75,12 @@ class _FindAnExpertScreenState extends State<FindAnExpertScreen> {
                 'Marketing',
                 'Other',
               ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(value: value, child: Text(value, style: primaryTextStyle()));
+                return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value, style: primaryTextStyle()));
               }).toList(),
-              hint: Text(categories.isNotEmpty ? categories : "Select Category", style: primaryTextStyle()),
+              hint: Text(categories.isNotEmpty ? categories : "Select Category",
+                  style: primaryTextStyle()),
               onChanged: (String? value) {
                 setState(() {
                   categories = value!;
@@ -98,13 +103,19 @@ class _FindAnExpertScreenState extends State<FindAnExpertScreen> {
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
                   alignLabelWithHint: true,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                   hintMaxLines: 2,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(6), borderSide: BorderSide(color: textSecondaryColorGlobal)),
-                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(6), borderSide: BorderSide(color: textSecondaryColorGlobal)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: BorderSide(color: textSecondaryColorGlobal)),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: BorderSide(color: textSecondaryColorGlobal)),
                   labelStyle: secondaryTextStyle(),
                   helperText: "25 character minimum",
-                  hintText: "I am looking for recommendations for professionals who can help me with a few projects"),
+                  hintText:
+                      "I am looking for recommendations for professionals who can help me with a few projects"),
             ),
             SizedBox(height: 20),
             SizedBox(
@@ -118,18 +129,29 @@ class _FindAnExpertScreenState extends State<FindAnExpertScreen> {
                     height: 80,
                     padding: EdgeInsets.all(8),
                     width: context.width(),
-                    decoration: BoxDecoration(color: context.dividerColor, borderRadius: radius(6), boxShadow: [BoxShadow(color: grey2, blurRadius: 1, offset: Offset(0, 0))]),
+                    decoration: BoxDecoration(
+                        color: context.dividerColor,
+                        borderRadius: radius(6),
+                        boxShadow: [
+                          BoxShadow(
+                              color: grey2, blurRadius: 1, offset: Offset(0, 0))
+                        ]),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Example of what to write', style: primaryTextStyle()),
+                        Text('Example of what to write',
+                            style: primaryTextStyle()),
                         SizedBox(height: 10),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CircleAvatar(backgroundImage: AssetImage(expertList[i].img.toString())),
+                            CircleAvatar(
+                                backgroundImage:
+                                    AssetImage(expertList[i].img.toString())),
                             SizedBox(width: 12),
-                            Expanded(child: Text(expertList[i].text.toString(), style: secondaryTextStyle())),
+                            Expanded(
+                                child: Text(expertList[i].text.toString(),
+                                    style: secondaryTextStyle())),
                           ],
                         ),
                       ],

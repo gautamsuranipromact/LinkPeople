@@ -6,5 +6,5 @@ class NetworkList {
   int? total;
   Widget? screen;
 
-  NetworkList({this.name, this.image, this.total,this.screen});
+  NetworkList({this.name, this.image, this.total, this.screen});
 }

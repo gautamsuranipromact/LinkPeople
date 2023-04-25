@@ -4,6 +4,7 @@ import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/text_styles.dart';
+
 import '../screens/ViewPeopleScreen.dart';
 
 class NetworkItem extends StatefulWidget {
@@ -52,13 +53,17 @@ class _NetworkItemState extends State<NetworkItem> {
       },
       child: Container(
         width: context.width() / 2,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), border: Border.all(color: context.dividerColor, width: 1.5)),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: context.dividerColor, width: 1.5)),
         child: Column(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10)),
               child: Container(
-                decoration: BoxDecoration(color: context.scaffoldBackgroundColor),
+                decoration:
+                    BoxDecoration(color: context.scaffoldBackgroundColor),
                 height: 120,
                 child: Stack(
                   children: [
@@ -67,16 +72,28 @@ class _NetworkItemState extends State<NetworkItem> {
                       left: 0,
                       right: 0,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10)),
                         child: Container(
-                            decoration: BoxDecoration(color: context.dividerColor, image: DecorationImage(fit: BoxFit.fill, image: AssetImage("Images/bg.png"))), height: 60, width: context.width()),
+                            decoration: BoxDecoration(
+                                color: context.dividerColor,
+                                image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: AssetImage("Images/bg.png"))),
+                            height: 60,
+                            width: context.width()),
                       ),
                     ),
                     Positioned.fill(
                       top: 22,
                       bottom: 4,
                       child: Container(
-                        decoration: BoxDecoration(color: context.dividerColor, shape: BoxShape.circle, image: DecorationImage(image: AssetImage(widget.image.toString()))),
+                        decoration: BoxDecoration(
+                            color: context.dividerColor,
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: AssetImage(widget.image.toString()))),
                       ),
                     )
                   ],
@@ -89,7 +106,10 @@ class _NetworkItemState extends State<NetworkItem> {
                 children: [
                   Text(widget.name.toString(), style: boldTextStyle()),
                   SizedBox(height: 6),
-                  Text(widget.profession.toString(), style: secondaryTextStyle(size: 14), maxLines: 2, textAlign: TextAlign.center),
+                  Text(widget.profession.toString(),
+                      style: secondaryTextStyle(size: 14),
+                      maxLines: 2,
+                      textAlign: TextAlign.center),
                   SizedBox(height: 8),
                 ],
               ),
@@ -100,7 +120,11 @@ class _NetworkItemState extends State<NetworkItem> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.link, color: grey2, size: 16),
-                Text("7 mutual connections", style: secondaryTextStyle(size: 12), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
+                Text("7 mutual connections",
+                    style: secondaryTextStyle(size: 12),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center),
               ],
             ),
             GestureDetector(
@@ -112,16 +136,26 @@ class _NetworkItemState extends State<NetworkItem> {
                 width: context.width(),
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                padding: EdgeInsets.symmetric( vertical: 6),
-                decoration: BoxDecoration(border: Border.all(color: isConnect == false ? primaryColor : textSecondaryColorGlobal, width: 0.8), borderRadius: BorderRadius.circular(20)),
+                padding: EdgeInsets.symmetric(vertical: 6),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: isConnect == false
+                            ? primaryColor
+                            : textSecondaryColorGlobal,
+                        width: 0.8),
+                    borderRadius: BorderRadius.circular(20)),
                 child: isConnect == false
-                    ? Text("Connect", style: primaryTextStyle(color: primaryColor))
+                    ? Text("Connect",
+                        style: primaryTextStyle(color: primaryColor))
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.check, size: 20, color: textSecondaryColorGlobal),
-                          Text('pending', style: primaryTextStyle(color: textSecondaryColorGlobal)),
+                          Icon(Icons.check,
+                              size: 20, color: textSecondaryColorGlobal),
+                          Text('pending',
+                              style: primaryTextStyle(
+                                  color: textSecondaryColorGlobal)),
                         ],
                       ),
               ),

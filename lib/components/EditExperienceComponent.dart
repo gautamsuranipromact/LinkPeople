@@ -3,6 +3,7 @@ import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:styled_text/styled_text.dart';
+
 import '../utils/AppColors.dart';
 import '../utils/AppCommon.dart';
 import '../utils/AppWidget.dart';
@@ -12,7 +13,8 @@ import '../utils/Extensions/text_styles.dart';
 
 class EditExperienceComponent extends StatefulWidget {
   @override
-  _EditExperienceComponentState createState() => _EditExperienceComponentState();
+  _EditExperienceComponentState createState() =>
+      _EditExperienceComponentState();
 }
 
 class _EditExperienceComponentState extends State<EditExperienceComponent> {
@@ -35,8 +37,6 @@ class _EditExperienceComponentState extends State<EditExperienceComponent> {
     if (mounted) super.setState(fn);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -56,7 +56,9 @@ class _EditExperienceComponentState extends State<EditExperienceComponent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Notify network', style: boldTextStyle()),
-                    Text('Turn on to notify your network about job and education changes. Updates can take up to 2 hours.', style: secondaryTextStyle()),
+                    Text(
+                        'Turn on to notify your network about job and education changes. Updates can take up to 2 hours.',
+                        style: secondaryTextStyle()),
                   ],
                 ),
               ),
@@ -98,7 +100,10 @@ class _EditExperienceComponentState extends State<EditExperienceComponent> {
               StyledText(
                 text: "Learn more about" + ' <b>employee type.</b>',
                 style: secondaryTextStyle(),
-                tags: {'b': StyledTextTag(style: secondaryTextStyle(color: primaryColor))},
+                tags: {
+                  'b': StyledTextTag(
+                      style: secondaryTextStyle(color: primaryColor))
+                },
               ),
               SizedBox(height: 16),
               AppTextField(
@@ -131,7 +136,8 @@ class _EditExperienceComponentState extends State<EditExperienceComponent> {
                       },
                     ),
                   ),
-                  Text("I am currently working in this role", style: secondaryTextStyle()),
+                  Text("I am currently working in this role",
+                      style: secondaryTextStyle()),
                 ],
               ),
               AppTextField(
@@ -170,7 +176,9 @@ class _EditExperienceComponentState extends State<EditExperienceComponent> {
                 decoration: inputDecoration(context, label: "Industry"),
               ),
               SizedBox(height: 12),
-              Text('LinkPeople uses industry information to provide more relevant recommendations', style: secondaryTextStyle()),
+              Text(
+                  'LinkPeople uses industry information to provide more relevant recommendations',
+                  style: secondaryTextStyle()),
               SizedBox(height: 16),
               AppTextField(
                 autoFocus: false,
@@ -189,19 +197,25 @@ class _EditExperienceComponentState extends State<EditExperienceComponent> {
                 errorThisFieldRequired: errorThisFieldRequired,
                 decoration: inputDecoration(context, label: "Profile headline"),
               ),
-              Text('Appear below your name at the top of the profile', style: boldTextStyle()),
-              Text('Add or link to external documents, photos, sites,videos and presentations.Learn more\n about media file type supported', style: primaryTextStyle()),
+              Text('Appear below your name at the top of the profile',
+                  style: boldTextStyle()),
+              Text(
+                  'Add or link to external documents, photos, sites,videos and presentations.Learn more\n about media file type supported',
+                  style: primaryTextStyle()),
               SizedBox(height: 16),
               Container(
                 height: 34,
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(border: Border.all(color: primaryColor, width: 0.8), borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(
+                    border: Border.all(color: primaryColor, width: 0.8),
+                    borderRadius: BorderRadius.circular(20)),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.add, size: 20, color: primaryColor),
-                    Text('Add media', style: primaryTextStyle(color: primaryColor)),
+                    Text('Add media',
+                        style: primaryTextStyle(color: primaryColor)),
                   ],
                 ),
               ),

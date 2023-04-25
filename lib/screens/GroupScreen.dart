@@ -51,7 +51,9 @@ class _GroupScreenState extends State<GroupScreen> {
             Container(
               height: 50,
               width: context.width(),
-              decoration: BoxDecoration(color: context.scaffoldBackgroundColor, boxShadow: [BoxShadow(blurRadius: 1)]),
+              decoration: BoxDecoration(
+                  color: context.scaffoldBackgroundColor,
+                  boxShadow: [BoxShadow(blurRadius: 1)]),
               child: TabBar(
                 onTap: (i) {
                   currentIndex = i;
@@ -69,7 +71,11 @@ class _GroupScreenState extends State<GroupScreen> {
                 ],
               ),
             ),
-            Expanded(child: TabBarView(children: [groupComponent(context), groupComponent(context)]))
+            Expanded(
+                child: TabBarView(children: [
+              groupComponent(context),
+              groupComponent(context)
+            ]))
           ],
         ),
       ),
@@ -86,14 +92,19 @@ groupComponent(BuildContext context) {
         SizedBox(height: 8),
         Text('Discover groups', style: boldTextStyle(size: 20)),
         SizedBox(height: 8),
-        Text("Find other trusted communities that share and support your goals.", style: secondaryTextStyle()),
+        Text(
+            "Find other trusted communities that share and support your goals.",
+            style: secondaryTextStyle()),
         SizedBox(height: 8),
         Container(
           height: 30,
           width: 130,
           alignment: Alignment.center,
           padding: EdgeInsets.symmetric(horizontal: 8),
-          decoration: BoxDecoration(color: context.scaffoldBackgroundColor, border: Border.all(width: 0.8, color: primaryColor), borderRadius: radius(20)),
+          decoration: BoxDecoration(
+              color: context.scaffoldBackgroundColor,
+              border: Border.all(width: 0.8, color: primaryColor),
+              borderRadius: radius(20)),
           child: Text('Discover', style: primaryTextStyle(color: primaryColor)),
         )
       ],

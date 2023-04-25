@@ -40,16 +40,21 @@ class _AppSettingScreenState extends State<AppSettingScreen> {
           Container(
             height: 50,
             padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(color: context.scaffoldBackgroundColor, boxShadow: [BoxShadow(blurRadius: 1)]),
+            decoration: BoxDecoration(
+                color: context.scaffoldBackgroundColor,
+                boxShadow: [BoxShadow(blurRadius: 1)]),
             child: Row(
               children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.filter_list_rounded)),
+                IconButton(
+                    onPressed: () {}, icon: Icon(Icons.filter_list_rounded)),
                 Container(
                   height: 30,
                   width: 70,
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(borderRadius: radius(20), color: greenColor),
-                  child: Text('Saved', style: primaryTextStyle(color: Colors.white)),
+                  decoration: BoxDecoration(
+                      borderRadius: radius(20), color: greenColor),
+                  child: Text('Saved',
+                      style: primaryTextStyle(color: Colors.white)),
                 ),
                 VerticalDivider(thickness: 1, width: 10),
               ],
@@ -61,7 +66,7 @@ class _AppSettingScreenState extends State<AppSettingScreen> {
             child: Text('35,47,467 jobs', style: secondaryTextStyle()),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical:16),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
             child: jobList(() {
               setState(() {});
             }),

@@ -1,33 +1,38 @@
 import 'package:custom_line_indicator_bottom_navbar/custom_line_indicator_bottom_navbar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/fragments/HomeScreen.dart';
-import 'package:link_people/fragments/JobsScreen.dart';
-import 'package:link_people/fragments/MyNetworkScreen.dart';
-import 'package:link_people/fragments/NotificationScreen.dart';
 import 'package:link_people/fragments/PostScreen.dart';
-import 'package:link_people/screens/SearchScreen.dart';
 import 'package:link_people/screens/SkillAssessmentsScreen.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/text_styles.dart';
+
 import '../components/DrawerComponent.dart';
 import '../main.dart';
 import '../utils/AppColors.dart';
 import '../utils/AppCommon.dart';
+import '../utils/AppConstants.dart';
 import '../utils/AppImages.dart';
 import '../utils/Extensions/decorations.dart';
 import 'AppSettingScreen.dart';
 import 'CreateAJobScreen.dart';
 import 'InterviewPrepareScreen.dart';
 import 'JobAlertScreen.dart';
-import 'MessageScreen.dart';
 import 'MyJobsSrceen.dart';
+import 'SignInScreen.dart';
+
+int selectedIndex = 0;
 
 class DashboardScreen extends StatefulWidget {
+  String? userId;
+
+  DashboardScreen({this.userId});
+
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
@@ -46,10 +51,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void init() async {
     widgets.add(HomeScreen());
-    widgets.add(MyNetworkScreen());
+    widgets.add(Container(
+        child: Text(
+      "Coming Soon...",
+      style: TextStyle(color: Colors.black),
+    )));
+    //widgets.add(MyNetworkScreen());
     widgets.add(PostScreen());
-    widgets.add(NotificationScreen());
-    widgets.add(JobsScreen());
+    widgets.add(Container(child: Text("Coming Soon...")));
+    //widgets.add(NotificationScreen());
+    widgets.add(Container(child: Text("Coming Soon...")));
+    //widgets.add(JobsScreen());
+    addDetailsToProfileTable();
+  }
+
+  void addDetailsToProfileTable() async {
+    String userId = prefs.getString(SharePreferencesKey.USERID)!;
+    DatabaseReference ref = FirebaseDatabase.instance.ref("profile/$userId");
+    ref.onValue.listen((DatabaseEvent event) {
+      print("Profile Data:" + event.snapshot.value.toString());
+      if (event.snapshot.value == null) {
+        ref.set({
+          "firstname": prefs.getString(SharePreferencesKey.FIRSTNAME)!,
+          "lastname": prefs.getString(SharePreferencesKey.LASTNAME)!,
+          "profile": prefs.getString(SharePreferencesKey.PROFILE)!,
+          "designation": "",
+          "lookingFor": "",
+          "aboutMe": "",
+          "aboutStartup": "",
+          "startupAge": "",
+          "stage": "",
+          "funding": "",
+          "website": "",
+          "coreSkills": "",
+          "education": [],
+          "experience": [],
+          "linkedIn": "",
+          "facebook": "",
+          "twitter": "",
+        }).whenComplete(() {
+          print("Blank Data Added To Profile Table");
+        });
+      }
+    });
   }
 
   @override
@@ -74,27 +118,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: AppBar(
                     backgroundColor: context.scaffoldBackgroundColor,
                     elevation: 0,
-                    leading: Padding(
-                      padding: EdgeInsets.all(8),
-                      child: GestureDetector(
-                          onTap: () {
-                            globalKey.currentState!.openDrawer();
-                          },
-                          child: CircleAvatar(backgroundImage: AssetImage(ic_profile), maxRadius: 30, minRadius: 20, backgroundColor: context.cardColor)),
-                    ),
+                    leading: prefs
+                            .getString(SharePreferencesKey.PROFILE)!
+                            .isNotEmpty
+                        ? Padding(
+                            padding: EdgeInsets.all(8),
+                            child: GestureDetector(
+                                onTap: () {
+                                  globalKey.currentState!.openDrawer();
+                                },
+                                child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        prefs.getString(
+                                            SharePreferencesKey.PROFILE)!),
+                                    maxRadius: 30,
+                                    minRadius: 20,
+                                    backgroundColor: context.cardColor)),
+                          )
+                        : Padding(
+                            padding: EdgeInsets.all(8),
+                            child: GestureDetector(
+                                onTap: () {
+                                  globalKey.currentState!.openDrawer();
+                                },
+                                child: CircleAvatar(
+                                    backgroundImage: AssetImage(ic_placeHolder),
+                                    maxRadius: 30,
+                                    minRadius: 20,
+                                    backgroundColor: context.cardColor)),
+                          ),
                     titleSpacing: 0,
                     title: GestureDetector(
                       onTap: () {
-                        SearchScreen().launch(context);
+                        //SearchScreen().launch(context);
                       },
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color:  primaryColor.withOpacity(0.09)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: primaryColor.withOpacity(0.09)),
                         height: 35,
                         padding: EdgeInsets.only(left: 10),
                         width: context.width(),
                         child: Row(
                           children: [
-                            Icon(FontAwesome.search, color: textSecondaryColorGlobal, size: 15),
+                            Icon(FontAwesome.search,
+                                color: textSecondaryColorGlobal, size: 15),
                             SizedBox(width: 5),
                             Text("Search", style: secondaryTextStyle()),
                           ],
@@ -108,49 +176,110 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               onPressed: () {
                                 showModalBottomSheet(
                                     context: context,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(25))),
                                     builder: (_) {
                                       return Container(
-                                        padding: EdgeInsets.only(right: 16, left: 16, top: 20, bottom: 16),
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: radiusCircular(16), topRight: radiusCircular(16))),
+                                        padding: EdgeInsets.only(
+                                            right: 16,
+                                            left: 16,
+                                            top: 20,
+                                            bottom: 16),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: radiusCircular(16),
+                                                topRight: radiusCircular(16))),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Container(
                                               height: 5,
                                               width: 50,
-                                              margin: EdgeInsets.only(bottom: 20),
-                                              decoration: BoxDecoration(borderRadius: radius(), color: grey2),
+                                              margin:
+                                                  EdgeInsets.only(bottom: 20),
+                                              decoration: BoxDecoration(
+                                                  borderRadius: radius(),
+                                                  color: grey2),
                                             ),
-                                            bottomSheetComponent(Ionicons.bookmark, "My Jobs", () {
-                                              MyJobsScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
+                                            bottomSheetComponent(
+                                                Ionicons.bookmark, "My Jobs",
+                                                () {
+                                              MyJobsScreen().launch(context,
+                                                  pageRouteAnimation:
+                                                      PageRouteAnimation.Slide);
                                             }),
-                                            bottomSheetComponent(FontAwesome.bell, "Job alerts", () {
+                                            bottomSheetComponent(
+                                                FontAwesome.bell, "Job alerts",
+                                                () {
                                               JobAlertScreen().launch(context);
                                             }),
-                                            bottomSheetComponent(MaterialCommunityIcons.sticker_check, "Skill assessments", () {
-                                              SkillAssessmentsScreen().launch(context);
+                                            bottomSheetComponent(
+                                                MaterialCommunityIcons
+                                                    .sticker_check,
+                                                "Skill assessments", () {
+                                              SkillAssessmentsScreen()
+                                                  .launch(context);
                                             }),
-                                            bottomSheetComponent(Ionicons.ios_document_text, "Interview prep", () {
-                                              InterviewPrepareScreen().launch(context);
+                                            bottomSheetComponent(
+                                                Ionicons.ios_document_text,
+                                                "Interview prep", () {
+                                              InterviewPrepareScreen()
+                                                  .launch(context);
                                             }),
-                                            bottomSheetComponent(MaterialCommunityIcons.square_edit_outline, "Post a job", () {
-                                              CreateAJobScreen().launch(context, pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+                                            bottomSheetComponent(
+                                                MaterialCommunityIcons
+                                                    .square_edit_outline,
+                                                "Post a job", () {
+                                              CreateAJobScreen().launch(context,
+                                                  pageRouteAnimation:
+                                                      PageRouteAnimation
+                                                          .SlideBottomTop);
                                             }),
-                                            bottomSheetComponent(Ionicons.settings_sharp, "Application settings", () {
-                                              AppSettingScreen().launch(context);
+                                            bottomSheetComponent(
+                                                Ionicons.settings_sharp,
+                                                "Application settings", () {
+                                              AppSettingScreen()
+                                                  .launch(context);
                                             }),
                                           ],
                                         ),
                                       );
                                     });
                               },
-                              icon: Icon(MaterialCommunityIcons.dots_vertical, color: grey2))),
-                      IconButton(
+                              icon: Icon(MaterialCommunityIcons.dots_vertical,
+                                  color: grey2))),
+                      InkWell(
+                        onTap: () {
+                          prefs.setString(SharePreferencesKey.USERID, "");
+                          prefs.setString(SharePreferencesKey.FIRSTNAME, "");
+                          prefs.setString(SharePreferencesKey.LASTNAME, "");
+                          prefs.setString(SharePreferencesKey.EMAIL, "");
+                          prefs.setString(SharePreferencesKey.USERNAME, "");
+                          prefs.setString(SharePreferencesKey.PROFILE, "");
+                          finish(context);
+
+                          SignInScreen().launch(context,
+                              pageRouteAnimation: PageRouteAnimation.Scale,
+                              isNewTask: true);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Image.asset(
+                            ic_logout,
+                            height: 16,
+                            width: 16,
+                          ),
+                        ),
+                      ),
+/*                      IconButton(
                           onPressed: () {
-                            MessageScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
+
+                            MessageScreen().launch(context,
+                                pageRouteAnimation: PageRouteAnimation.Slide);
+
                           },
-                          icon: Icon(Ionicons.chatbox_ellipses, color: grey2))
+                          icon: Icon(ic_logout, color: grey2))*/
                     ],
                   ),
                 ),
@@ -195,7 +324,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             CustomBottomBarItems(icon: FontAwesome.home, label: 'Home'),
             CustomBottomBarItems(icon: FontAwesome.users, label: 'My Network'),
             CustomBottomBarItems(icon: MaterialIcons.add_box, label: 'Post'),
-            CustomBottomBarItems(icon: Ionicons.ios_notifications, label: 'Notifications'),
+            CustomBottomBarItems(
+                icon: Ionicons.ios_notifications, label: 'Notifications'),
             CustomBottomBarItems(icon: Icons.work, label: 'Jobs'),
           ],
         ),
@@ -220,7 +350,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             Icon(icon, color: textSecondaryColorGlobal, size: 22),
             SizedBox(width: 12),
-            Text(text, style: primaryTextStyle(color: textSecondaryColorGlobal)),
+            Text(text,
+                style: primaryTextStyle(color: textSecondaryColorGlobal)),
           ],
         ),
       ),

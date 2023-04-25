@@ -88,11 +88,22 @@ class _CategoryQueScreenState extends State<CategoryQueScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(data.text.toString(), style: primaryTextStyle(color: isSelected == i ? greenColor : textPrimaryColorGlobal)),
-                            Text(data.subtext.toString(), style: primaryTextStyle(size: 12, color: isSelected == i ? greenColor : textPrimaryColorGlobal)),
+                            Text(data.text.toString(),
+                                style: primaryTextStyle(
+                                    color: isSelected == i
+                                        ? greenColor
+                                        : textPrimaryColorGlobal)),
+                            Text(data.subtext.toString(),
+                                style: primaryTextStyle(
+                                    size: 12,
+                                    color: isSelected == i
+                                        ? greenColor
+                                        : textPrimaryColorGlobal)),
                           ],
                         ),
-                        Visibility(visible: isSelected == i, child: Icon(Icons.check, color: greenColor))
+                        Visibility(
+                            visible: isSelected == i,
+                            child: Icon(Icons.check, color: greenColor))
                       ],
                     ),
                   );

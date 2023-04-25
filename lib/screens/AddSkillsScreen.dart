@@ -63,24 +63,30 @@ class _AddSkillsScreenState extends State<AddSkillsScreen> {
                 SizedBox(height: 12),
                 Text('* indicates required', style: secondaryTextStyle()),
                 SizedBox(height: 20),
-                Text('Suggested skills based on your profile', style: secondaryTextStyle()),
+                Text('Suggested skills based on your profile',
+                    style: secondaryTextStyle()),
               ],
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal:8, vertical: 6),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
             child: Wrap(
               children: skillList
                   .map(
                     (e) => Container(
                       margin: EdgeInsets.all(6),
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                      decoration: BoxDecoration(borderRadius: radius(16), border: Border.all(width: 0.6, color: textSecondaryColorGlobal)),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                      decoration: BoxDecoration(
+                          borderRadius: radius(16),
+                          border: Border.all(
+                              width: 0.6, color: textSecondaryColorGlobal)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(e, style: primaryTextStyle()),
-                          Icon(Icons.add, color: textSecondaryColorGlobal, size: 18),
+                          Icon(Icons.add,
+                              color: textSecondaryColorGlobal, size: 18),
                         ],
                       ),
                     ),
@@ -91,11 +97,14 @@ class _AddSkillsScreenState extends State<AddSkillsScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             margin: EdgeInsets.only(left: 14),
-            decoration: BoxDecoration(borderRadius: radius(16), border: Border.all(width: 0.6, color: primaryColor)),
+            decoration: BoxDecoration(
+                borderRadius: radius(16),
+                border: Border.all(width: 0.6, color: primaryColor)),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Add another skill", style: primaryTextStyle(color: primaryColor)),
+                Text("Add another skill",
+                    style: primaryTextStyle(color: primaryColor)),
                 Icon(Icons.add, color: primaryColor, size: 18),
               ],
             ),

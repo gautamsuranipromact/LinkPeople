@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:link_people/utils/Extensions/text_styles.dart';
+
 import 'Colors.dart';
 import 'Constants.dart';
 import 'Loader.dart';
@@ -101,14 +102,14 @@ extension WidgetExtension on Widget? {
   /// set widget visibility
   @Deprecated('')
   Visibility withVisibility(
-      bool visible, {
-        Widget? replacement,
-        bool maintainAnimation = false,
-        bool maintainState = false,
-        bool maintainSize = false,
-        bool maintainSemantics = false,
-        bool maintainInteractivity = false,
-      }) {
+    bool visible, {
+    Widget? replacement,
+    bool maintainAnimation = false,
+    bool maintainState = false,
+    bool maintainSize = false,
+    bool maintainSemantics = false,
+    bool maintainInteractivity = false,
+  }) {
     return Visibility(
       visible: visible,
       maintainAnimation: maintainAnimation,
@@ -245,16 +246,18 @@ extension WidgetExtension on Widget? {
 
   /// add tap to parent widget
   Widget onTap(
-      Function? function, {
-        BorderRadius? borderRadius,
-        Color? splashColor,
-        Color? hoverColor,
-        Color? highlightColor,
-      }) {
+    Function? function, {
+    BorderRadius? borderRadius,
+    Color? splashColor,
+    Color? hoverColor,
+    Color? highlightColor,
+  }) {
     return InkWell(
       onTap: function as void Function()?,
       borderRadius: borderRadius ??
-          (defaultInkWellRadius != null ? radiusWidget(defaultInkWellRadius) : null),
+          (defaultInkWellRadius != null
+              ? radiusWidget(defaultInkWellRadius)
+              : null),
       child: this,
       splashColor: splashColor ?? defaultInkWellSplashColor,
       hoverColor: hoverColor ?? defaultInkWellHoverColor,
@@ -265,12 +268,12 @@ extension WidgetExtension on Widget? {
   /// Launch a new screen
   Future<T?> launch<T>(BuildContext context,
       {bool isNewTask = false,
-        PageRouteAnimation? pageRouteAnimation,
-        Duration? duration}) async {
+      PageRouteAnimation? pageRouteAnimation,
+      Duration? duration}) async {
     if (isNewTask) {
       return await Navigator.of(context).pushAndRemoveUntil(
         buildPageRoute(this!, pageRouteAnimation, duration),
-            (route) => false,
+        (route) => false,
       );
     } else {
       return await Navigator.of(context).push(
@@ -278,7 +281,6 @@ extension WidgetExtension on Widget? {
       );
     }
   }
-
 
   @deprecated
   Widget withScroll({
@@ -321,17 +323,15 @@ extension WidgetExtension on Widget? {
 
   /// Validate given widget is not null and returns given value if null.
   Widget validate({Widget value = const SizedBox()}) => this ?? value;
-
-
 }
 
 Widget snapWidgetHelper<T>(
-    AsyncSnapshot<T> snap, {
-      Widget? errorWidget,
-      Widget? loadingWidget,
-      String? defaultErrorMessage,
-      @Deprecated('Do not use this') bool checkHasData = false,
-    }) {
+  AsyncSnapshot<T> snap, {
+  Widget? errorWidget,
+  Widget? loadingWidget,
+  String? defaultErrorMessage,
+  @Deprecated('Do not use this') bool checkHasData = false,
+}) {
   if (snap.hasError) {
     log(snap.error);
     return errorWidget ??

@@ -26,5 +26,4 @@ extension IntExtensions on int? {
 
   /// HTTP status code
   bool isSuccessful() => this! >= 200 && this! <= 206;
-
 }

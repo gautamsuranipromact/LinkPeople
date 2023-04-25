@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:link_people/utils/AppCommon.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../utils/AppColors.dart';
 import '../utils/AppWidget.dart';
 import '../utils/Extensions/AppTextField.dart';
@@ -46,7 +47,7 @@ class _EditIntroScreenState extends State<EditIntroScreen> {
               icon: Icon(Icons.close)),
         ),
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 12,vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           children: [
             AppTextField(
               autoFocus: false,
@@ -78,7 +79,8 @@ class _EditIntroScreenState extends State<EditIntroScreen> {
               child: Row(
                 children: [
                   Icon(Icons.add),
-                  Text('Add name pronunciation', style: primaryTextStyle(color: primaryColor)),
+                  Text('Add name pronunciation',
+                      style: primaryTextStyle(color: primaryColor)),
                 ],
               ),
             ),
@@ -95,7 +97,8 @@ class _EditIntroScreenState extends State<EditIntroScreen> {
               child: Row(
                 children: [
                   Icon(Icons.add),
-                  Text('Add name position', style: primaryTextStyle(color: primaryColor)),
+                  Text('Add name position',
+                      style: primaryTextStyle(color: primaryColor)),
                 ],
               ),
             ),
@@ -122,7 +125,8 @@ class _EditIntroScreenState extends State<EditIntroScreen> {
               child: Row(
                 children: [
                   Icon(Icons.add),
-                  Text('Add name education', style: primaryTextStyle(color: primaryColor)),
+                  Text('Add name education',
+                      style: primaryTextStyle(color: primaryColor)),
                 ],
               ),
             ),
@@ -141,7 +145,8 @@ class _EditIntroScreenState extends State<EditIntroScreen> {
                     },
                   ),
                 ),
-                Text("Show education in my intro", style: secondaryTextStyle(size: 16 )),
+                Text("Show education in my intro",
+                    style: secondaryTextStyle(size: 16)),
               ],
             ),
             SizedBox(height: 8),
@@ -154,7 +159,8 @@ class _EditIntroScreenState extends State<EditIntroScreen> {
               decoration: inputDecoration(context, label: "Country/Region"),
             ),
             SizedBox(height: 8),
-            Text('Use current location', style: primaryTextStyle(color: primaryColor)),
+            Text('Use current location',
+                style: primaryTextStyle(color: primaryColor)),
             AppTextField(
               autoFocus: false,
               textFieldType: TextFieldType.EMAIL,
@@ -170,7 +176,8 @@ class _EditIntroScreenState extends State<EditIntroScreen> {
           width: context.width(),
           height: 35,
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(color: primaryColor, borderRadius: radius(30)),
+          decoration:
+              BoxDecoration(color: primaryColor, borderRadius: radius(30)),
           child: Text("Save", style: boldTextStyle(color: Colors.white)),
         ));
   }

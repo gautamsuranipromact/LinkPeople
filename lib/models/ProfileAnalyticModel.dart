@@ -6,5 +6,5 @@ class ProfileAnalyticModel {
   String? description;
   int? ind;
 
-  ProfileAnalyticModel({this.name, this.icon, this.description,this.ind});
+  ProfileAnalyticModel({this.name, this.icon, this.description, this.ind});
 }

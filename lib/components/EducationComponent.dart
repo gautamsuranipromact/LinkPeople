@@ -18,20 +18,37 @@ Widget educationComponent({bool isEdit = false}) {
             Container(
               height: 50,
               width: 50,
-              decoration: BoxDecoration(color: context.dividerColor, image: DecorationImage(fit: BoxFit.fill, image: AssetImage(educationList[index].img.toString()))),
+              decoration: BoxDecoration(
+                  color: context.dividerColor,
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(educationList[index].img.toString()))),
             ),
             SizedBox(width: 8),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(educationList[index].inName.toString(), style: primaryTextStyle()),
-                  Text(educationList[index].degree.toString() + "," + educationList[index].field.toString(), style: primaryTextStyle()),
-                  Text(educationList[index].startYear.toString() + "-" + educationList[index].endYear.toString(), style: secondaryTextStyle())
+                  Text(educationList[index].inName.toString(),
+                      style: primaryTextStyle()),
+                  Text(
+                      educationList[index].degree.toString() +
+                          "," +
+                          educationList[index].field.toString(),
+                      style: primaryTextStyle()),
+                  Text(
+                      educationList[index].startYear.toString() +
+                          "-" +
+                          educationList[index].endYear.toString(),
+                      style: secondaryTextStyle())
                 ],
               ),
             ),
-            Visibility(visible: isEdit, child: IconButton(onPressed: () {}, icon: Icon(Icons.edit, color: textSecondaryColorGlobal))),
+            Visibility(
+                visible: isEdit,
+                child: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.edit, color: textSecondaryColorGlobal))),
           ],
         ),
       );

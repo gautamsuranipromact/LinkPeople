@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:link_people/utils/AppImages.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
@@ -19,7 +20,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void init() async {
     Timer(Duration(seconds: 2), () {
+      //if (prefs.getString(SharePreferencesKey.USERID)! == "") {
       WalkThroughScreen().launch(context, isNewTask: true);
+      /*} else {
+        DashboardScreen().launch(context, isNewTask: true);
+      }*/
     });
   }
 
@@ -32,7 +37,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: CircleAvatar(backgroundImage: AssetImage(ic_appLogo), maxRadius: 75),
+        child: CircleAvatar(
+            backgroundImage: AssetImage(ic_appLogo), maxRadius: 75),
       ),
     );
   }

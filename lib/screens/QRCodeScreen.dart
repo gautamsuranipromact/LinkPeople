@@ -15,7 +15,8 @@ class QRCodeScreen extends StatefulWidget {
   _QRCodeScreenState createState() => _QRCodeScreenState();
 }
 
-class _QRCodeScreenState extends State<QRCodeScreen> with SingleTickerProviderStateMixin {
+class _QRCodeScreenState extends State<QRCodeScreen>
+    with SingleTickerProviderStateMixin {
   TabController? controller;
   int currentIndex = 0;
 
@@ -87,13 +88,15 @@ class MyCodeComponent extends StatelessWidget {
                 height: 260,
                 width: context.width(),
                 margin: EdgeInsets.only(top: 60, right: 16, left: 16),
-                decoration: BoxDecoration(color: context.dividerColor, borderRadius: radius(8)),
+                decoration: BoxDecoration(
+                    color: context.dividerColor, borderRadius: radius(8)),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 20),
                 child: Column(
                   children: [
-                    CircleAvatar(backgroundImage: AssetImage(ic_profile), maxRadius: 30),
+                    CircleAvatar(
+                        backgroundImage: AssetImage(ic_profile), maxRadius: 30),
                     SizedBox(height: 4),
                     Text('Muskan Agarwal', style: boldTextStyle()),
                     SizedBox(height: 4),
@@ -111,7 +114,8 @@ class MyCodeComponent extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Ionicons.share_social_sharp, color: textSecondaryColorGlobal),
+                Icon(Ionicons.share_social_sharp,
+                    color: textSecondaryColorGlobal),
                 SizedBox(width: 6),
                 Text('Share my code', style: secondaryTextStyle()),
               ],

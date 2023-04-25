@@ -26,7 +26,8 @@ class AppTheme {
         brightness: Brightness.light,
       ),
       checkboxTheme: CheckboxThemeData(
-        shape: RoundedRectangleBorder(borderRadius: radius(20), side: BorderSide(width: 1)),
+        shape: RoundedRectangleBorder(
+            borderRadius: radius(20), side: BorderSide(width: 1)),
         checkColor: MaterialStateProperty.all(Colors.white),
         fillColor: MaterialStateProperty.all(primaryColor),
         materialTapTargetSize: MaterialTapTargetSize.padded,

@@ -38,7 +38,8 @@ class _SelectAnOptionScreenState extends State<SelectAnOptionScreen> {
       body: Column(
         children: [
           SizedBox(height: 16),
-          data('Welcome to the Team', 'Celebrate a new colleague joining your team'),
+          data('Welcome to the Team',
+              'Celebrate a new colleague joining your team'),
           data('Give Kudos', 'Show appreciation to your colleague'),
           data('Project launch', 'Shar a new project milestone'),
           data('Work anniversary', 'Celebrate a career milestone'),

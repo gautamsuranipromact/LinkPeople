@@ -50,11 +50,13 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
   Widget getIcons(BuildContext context, ThemeModes themeModes) {
     switch (themeModes) {
       case ThemeModes.Light:
-        return Icon(MaterialCommunityIcons.lightbulb_on_outline, color: context.iconColor);
+        return Icon(MaterialCommunityIcons.lightbulb_on_outline,
+            color: context.iconColor);
       case ThemeModes.Dark:
         return Icon(MaterialIcons.nights_stay, color: context.iconColor);
       case ThemeModes.SystemDefault:
-        return Icon(MaterialCommunityIcons.theme_light_dark, color: context.iconColor);
+        return Icon(MaterialCommunityIcons.theme_light_dark,
+            color: context.iconColor);
     }
   }
 
@@ -81,14 +83,18 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
                 padding: EdgeInsets.all(16),
                 child: Row(
                   children: [
-                    Expanded(child: Text('${getName(ThemeModes.values[index])}', style: boldTextStyle())),
+                    Expanded(
+                        child: Text('${getName(ThemeModes.values[index])}',
+                            style: boldTextStyle())),
                     getIcons(context, ThemeModes.values[index]),
                   ],
                 ),
               ).onTap(() async {
                 currentIndex = index;
                 if (currentIndex == appThemeMode.themeModeSystem) {
-                  appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.dark);
+                  appStore.setDarkMode(
+                      MediaQuery.of(context).platformBrightness ==
+                          Brightness.dark);
                 } else if (currentIndex == appThemeMode.themeModeLight) {
                   appStore.setDarkMode(false);
                 } else if (currentIndex == appThemeMode.themeModeDark) {

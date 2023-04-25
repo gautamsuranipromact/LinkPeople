@@ -8,9 +8,9 @@ import '../components/InvitationReceiveComponent.dart';
 import '../components/PageComponent.dart';
 import '../components/SuggestedPeopleComponent.dart';
 import '../components/recommendedPagesComponent.dart';
+import '../screens/AllInvitationsScreen.dart';
 import '../utils/AppDataProvider.dart';
 import '../utils/Extensions/text_styles.dart';
-import '../screens/AllInvitationsScreen.dart';
 
 class MyNetworkScreen extends StatefulWidget {
   @override
@@ -52,7 +52,8 @@ class _MyNetworkScreenState extends State<MyNetworkScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Manage my network", style: boldTextStyle(color: primaryColor)),
+                  Text("Manage my network",
+                      style: boldTextStyle(color: primaryColor)),
                   Icon(Icons.chevron_right, color: grey2),
                 ],
               ),
@@ -74,7 +75,8 @@ class _MyNetworkScreenState extends State<MyNetworkScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Invitations", style: boldTextStyle(color: primaryColor)),
+                        Text("Invitations",
+                            style: boldTextStyle(color: primaryColor)),
                         Icon(Icons.chevron_right, color: grey2),
                       ],
                     ),
@@ -89,8 +91,12 @@ class _MyNetworkScreenState extends State<MyNetworkScreen> {
                   itemCount: 2,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return invitationTile(invitationUsers[index].name.toString(), invitationUsers[index].imageUrl.toString(), invitationUsers[index].profession.toString(),
-                        invitationUsers[index].mutualFriends!.toInt(), context);
+                    return invitationTile(
+                        invitationUsers[index].name.toString(),
+                        invitationUsers[index].imageUrl.toString(),
+                        invitationUsers[index].profession.toString(),
+                        invitationUsers[index].mutualFriends!.toInt(),
+                        context);
                   },
                 ),
                 Divider(color: context.dividerColor, thickness: 2, height: 0),
@@ -101,8 +107,9 @@ class _MyNetworkScreenState extends State<MyNetworkScreen> {
                   child: Container(
                     height: 40,
                     alignment: Alignment.center,
-                    color:context.scaffoldBackgroundColor,
-                    child: Text("Show more", style: boldTextStyle(color: primaryColor)),
+                    color: context.scaffoldBackgroundColor,
+                    child: Text("Show more",
+                        style: boldTextStyle(color: primaryColor)),
                   ),
                 ),
               ],
@@ -110,9 +117,11 @@ class _MyNetworkScreenState extends State<MyNetworkScreen> {
           ),
 
           Divider(height: 7.0, thickness: 7.0),
-          SuggestedPeopleComponent(text: "People you may know from Spark Foundation", count: 4),
+          SuggestedPeopleComponent(
+              text: "People you may know from Spark Foundation", count: 4),
           Divider(height: 7, thickness: 7),
-          SuggestedPeopleComponent(text: "Software Engineer you may know", count: 4),
+          SuggestedPeopleComponent(
+              text: "Software Engineer you may know", count: 4),
           Divider(height: 7, thickness: 7),
 
           //recommended pages
@@ -135,7 +144,9 @@ class _MyNetworkScreenState extends State<MyNetworkScreen> {
             ),
           ),
           Divider(height: 7.0, thickness: 7.0),
-          SuggestedPeopleComponent(text: "Software Engineer you may know", count: invitationUsers.length)
+          SuggestedPeopleComponent(
+              text: "Software Engineer you may know",
+              count: invitationUsers.length)
         ],
       ),
     );

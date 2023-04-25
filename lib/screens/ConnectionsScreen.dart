@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../utils/AppCommon.dart';
 import '../utils/AppDataProvider.dart';
 import '../utils/Extensions/Commons.dart';
@@ -35,7 +36,8 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarCommon(context, widget.isPeople == true ? "Peoples you follow" : "Connections", () {
+      appBar: appBarCommon(context,
+          widget.isPeople == true ? "Peoples you follow" : "Connections", () {
         finish(context);
       }),
       body: SingleChildScrollView(
@@ -47,9 +49,12 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> {
                 width: context.width(),
                 child: Row(
                   children: [
-                    Expanded(child: Text('16 connections', style: secondaryTextStyle())),
+                    Expanded(
+                        child: Text('16 connections',
+                            style: secondaryTextStyle())),
                     IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.filter_list_rounded))
+                    IconButton(
+                        onPressed: () {}, icon: Icon(Icons.filter_list_rounded))
                   ],
                 )),
             ListView.separated(
@@ -65,23 +70,41 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(backgroundImage: AssetImage(invitationUsers[i].imageUrl.toString()), maxRadius: 34, backgroundColor: context.cardColor),
+                    CircleAvatar(
+                        backgroundImage:
+                            AssetImage(invitationUsers[i].imageUrl.toString()),
+                        maxRadius: 34,
+                        backgroundColor: context.cardColor),
                     SizedBox(width: 8),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(invitationUsers[i].name.toString(), style: boldTextStyle()),
+                          Text(invitationUsers[i].name.toString(),
+                              style: boldTextStyle()),
                           SizedBox(height: 5),
-                          Text(invitationUsers[i].profession.toString(), style: secondaryTextStyle(size: 14), maxLines: 2, overflow: TextOverflow.ellipsis),
-                          Text(invitationUsers[i].mutualFriends.toString() + " Connect days ago", style: secondaryTextStyle(size: 12), maxLines: 1),
+                          Text(invitationUsers[i].profession.toString(),
+                              style: secondaryTextStyle(size: 14),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis),
+                          Text(
+                              invitationUsers[i].mutualFriends.toString() +
+                                  " Connect days ago",
+                              style: secondaryTextStyle(size: 12),
+                              maxLines: 1),
                         ],
                       ),
                     ),
                     SizedBox(width: 4),
-                    IconButton(onPressed: () {}, icon: Icon(Entypo.dots_three_vertical, color: textSecondaryColorGlobal, size: 20)),
-                    IconButton(onPressed: () {}, icon: Icon(MaterialCommunityIcons.telegram, color: textSecondaryColorGlobal))
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(Entypo.dots_three_vertical,
+                            color: textSecondaryColorGlobal, size: 20)),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(MaterialCommunityIcons.telegram,
+                            color: textSecondaryColorGlobal))
                   ],
                 );
               },

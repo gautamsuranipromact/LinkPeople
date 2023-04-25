@@ -26,9 +26,32 @@ dependencies:
   image_picker: ^0.8.5
   photo_view: ^0.13.0
 
+  # APIs
+  http: ^0.13.4
+  intl: ^0.17.0
+
   #State Management
   mobx: ^2.0.7
   flutter_mobx: ^2.0.5
+
+  # Common packages
+  nb_utils: ^5.0.5
+  google_fonts: ^3.0.1
+  giphy_get: ^3.2.0
+
+  # Share
+  share_plus: ^4.0.10
+
+  onesignal_flutter: 3.4.1
+
+  #Firebase
+  firebase_database: ^10.1.0
+  firebase_core: ^2.9.0
+  firebase_auth: ^4.4.2
+  firebase_storage: ^11.1.1
+
+  url_launcher: ^6.1.10
+
 
 dev_dependencies:
   flutter_test:
@@ -51,5 +74,5 @@ flutter:
 
   fonts:
     - family: Raleway
-      fonts:
-        - asset: Font/SansSerif.ttf
+      #fonts:
+        #- asset: Font/SansSerif.ttf

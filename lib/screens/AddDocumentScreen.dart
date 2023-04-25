@@ -36,7 +36,10 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
     return Scaffold(
       appBar: appBarCommon(context, "Add a document", () {
         finish(context);
-      }, action: [TextButton(onPressed: () {}, child: Text('Next', style: secondaryTextStyle()))]),
+      }, action: [
+        TextButton(
+            onPressed: () {}, child: Text('Next', style: secondaryTextStyle()))
+      ]),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -49,13 +52,17 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
               keyboardType: TextInputType.emailAddress,
               errorThisFieldRequired: errorThisFieldRequired,
               maxLength: 58,
-              decoration: inputDecoration(context, label: "Add a description title to your document*"),
+              decoration: inputDecoration(context,
+                  label: "Add a description title to your document*"),
             ),
             SizedBox(height: 40),
             Row(
               children: [
-                Text('Adding a title a helps your document get discovered more easily.', style: secondaryTextStyle(size: 12)),
-                Text('Learn more.', style: secondaryTextStyle(color: primaryColor, size: 12)),
+                Text(
+                    'Adding a title a helps your document get discovered more easily.',
+                    style: secondaryTextStyle(size: 12)),
+                Text('Learn more.',
+                    style: secondaryTextStyle(color: primaryColor, size: 12)),
               ],
             ),
             SizedBox(height: 40),
@@ -65,8 +72,12 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
               },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                decoration: BoxDecoration(borderRadius: radius(20), color: context.scaffoldBackgroundColor, border: Border.all(width: 1, color: primaryColor)),
-                child: Text('Choose a file', style: boldTextStyle(color: primaryColor)),
+                decoration: BoxDecoration(
+                    borderRadius: radius(20),
+                    color: context.scaffoldBackgroundColor,
+                    border: Border.all(width: 1, color: primaryColor)),
+                child: Text('Choose a file',
+                    style: boldTextStyle(color: primaryColor)),
               ),
             )
           ],

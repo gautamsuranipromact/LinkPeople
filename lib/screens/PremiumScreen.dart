@@ -3,6 +3,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../utils/AppColors.dart';
 import '../utils/Extensions/decorations.dart';
 import '../utils/Extensions/text_styles.dart';
@@ -83,13 +84,16 @@ class _PremiumScreenState extends State<PremiumScreen> {
                   children: [
                     Icon(Ionicons.square, color: tanColor, size: 18),
                     SizedBox(width: 6),
-                    Text('Premium'.toUpperCase(), style: boldTextStyle(letterSpacing: 4)),
+                    Text('Premium'.toUpperCase(),
+                        style: boldTextStyle(letterSpacing: 4)),
                   ],
                 ),
                 SizedBox(height: 16),
-                Text('Muskan, how would you like Premium to help?', style: boldTextStyle()),
+                Text('Muskan, how would you like Premium to help?',
+                    style: boldTextStyle()),
                 SizedBox(height: 8),
-                Text("We'll recommend the right plan for you", style: secondaryTextStyle()),
+                Text("We'll recommend the right plan for you",
+                    style: secondaryTextStyle()),
                 SizedBox(height: 40),
                 Column(
                   children: List.generate(
@@ -99,7 +103,8 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       side: BorderSide(color: textSecondaryColorGlobal),
                       contentPadding: EdgeInsets.all(0),
                       dense: true,
-                      title: Text(checkListItems[index]["title"], style: secondaryTextStyle()),
+                      title: Text(checkListItems[index]["title"],
+                          style: secondaryTextStyle()),
                       value: checkListItems[index]["value"],
                       onChanged: (value) {
                         setState(() {
@@ -118,7 +123,11 @@ class _PremiumScreenState extends State<PremiumScreen> {
                   height: 35,
                   width: context.width(),
                   margin: EdgeInsets.all(8),
-                  decoration: boxDecorationWithShadowWidget(backgroundColor: grey2.withOpacity(0.02), borderRadius: radius(30), blurRadius: 0, spreadRadius: 0),
+                  decoration: boxDecorationWithShadowWidget(
+                      backgroundColor: grey2.withOpacity(0.02),
+                      borderRadius: radius(30),
+                      blurRadius: 0,
+                      spreadRadius: 0),
                   child: Text('Next', style: secondaryTextStyle()),
                 ),
                 Container(
@@ -127,8 +136,13 @@ class _PremiumScreenState extends State<PremiumScreen> {
                   width: context.width(),
                   margin: EdgeInsets.all(8),
                   decoration: boxDecorationWithShadowWidget(
-                      backgroundColor: context.scaffoldBackgroundColor, borderRadius: radius(30), blurRadius: 0, spreadRadius: 0, border: Border.all(width: 1, color: primaryColor)),
-                  child: Text('See plans', style: primaryTextStyle(color: primaryColor)),
+                      backgroundColor: context.scaffoldBackgroundColor,
+                      borderRadius: radius(30),
+                      blurRadius: 0,
+                      spreadRadius: 0,
+                      border: Border.all(width: 1, color: primaryColor)),
+                  child: Text('See plans',
+                      style: primaryTextStyle(color: primaryColor)),
                 ),
               ],
             ),

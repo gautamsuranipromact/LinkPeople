@@ -7,5 +7,12 @@ class InvitationUsers {
   bool? isInvite;
   bool? isFollow;
 
-  InvitationUsers({this.name, this.profession, this.mutualFriends, this.time, this.imageUrl, this.isInvite = false, this.isFollow = false});
+  InvitationUsers(
+      {this.name,
+      this.profession,
+      this.mutualFriends,
+      this.time,
+      this.imageUrl,
+      this.isInvite = false,
+      this.isFollow = false});
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../components/InvitationReceiveComponent.dart';
 import '../utils/AppColors.dart';
 import '../utils/AppCommon.dart';
@@ -50,8 +51,12 @@ class _AllInvitationsScreenState extends State<AllInvitationsScreen> {
                     isScrollControlled: true,
                     builder: (c) {
                       return Container(
-                        padding: EdgeInsets.only(right: 16, left: 16, top: 20, bottom: 16),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: radiusCircular(16), topRight: radiusCircular(16))),
+                        padding: EdgeInsets.only(
+                            right: 16, left: 16, top: 20, bottom: 16),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: radiusCircular(16),
+                                topRight: radiusCircular(16))),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
@@ -62,17 +67,23 @@ class _AllInvitationsScreenState extends State<AllInvitationsScreen> {
                                 height: 5,
                                 width: 50,
                                 margin: EdgeInsets.only(bottom: 20),
-                                decoration: BoxDecoration(borderRadius: radius(), color: grey2),
+                                decoration: BoxDecoration(
+                                    borderRadius: radius(), color: grey2),
                               ),
                             ),
-                            Padding(padding: EdgeInsets.only(left: 8), child: Text('Invitation Setting', style: boldTextStyle())),
+                            Padding(
+                                padding: EdgeInsets.only(left: 8),
+                                child: Text('Invitation Setting',
+                                    style: boldTextStyle())),
                             TextButton(
                               onPressed: () {},
-                              child: Text('Choose who can connect with you', style: secondaryTextStyle()),
+                              child: Text('Choose who can connect with you',
+                                  style: secondaryTextStyle()),
                             ),
                             TextButton(
                               onPressed: () {},
-                              child: Text('Choose what invitations to receive', style: secondaryTextStyle()),
+                              child: Text('Choose what invitations to receive',
+                                  style: secondaryTextStyle()),
                             )
                           ],
                         ),
@@ -104,7 +115,11 @@ class _AllInvitationsScreenState extends State<AllInvitationsScreen> {
                 ],
               ),
             ),
-            Expanded(child: TabBarView(children: [receiveComponent(context), receiveComponent(context, isSent: true)]))
+            Expanded(
+                child: TabBarView(children: [
+              receiveComponent(context),
+              receiveComponent(context, isSent: true)
+            ]))
           ],
         ),
       ),
@@ -127,8 +142,10 @@ receiveComponent(BuildContext context, {bool isSent = false}) {
                 height: 30,
                 width: 70,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(borderRadius: radius(20), color: greenColor),
-                child: Text('All(12)', style: primaryTextStyle(color: Colors.white)),
+                decoration:
+                    BoxDecoration(borderRadius: radius(20), color: greenColor),
+                child: Text('All(12)',
+                    style: primaryTextStyle(color: Colors.white)),
               ).visible(isSent == false),
               SizedBox(width: 12).visible(isSent == false),
               Container(
@@ -136,24 +153,30 @@ receiveComponent(BuildContext context, {bool isSent = false}) {
                 width: 120,
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                decoration: BoxDecoration(borderRadius: radius(20), color: greenColor),
-                child: Text('People(2)', style: primaryTextStyle(color: Colors.white)),
+                decoration:
+                    BoxDecoration(borderRadius: radius(20), color: greenColor),
+                child: Text('People(2)',
+                    style: primaryTextStyle(color: Colors.white)),
               ),
               SizedBox(width: 12),
               Container(
                 height: 30,
                 width: 70,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(borderRadius: radius(20), color: greenColor),
-                child: Text('Pages(0)', style: primaryTextStyle(color: Colors.white)),
+                decoration:
+                    BoxDecoration(borderRadius: radius(20), color: greenColor),
+                child: Text('Pages(0)',
+                    style: primaryTextStyle(color: Colors.white)),
               ).visible(isSent),
               SizedBox(width: 12).visible(isSent),
               Container(
                 height: 30,
                 width: 70,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(borderRadius: radius(20), color: greenColor),
-                child: Text('Events(0)', style: primaryTextStyle(color: Colors.white)),
+                decoration:
+                    BoxDecoration(borderRadius: radius(20), color: greenColor),
+                child: Text('Events(0)',
+                    style: primaryTextStyle(color: Colors.white)),
               ).visible(isSent),
             ],
           ),
@@ -169,12 +192,20 @@ receiveComponent(BuildContext context, {bool isSent = false}) {
           primary: true,
           itemBuilder: (BuildContext context, int index) {
             if (isSent)
-              return invitationTile(invitationUsers[index % 2].name.toString(), invitationUsers[index % 2].imageUrl.toString(), invitationUsers[index % 2].profession.toString(),
-                  invitationUsers[index % 2].mutualFriends!.toInt(), context,
+              return invitationTile(
+                  invitationUsers[index % 2].name.toString(),
+                  invitationUsers[index % 2].imageUrl.toString(),
+                  invitationUsers[index % 2].profession.toString(),
+                  invitationUsers[index % 2].mutualFriends!.toInt(),
+                  context,
                   isSent: isSent);
             else
-              return invitationTile(invitationUsers[index].name.toString(), invitationUsers[index].imageUrl.toString(), invitationUsers[index].profession.toString(),
-                  invitationUsers[index].mutualFriends!.toInt(), context,
+              return invitationTile(
+                  invitationUsers[index].name.toString(),
+                  invitationUsers[index].imageUrl.toString(),
+                  invitationUsers[index].profession.toString(),
+                  invitationUsers[index].mutualFriends!.toInt(),
+                  context,
                   isSent: isSent);
           },
         ),

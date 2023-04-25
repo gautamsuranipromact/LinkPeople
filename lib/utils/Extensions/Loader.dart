@@ -5,7 +5,8 @@ import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 class Loader extends StatefulWidget {
   final Color? color;
 
-  @Deprecated('accentColor is now deprecated and not being used. use defaultLoaderAccentColorGlobal instead')
+  @Deprecated(
+      'accentColor is now deprecated and not being used. use defaultLoaderAccentColorGlobal instead')
   final Color? accentColor;
   final Decoration? decoration;
   final int? size;

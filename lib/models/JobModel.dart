@@ -1,8 +1,12 @@
 class JobsModel {
-   String? companyName;
-   String? companyImage;
-   String? jobType;
-   bool? isBookMark;
+  String? companyName;
+  String? companyImage;
+  String? jobType;
+  bool? isBookMark;
 
-  JobsModel({this.companyName, this.companyImage, this.jobType, this.isBookMark = false});
+  JobsModel(
+      {this.companyName,
+      this.companyImage,
+      this.jobType,
+      this.isBookMark = false});
 }

@@ -13,7 +13,9 @@ class SuggestedPeopleComponent extends StatelessWidget {
   final String text;
   final int count;
 
-  const SuggestedPeopleComponent({Key? key, required this.text, required this.count}) : super(key: key);
+  const SuggestedPeopleComponent(
+      {Key? key, required this.text, required this.count})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,9 @@ class SuggestedPeopleComponent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(padding: EdgeInsets.symmetric(vertical: 12), child: Text(text, style: primaryTextStyle())),
+          Padding(
+              padding: EdgeInsets.symmetric(vertical: 12),
+              child: Text(text, style: primaryTextStyle())),
           Container(
             color: context.scaffoldBackgroundColor,
             child: Column(
@@ -39,7 +43,8 @@ class SuggestedPeopleComponent extends StatelessWidget {
                     return NetworkItem(
                         image: invitationUsers[index].imageUrl.toString(),
                         name: invitationUsers[index].name.toString(),
-                        profession: invitationUsers[index].profession.toString(),
+                        profession:
+                            invitationUsers[index].profession.toString(),
                         mutual: invitationUsers[index].mutualFriends!.toInt());
                   },
                 ),
@@ -49,7 +54,8 @@ class SuggestedPeopleComponent extends StatelessWidget {
                     onTap: () {
                       RecommendationScreen().launch(context);
                     },
-                    child: Text("See all", style: boldTextStyle(color: primaryColor)),
+                    child: Text("See all",
+                        style: boldTextStyle(color: primaryColor)),
                   ),
                 ),
                 SizedBox(height: 20)

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
+import 'package:link_people/utils/Extensions/int_extensions.dart';
 import 'package:link_people/utils/Extensions/string_extensions.dart';
 import 'package:link_people/utils/Extensions/text_styles.dart';
-import 'package:link_people/utils/Extensions/int_extensions.dart';
-import 'package:link_people/utils/Extensions/Commons.dart';
+
 import '../../main.dart';
 import 'Constants.dart';
 import 'decorations.dart';
@@ -149,7 +150,7 @@ class _AppTextFieldState extends State<AppTextField> {
           if (s.trim().length < passwordLengthGlobal)
             return widget.errorMinimumPasswordLength.validate(
                 value:
-                'Minimum password length should be $passwordLengthGlobal');
+                    'Minimum password length should be $passwordLengthGlobal');
           return null;
         };
       } else if (widget.textFieldType == TextFieldType.NAME ||
@@ -236,7 +237,7 @@ class _AppTextFieldState extends State<AppTextField> {
     return TextFormField(
       controller: widget.controller,
       obscureText:
-      widget.textFieldType == TextFieldType.PASSWORD && !isPasswordVisible,
+          widget.textFieldType == TextFieldType.PASSWORD && !isPasswordVisible,
       validator: applyValidation(),
       textCapitalization: applyTextCapitalization(),
       textInputAction: applyTextInputAction(),
@@ -249,22 +250,22 @@ class _AppTextFieldState extends State<AppTextField> {
       keyboardType: applyTextInputType(),
       decoration: widget.decoration != null
           ? (widget.decoration!.copyWith(
-        suffixIcon: widget.textFieldType == TextFieldType.PASSWORD
-            ? widget.suffix != null
-            ? widget.suffix
-            : Icon(
-          isPasswordVisible
-              ? Icons.visibility
-              : Icons.visibility_off,
-          color: widget.suffixIconColor ??
-              Theme.of(context).iconTheme.color,
-        ).onTap(() {
-          isPasswordVisible = !isPasswordVisible;
+              suffixIcon: widget.textFieldType == TextFieldType.PASSWORD
+                  ? widget.suffix != null
+                      ? widget.suffix
+                      : Icon(
+                          isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: widget.suffixIconColor ??
+                              Theme.of(context).iconTheme.color,
+                        ).onTap(() {
+                          isPasswordVisible = !isPasswordVisible;
 
-          setState(() {});
-        })
-            : widget.suffix,
-      ))
+                          setState(() {});
+                        })
+                  : widget.suffix,
+            ))
           : InputDecoration(),
       focusNode: widget.focus,
       style: widget.textStyle ?? primaryTextStyle(),

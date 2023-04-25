@@ -18,17 +18,28 @@ Widget reactionBox(BuildContext context) {
             width: 60,
             child: Stack(
               children: [
-                CircleAvatar(backgroundColor: context.cardColor, maxRadius: 10, backgroundImage: AssetImage(ic_react1)),
-                Positioned(left: 17, child: CircleAvatar(backgroundColor: context.cardColor, maxRadius: 10, backgroundImage: AssetImage(ic_react2))),
-                Positioned(left: 34, child: CircleAvatar(backgroundColor: context.cardColor, maxRadius: 10, backgroundImage: AssetImage(ic_react3)))
+                CircleAvatar(
+                    backgroundColor: context.cardColor,
+                    maxRadius: 10,
+                    backgroundImage: AssetImage(ic_react1)),
+                Positioned(
+                    left: 17,
+                    child: CircleAvatar(
+                        backgroundColor: context.cardColor,
+                        maxRadius: 10,
+                        backgroundImage: AssetImage(ic_react2))),
+                Positioned(
+                    left: 34,
+                    child: CircleAvatar(
+                        backgroundColor: context.cardColor,
+                        maxRadius: 10,
+                        backgroundImage: AssetImage(ic_react3)))
               ],
             ),
           ),
           Expanded(child: Text("92,928", style: secondaryTextStyle())),
           TextButton(
-              onPressed: (){
-
-              },
+              onPressed: () {},
               child: Text("90 comments", style: secondaryTextStyle()))
         ],
       ),

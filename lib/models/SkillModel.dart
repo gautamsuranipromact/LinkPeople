@@ -4,5 +4,5 @@ class SkillModel {
   String? subText;
   String? people;
 
-  SkillModel({this.name, this.image, this.subText,this.people});
+  SkillModel({this.name, this.image, this.subText, this.people});
 }

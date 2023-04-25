@@ -24,7 +24,8 @@ Future<bool> setValue(String key, dynamic value, {bool print = true}) async {
   } else if (value is List<String>) {
     return await sharedPreferences.setStringList(key, value);
   } else {
-    throw ArgumentError('Invalid value ${value.runtimeType} - Must be a String, int, bool, double, Map<String, dynamic> or StringList');
+    throw ArgumentError(
+        'Invalid value ${value.runtimeType} - Must be a String, int, bool, double, Map<String, dynamic> or StringList');
   }
 }
 
@@ -46,7 +47,6 @@ List<String>? getStringListAsync(String key) {
   return sharedPreferences.getStringList(key);
 }
 
-
 /// Returns a Bool if exists in SharedPref
 bool getBoolAsync(String key, {bool defaultValue = false}) {
   return sharedPreferences.getBool(key) ?? defaultValue;
@@ -61,7 +61,3 @@ int getIntAsync(String key, {int defaultValue = 0}) {
 String getStringAsync(String key, {String defaultValue = ''}) {
   return sharedPreferences.getString(key) ?? defaultValue;
 }
-
-
-
-

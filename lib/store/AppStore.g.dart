@@ -12,6 +12,31 @@ mixin _$AppStore on AppStoreBase, Store {
   late final _$isDarkModeAtom =
       Atom(name: 'AppStoreBase.isDarkMode', context: context);
 
+  late final _$doRememberAtom =
+      Atom(name: 'AppStoreBase.doRemember', context: context);
+
+  late final _$setPasswordAsyncAction =
+      AsyncAction('AppStoreBase.setPassword', context: context);
+
+  @override
+  Future<void> setPassword(String val, {bool isInitializing = false}) {
+    return _$setPasswordAsyncAction
+        .run(() => super.setPassword(val, isInitializing: isInitializing));
+  }
+
+  @override
+  bool get doRemember {
+    _$doRememberAtom.reportRead();
+    return super.doRemember;
+  }
+
+  @override
+  set doRemember(bool value) {
+    _$doRememberAtom.reportWrite(value, super.doRemember, () {
+      super.doRemember = value;
+    });
+  }
+
   @override
   bool get isDarkMode {
     _$isDarkModeAtom.reportRead();
@@ -95,7 +120,41 @@ mixin _$AppStore on AppStoreBase, Store {
     return '''
 isDarkMode: ${isDarkMode},
 isLoading: ${isLoading},
-isJobShowAll: ${isJobShowAll}
+token: ${token},
+loginUserId: ${loginUserId},
+isJobShowAll: ${isJobShowAll},
+doRemember: ${doRemember},
     ''';
+  }
+
+  late final _$tokenAtom = Atom(name: 'AppStoreBase.token', context: context);
+
+  @override
+  String get token {
+    _$tokenAtom.reportRead();
+    return super.token;
+  }
+
+  late final _$loginUserIdAtom =
+      Atom(name: 'AppStoreBase.loginUserId', context: context);
+
+  @override
+  String get loginUserId {
+    _$loginUserIdAtom.reportRead();
+    return super.loginUserId;
+  }
+
+  @override
+  set loginUserId(String value) {
+    _$loginUserIdAtom.reportWrite(value, super.loginUserId, () {
+      super.loginUserId = value;
+    });
+  }
+
+  @override
+  set token(String value) {
+    _$tokenAtom.reportWrite(value, super.token, () {
+      super.token = value;
+    });
   }
 }

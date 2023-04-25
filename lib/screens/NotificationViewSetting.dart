@@ -7,7 +7,8 @@ import '../utils/Extensions/text_styles.dart';
 
 class NotificationViewSetting extends StatefulWidget {
   @override
-  _NotificationViewSettingState createState() => _NotificationViewSettingState();
+  _NotificationViewSettingState createState() =>
+      _NotificationViewSettingState();
 }
 
 class _NotificationViewSettingState extends State<NotificationViewSetting> {
@@ -38,7 +39,8 @@ class _NotificationViewSettingState extends State<NotificationViewSetting> {
           SizedBox(height: 8),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Text('Received via LinkPeople web and app', style: secondaryTextStyle()),
+            child: Text('Received via LinkPeople web and app',
+                style: secondaryTextStyle()),
           ),
           Divider(thickness: 1),
           component("Job", "Job activities,hiring insights"),

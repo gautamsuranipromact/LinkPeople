@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../utils/AppColors.dart';
 import '../utils/AppCommon.dart';
 import '../utils/AppImages.dart';
@@ -39,12 +40,18 @@ class _EventsScreenState extends State<EventsScreen> {
             height: 50,
             width: context.width(),
             padding: EdgeInsets.only(left: 12),
-            decoration: BoxDecoration(color: context.scaffoldBackgroundColor, boxShadow: [BoxShadow(blurRadius: 0)]),
+            decoration: BoxDecoration(
+                color: context.scaffoldBackgroundColor,
+                boxShadow: [BoxShadow(blurRadius: 0)]),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('0 events', style: secondaryTextStyle()),
-                TextButton(onPressed: (){}, child: Text('Create',style: secondaryTextStyle(color: primaryColor)),)
+                TextButton(
+                  onPressed: () {},
+                  child: Text('Create',
+                      style: secondaryTextStyle(color: primaryColor)),
+                )
               ],
             ),
           ),
@@ -55,7 +62,8 @@ class _EventsScreenState extends State<EventsScreen> {
               children: [
                 Image.asset(ic_jobs, width: context.width() * 0.5, height: 150),
                 SizedBox(height: 20),
-                Text('Looks like you are not attending any events', style: secondaryTextStyle()),
+                Text('Looks like you are not attending any events',
+                    style: secondaryTextStyle()),
               ],
             ),
           ),

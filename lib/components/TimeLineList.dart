@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/fragments/PostScreen.dart';
-import 'package:link_people/screens/ViewProfileScreen.dart';
+import 'package:link_people/models/post_model.dart';
+import 'package:link_people/screens/ProfileScreen.dart';
+import 'package:link_people/utils/AppConstants.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/decorations.dart';
 import 'package:link_people/utils/Extensions/text_styles.dart';
-import '../models/TimeLinePostModel.dart';
+
 import '../screens/CommentScreen.dart';
 import '../screens/SendPostScreen.dart';
-import '../screens/ZoomeImagScreen.dart';
 import '../utils/AppColors.dart';
 import '../utils/AppImages.dart';
 
 class TimeLinePostBox extends StatefulWidget {
   final bool? isShare;
-  final TimelinePost? post;
+  final PostModel? post;
 
   TimeLinePostBox(this.post, {this.isShare = false});
 
@@ -45,7 +46,11 @@ class _TimeLinePostBoxState extends State<TimeLinePostBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: widget.isShare == false ? BoxDecoration(border: Border.all(width: 0.5, color: textSecondaryColorGlobal), borderRadius: radius(8)) : BoxDecoration(),
+      decoration: widget.isShare == false
+          ? BoxDecoration(
+              border: Border.all(width: 0.5, color: textSecondaryColorGlobal),
+              borderRadius: radius(8))
+          : BoxDecoration(),
       child: Column(
         children: [
           Padding(
@@ -65,9 +70,12 @@ class _TimeLinePostBoxState extends State<TimeLinePostBox> {
                             children: [
                               Row(
                                 children: [
-                                  Text(widget.post!.likedByUser.toString(), style: secondaryTextStyle()),
+                                  Text(widget.post!.likeCount.toString(),
+                                      style: secondaryTextStyle()),
                                   SizedBox(width: 8),
-                                  Text("celebrates this", style: primaryTextStyle(color: reactionColor)),
+                                  Text("celebrates this",
+                                      style: primaryTextStyle(
+                                          color: reactionColor)),
                                 ],
                               )
                             ],
@@ -81,23 +89,38 @@ class _TimeLinePostBoxState extends State<TimeLinePostBox> {
                 SizedBox(height: 8),
                 GestureDetector(
                   onTap: () {
-                    ViewProfileScreen(name: widget.post!.name.toString(), image: widget.post!.profilePhoto.toString()).launch(context);
+                    ProfileScreen().launch(context);
+/*
+                    ViewProfileScreen(
+                            name: widget.post!.userName.toString(),
+                            image: ic_placeHolder)
+                        .launch(context);
+*/
                   },
                   child: Row(
                     children: [
-                      CircleAvatar(backgroundColor: context.cardColor, maxRadius: 26, backgroundImage: AssetImage(widget.post!.profilePhoto.toString())),
+                      CircleAvatar(
+                          backgroundColor: context.cardColor,
+                          maxRadius: 26,
+                          backgroundImage: AssetImage(ic_placeHolder)),
                       SizedBox(width: 8),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(widget.post!.name.toString(), style: boldTextStyle()),
-                            Text(widget.post!.profession.toString(), style: primaryTextStyle(color: reactionColor, size: 14), maxLines: 1, overflow: TextOverflow.ellipsis),
+                            Text(widget.post!.userName.toString(),
+                                style: boldTextStyle()),
+                            Text(widget.post!.userEmail.toString(),
+                                style: primaryTextStyle(
+                                    color: reactionColor, size: 14),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis),
                             Row(
                               children: [
                                 Text('1w', style: secondaryTextStyle()),
-                                Icon(Icons.public, color: reactionColor, size: 12),
+                                Icon(Icons.public,
+                                    color: reactionColor, size: 12),
                               ],
                             ),
                           ],
@@ -109,13 +132,27 @@ class _TimeLinePostBoxState extends State<TimeLinePostBox> {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              ZoomImageScreen(widget.post!.image.toString()).launch(context);
-            },
-            child: Padding(padding: EdgeInsets.only(top: 8), child: Image(image: AssetImage(widget.post!.image.toString())))
-                .cornerRadiusWithClipRRectOnly(bottomRight: widget.isShare == false ? 8 : 0, bottomLeft: widget.isShare == false ? 8 : 0),
+          SizedBox(height: 10),
+          Row(
+            children: [
+              SizedBox(width: 10),
+              Text(parseHtmlString(widget.post!.content!))
+            ],
           ),
+
+/*
+          GestureDetector(
+                  onTap: () {
+                    ZoomImageScreen(ic_placeHolder).launch(context);
+                  },
+                  child: Padding(
+                          padding: EdgeInsets.only(top: 8),
+                          child: Image(image: AssetImage(ic_placeHolder)))
+                      .cornerRadiusWithClipRRectOnly(
+                          bottomRight: widget.isShare == false ? 8 : 0,
+                          bottomLeft: widget.isShare == false ? 8 : 0),
+                )
+*/
           Visibility(
             visible: widget.isShare!,
             child: Padding(
@@ -124,7 +161,8 @@ class _TimeLinePostBoxState extends State<TimeLinePostBox> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      CommentScreen(widget.post!).launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
+                      CommentScreen(widget.post!).launch(context,
+                          pageRouteAnimation: PageRouteAnimation.Slide);
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,14 +172,29 @@ class _TimeLinePostBoxState extends State<TimeLinePostBox> {
                           width: 60,
                           child: Stack(
                             children: [
-                              CircleAvatar(backgroundColor: context.cardColor, maxRadius: 10, backgroundImage: AssetImage(ic_react1)),
-                              Positioned(left: 17, child: CircleAvatar(backgroundColor: context.cardColor, maxRadius: 10, backgroundImage: AssetImage(ic_react2))),
-                              Positioned(left: 34, child: CircleAvatar(backgroundColor: context.cardColor, maxRadius: 10, backgroundImage: AssetImage(ic_react3)))
+                              CircleAvatar(
+                                  backgroundColor: context.cardColor,
+                                  maxRadius: 10,
+                                  backgroundImage: AssetImage(ic_react1)),
+                              Positioned(
+                                  left: 17,
+                                  child: CircleAvatar(
+                                      backgroundColor: context.cardColor,
+                                      maxRadius: 10,
+                                      backgroundImage: AssetImage(ic_react2))),
+                              Positioned(
+                                  left: 34,
+                                  child: CircleAvatar(
+                                      backgroundColor: context.cardColor,
+                                      maxRadius: 10,
+                                      backgroundImage: AssetImage(ic_react3)))
                             ],
                           ),
                         ),
-                        Expanded(child: Text("92,928", style: secondaryTextStyle())),
-                        Text(widget.post!.comments.toString() + " comments", style: secondaryTextStyle())
+                        Expanded(
+                            child: Text("92,928", style: secondaryTextStyle())),
+                        Text(widget.post!.comments.toString() + " comments",
+                            style: secondaryTextStyle())
                       ],
                     ),
                   ),
@@ -150,18 +203,26 @@ class _TimeLinePostBoxState extends State<TimeLinePostBox> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      button(widget.post!.isPostLike == true ? FontAwesome.thumbs_up : FontAwesome.thumbs_o_up, "Like", () {
-                        widget.post!.isPostLike = !widget.post!.isPostLike!;
+                      button(
+                          widget.post!.isLiked == true
+                              ? FontAwesome.thumbs_up
+                              : FontAwesome.thumbs_o_up,
+                          "Like", () {
+                        widget.post!.isLiked = !widget.post!.isLiked!;
                         setState(() {});
                       }),
                       button(Ionicons.chatbox_ellipses, "Comment", () {
-                        CommentScreen(widget.post!).launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
+                        CommentScreen(widget.post!).launch(context,
+                            pageRouteAnimation: PageRouteAnimation.Slide);
                       }),
                       button(FontAwesome.share_alt, "Share", () {
-                        PostScreen(isSharePost: true, post: widget.post!).launch(context);
+                        PostScreen(isSharePost: true, post: widget.post!)
+                            .launch(context);
                       }),
                       button(FontAwesome.send, "Send", () {
-                        SendPostScreen().launch(context, pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+                        SendPostScreen().launch(context,
+                            pageRouteAnimation:
+                                PageRouteAnimation.SlideBottomTop);
                       }),
                     ],
                   ),
@@ -182,7 +243,9 @@ class _TimeLinePostBoxState extends State<TimeLinePostBox> {
       child: Column(
         children: [
           Icon(icon, color: context.iconColor, size: iconSize),
-          Padding(padding: EdgeInsets.only(top: 2), child: Text(text, style: secondaryTextStyle())),
+          Padding(
+              padding: EdgeInsets.only(top: 2),
+              child: Text(text, style: secondaryTextStyle())),
         ],
       ),
     );

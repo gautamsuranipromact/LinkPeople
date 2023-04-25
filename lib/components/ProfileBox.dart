@@ -3,6 +3,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/text_styles.dart';
+
 import '../components/ProfileComponent.dart';
 import '../screens/EditIntroScreen.dart';
 import '../utils/AppColors.dart';
@@ -31,7 +32,9 @@ class ProfileBox extends StatelessWidget {
                   Container(
                     height: context.height() * 0.11,
                     width: context.width(),
-                    decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.fill, image: AssetImage(ic_bg))),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill, image: AssetImage(ic_bg))),
                   ),
                   Visibility(
                     visible: isUser!,
@@ -39,11 +42,17 @@ class ProfileBox extends StatelessWidget {
                       onTap: () {
                         showModalBottomSheet(
                             context: context,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25))),
                             builder: (_) {
                               return Container(
-                                padding: EdgeInsets.only(right: 16, left: 16, top: 20, bottom: 16),
-                                decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: radiusCircular(16), topRight: radiusCircular(16))),
+                                padding: EdgeInsets.only(
+                                    right: 16, left: 16, top: 20, bottom: 16),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: radiusCircular(16),
+                                        topRight: radiusCircular(16))),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
@@ -53,15 +62,23 @@ class ProfileBox extends StatelessWidget {
                                         height: 5,
                                         width: 50,
                                         margin: EdgeInsets.only(bottom: 20),
-                                        decoration: BoxDecoration(borderRadius: radius(), color: grey2),
+                                        decoration: BoxDecoration(
+                                            borderRadius: radius(),
+                                            color: grey2),
                                       ),
                                     ),
-                                    Text('Add profile photo', style: boldTextStyle()),
+                                    Text('Add profile photo',
+                                        style: boldTextStyle()),
                                     SizedBox(height: 16),
-                                    bottomSheetComponent(context, text: "Take a photo", onTap: () {}, icon: Ionicons.camera, isSubtext: false),
+                                    bottomSheetComponent(context,
+                                        text: "Take a photo",
+                                        onTap: () {},
+                                        icon: Ionicons.camera,
+                                        isSubtext: false),
                                     bottomSheetComponent(context,
                                         text: "upload from Photos",
-                                        subtext: "On LinkPeople, we require members to use their real identities, so upload a photo of yourself",
+                                        subtext:
+                                            "On LinkPeople, we require members to use their real identities, so upload a photo of yourself",
                                         onTap: () {},
                                         icon: Ionicons.images_outline,
                                         isSubtext: false),
@@ -73,7 +90,10 @@ class ProfileBox extends StatelessWidget {
                       child: Container(
                         margin: EdgeInsets.all(8),
                         padding: EdgeInsets.all(6),
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: context.scaffoldBackgroundColor, boxShadow: [BoxShadow(blurRadius: 3)]),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: context.scaffoldBackgroundColor,
+                            boxShadow: [BoxShadow(blurRadius: 3)]),
                         child: Icon(MaterialCommunityIcons.camera, size: 18),
                       ),
                     ),
@@ -106,7 +126,8 @@ class ProfileBox extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(width: 3, color: Colors.white),
-                    image: DecorationImage(fit: BoxFit.fill, image: AssetImage(img ?? ic_profile)),
+                    image: DecorationImage(
+                        fit: BoxFit.fill, image: AssetImage(ic_profile)),
                   ),
                 ),
                 Visibility(
@@ -117,11 +138,20 @@ class ProfileBox extends StatelessWidget {
                           onTap: () {
                             showModalBottomSheet(
                                 context: context,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25))),
                                 builder: (_) {
                                   return Container(
-                                    padding: EdgeInsets.only(right: 16, left: 16, top: 20, bottom: 16),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: radiusCircular(16), topRight: radiusCircular(16))),
+                                    padding: EdgeInsets.only(
+                                        right: 16,
+                                        left: 16,
+                                        top: 20,
+                                        bottom: 16),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: radiusCircular(16),
+                                            topRight: radiusCircular(16))),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -129,17 +159,36 @@ class ProfileBox extends StatelessWidget {
                                           height: 5,
                                           width: 50,
                                           margin: EdgeInsets.only(bottom: 20),
-                                          decoration: BoxDecoration(borderRadius: radius(), color: grey2),
+                                          decoration: BoxDecoration(
+                                              borderRadius: radius(),
+                                              color: grey2),
                                         ),
-                                        bottomSheetComponent(context, text: "Add profile photo", onTap: () {}, icon: Ionicons.camera, isSubtext: false),
-                                        bottomSheetComponent(context, text: "Add profile video", onTap: () {}, icon: Ionicons.ios_videocam, isSubtext: false),
-                                        bottomSheetComponent(context, text: "Add frame", onTap: () {}, icon: Ionicons.ios_image, isSubtext: false),
+                                        bottomSheetComponent(context,
+                                            text: "Add profile photo",
+                                            onTap: () {},
+                                            icon: Ionicons.camera,
+                                            isSubtext: false),
+                                        bottomSheetComponent(context,
+                                            text: "Add profile video",
+                                            onTap: () {},
+                                            icon: Ionicons.ios_videocam,
+                                            isSubtext: false),
+                                        bottomSheetComponent(context,
+                                            text: "Add frame",
+                                            onTap: () {},
+                                            icon: Ionicons.ios_image,
+                                            isSubtext: false),
                                       ],
                                     ),
                                   );
                                 });
                           },
-                          child: Container(padding: EdgeInsets.all(2), decoration: BoxDecoration(color: context.scaffoldBackgroundColor, shape: BoxShape.circle), child: Icon(AntDesign.pluscircle)))),
+                          child: Container(
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                  color: context.scaffoldBackgroundColor,
+                                  shape: BoxShape.circle),
+                              child: Icon(AntDesign.pluscircle)))),
                 ),
               ],
             ),

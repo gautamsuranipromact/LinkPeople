@@ -27,8 +27,3 @@ bool get isMobile => !isWeb && (Platform.isIOS || Platform.isAndroid);
 bool get isAndroid => !isWeb && Platform.isAndroid;
 
 bool get isIos => !isWeb && Platform.isIOS;
-
-
-
-
-

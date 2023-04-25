@@ -6,6 +6,7 @@ import 'package:link_people/utils/AppImages.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../components/JobListComponent.dart';
 import '../utils/Extensions/text_styles.dart';
 
@@ -55,9 +56,11 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
               PopupMenuItem(
                 child: Row(
                   children: [
-                    Icon(EvilIcons.sc_telegram, color: textSecondaryColorGlobal),
+                    Icon(EvilIcons.sc_telegram,
+                        color: textSecondaryColorGlobal),
                     SizedBox(width: 4),
-                    Text("Share via private message", style: secondaryTextStyle()),
+                    Text("Share via private message",
+                        style: secondaryTextStyle()),
                   ],
                 ),
                 value: 1,
@@ -75,7 +78,8 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
               PopupMenuItem(
                 child: Row(
                   children: [
-                    Icon(MaterialCommunityIcons.flag_variant, color: textSecondaryColorGlobal),
+                    Icon(MaterialCommunityIcons.flag_variant,
+                        color: textSecondaryColorGlobal),
                     SizedBox(width: 4),
                     Text("Report this job", style: secondaryTextStyle()),
                   ],
@@ -104,7 +108,8 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(widget.cName.toString(), style: primaryTextStyle()),
+                          Text(widget.cName.toString(),
+                              style: primaryTextStyle()),
                           Text('India(Remote)', style: primaryTextStyle()),
                         ],
                       ),
@@ -115,7 +120,8 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                     children: [
                       Text('13 day ago', style: secondaryTextStyle()),
                       Icon(Entypo.dot_single),
-                      Text('17 applicants', style: boldTextStyle(size: 14, color: greenColor)),
+                      Text('17 applicants',
+                          style: boldTextStyle(size: 14, color: greenColor)),
                     ],
                   ),
                 ],
@@ -123,9 +129,12 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
             ),
             component(MaterialIcons.work, 'Full-time'),
             component(MaterialIcons.local_post_office, '11-50 employees'),
-            component(FontAwesome.user_circle_o, 'Anjali Tiwari is hiring for this job'),
-            component(MaterialCommunityIcons.lightbulb_on_outline, 'see recent hiring trends for arity infoway.'),
-            component(Feather.check_circle, 'Actively recruiting', color: greenColor),
+            component(FontAwesome.user_circle_o,
+                'Anjali Tiwari is hiring for this job'),
+            component(MaterialCommunityIcons.lightbulb_on_outline,
+                'see recent hiring trends for arity infoway.'),
+            component(Feather.check_circle, 'Actively recruiting',
+                color: greenColor),
             SizedBox(height: 8),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -134,15 +143,19 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                   Expanded(
                     flex: 2,
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(22), color: primaryColor),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(22),
+                          color: primaryColor),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(ic_appLogo, height: 18, width: 18),
                           SizedBox(width: 5),
-                          Text("Easy Apply", style: boldTextStyle(color: Colors.white)),
+                          Text("Easy Apply",
+                              style: boldTextStyle(color: Colors.white)),
                         ],
                       ),
                     ),
@@ -152,9 +165,14 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                     flex: 2,
                     child: Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      decoration: BoxDecoration(border: Border.all(width: 1, color: reactionColor), borderRadius: BorderRadius.circular(22)),
-                      child: Text("Add Section", style: primaryTextStyle(color: textSecondaryColorGlobal)),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: reactionColor),
+                          borderRadius: BorderRadius.circular(22)),
+                      child: Text("Add Section",
+                          style: primaryTextStyle(
+                              color: textSecondaryColorGlobal)),
                     ),
                   ),
                 ],
@@ -168,7 +186,9 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                 children: [
                   Text('Job description', style: boldTextStyle()),
                   SizedBox(height: 12),
-                  Text('we are looking for android flutter developer for our company.candidate must have atlist 1 year of experience.', style: primaryTextStyle()),
+                  Text(
+                      'we are looking for android flutter developer for our company.candidate must have atlist 1 year of experience.',
+                      style: primaryTextStyle()),
                 ],
               ),
             ),
@@ -182,7 +202,8 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                   SizedBox(height: 12),
                   Row(
                     children: [
-                      CircleAvatar(backgroundImage: AssetImage(ic_man2), maxRadius: 25),
+                      CircleAvatar(
+                          backgroundImage: AssetImage(ic_man2), maxRadius: 25),
                       SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +216,9 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                   ),
                   Divider(thickness: 1),
                   SizedBox(height: 8),
-                  Center(child: Text('Send Mail', style: boldTextStyle(color: primaryColor))),
+                  Center(
+                      child: Text('Send Mail',
+                          style: boldTextStyle(color: primaryColor))),
                   SizedBox(height: 8),
                 ],
               ),
@@ -208,7 +231,8 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                 children: [
                   Text('Pay range unavailable', style: boldTextStyle()),
                   SizedBox(height: 12),
-                  Text('Salary information is not available at the moment.', style: secondaryTextStyle()),
+                  Text('Salary information is not available at the moment.',
+                      style: secondaryTextStyle()),
                 ],
               ),
             ),
@@ -217,7 +241,10 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               child: Row(
                 children: [
-                  Expanded(child: Text('Are you interested in salary information for this job?', style: secondaryTextStyle())),
+                  Expanded(
+                      child: Text(
+                          'Are you interested in salary information for this job?',
+                          style: secondaryTextStyle())),
                   Text('Yes / No', style: secondaryTextStyle()),
                 ],
               ),
@@ -244,15 +271,21 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                           ],
                         ),
                       ),
-                      Text('+ Follow', style: boldTextStyle(color: textSecondaryColorGlobal)),
+                      Text('+ Follow',
+                          style:
+                              boldTextStyle(color: textSecondaryColorGlobal)),
                     ],
                   ),
                   SizedBox(height: 12),
-                  Text('Information Technology & Services • 11 - 50 employees • 19 on LinkPeople', style: primaryTextStyle(size: 14)),
-                  SizedBox(height: 20),
-                  Text('Arity Infoway is an India based outsourcing company providing services all over the world. The services provided by Arity Infoway are various like Web...',
+                  Text(
+                      'Information Technology & Services • 11 - 50 employees • 19 on LinkPeople',
                       style: primaryTextStyle(size: 14)),
-                  Text('Show more', style: boldTextStyle(color: textSecondaryColorGlobal)),
+                  SizedBox(height: 20),
+                  Text(
+                      'Arity Infoway is an India based outsourcing company providing services all over the world. The services provided by Arity Infoway are various like Web...',
+                      style: primaryTextStyle(size: 14)),
+                  Text('Show more',
+                      style: boldTextStyle(color: textSecondaryColorGlobal)),
                 ],
               ),
             ),

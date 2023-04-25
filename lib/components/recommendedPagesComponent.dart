@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:link_people/utils/AppColors.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
+
 import '../screens/RecommendationScreen.dart';
 import '../utils/AppDataProvider.dart';
 import '../utils/Extensions/text_styles.dart';
@@ -9,7 +10,8 @@ import 'SuggestedPageComponent.dart';
 
 class RecommendedPagesComponent extends StatefulWidget {
   @override
-  _RecommendedPagesComponentState createState() => _RecommendedPagesComponentState();
+  _RecommendedPagesComponentState createState() =>
+      _RecommendedPagesComponentState();
 }
 
 class _RecommendedPagesComponentState extends State<RecommendedPagesComponent> {

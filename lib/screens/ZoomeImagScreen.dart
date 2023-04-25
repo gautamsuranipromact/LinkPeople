@@ -25,7 +25,12 @@ class _ZoomImageScreenState extends State<ZoomImageScreen> {
         alignment: Alignment.topLeft,
         children: [
           PhotoView(imageProvider: Image.asset(widget.image!).image),
-          IconButton(iconSize: 20, padding: EdgeInsets.zero, icon: Icon(Icons.arrow_back, color: Colors.white), onPressed: () => finish(context)).paddingOnly(top: context.statusBarHeight + 20),
+          IconButton(
+                  iconSize: 20,
+                  padding: EdgeInsets.zero,
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () => finish(context))
+              .paddingOnly(top: context.statusBarHeight + 20),
         ],
       ),
     );

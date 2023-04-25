@@ -46,7 +46,8 @@ class _InterviewPrepareScreenState extends State<InterviewPrepareScreen> {
               iconTheme: IconThemeData(color: context.iconColor),
               automaticallyImplyLeading: true,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text("Prepare for an interview", style: primaryTextStyle()),
+                title:
+                    Text("Prepare for an interview", style: primaryTextStyle()),
               ),
             ),
           ];
@@ -67,12 +68,18 @@ class _InterviewPrepareScreenState extends State<InterviewPrepareScreen> {
                         Text('Common Questions', style: primaryTextStyle()),
                         GestureDetector(
                           onTap: () {
-                            CategoryQueScreen().launch(context,pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+                            CategoryQueScreen().launch(context,
+                                pageRouteAnimation:
+                                    PageRouteAnimation.SlideBottomTop);
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                            decoration: BoxDecoration(color: primaryColor, borderRadius: radius(16)),
-                            child: Text('Categories', style: boldTextStyle(color: Colors.white, size: 12)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                                color: primaryColor, borderRadius: radius(16)),
+                            child: Text('Categories',
+                                style: boldTextStyle(
+                                    color: Colors.white, size: 12)),
                           ),
                         )
                       ],
@@ -92,16 +99,22 @@ class _InterviewPrepareScreenState extends State<InterviewPrepareScreen> {
                     WalkThroughModel data = interviewQueList[i];
                     return GestureDetector(
                       onTap: () {
-                        QuestionsDetailScreen(text: data.text.toString()).launch(context);
+                        QuestionsDetailScreen(text: data.text.toString())
+                            .launch(context);
                       },
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                         child: Row(children: [
-                          Text("0" + data.index.toString(), style: secondaryTextStyle()),
+                          Text("0" + data.index.toString(),
+                              style: secondaryTextStyle()),
                           SizedBox(width: 8),
-                          Image.asset(data.img.toString(), height: 50, width: 50, fit: BoxFit.cover),
+                          Image.asset(data.img.toString(),
+                              height: 50, width: 50, fit: BoxFit.cover),
                           SizedBox(width: 8),
-                          Expanded(child: Text(data.text.toString(), style: primaryTextStyle())),
+                          Expanded(
+                              child: Text(data.text.toString(),
+                                  style: primaryTextStyle())),
                         ]),
                       ),
                     );

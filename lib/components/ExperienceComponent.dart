@@ -23,7 +23,8 @@ Widget experienceBox(BuildContext context, {isUser = false}) {
                 children: [
                   IconButton(
                       onPressed: () {
-                        AddOrEditEducationScreen(isExperience: true).launch(context);
+                        AddOrEditEducationScreen(isExperience: true)
+                            .launch(context);
                       },
                       icon: Icon(Icons.add, color: textSecondaryColorGlobal)),
                   IconButton(
@@ -61,7 +62,9 @@ Widget experienceComponent(BuildContext context, {bool isEdit = false}) {
               width: 50,
               decoration: BoxDecoration(
                 color: context.dividerColor,
-                image: DecorationImage(fit: BoxFit.fill, image: AssetImage(experienceList[index].image.toString())),
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage(experienceList[index].image.toString())),
               ),
             ),
             SizedBox(width: 8),
@@ -69,15 +72,22 @@ Widget experienceComponent(BuildContext context, {bool isEdit = false}) {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(experienceList[index].name.toString(), style: boldTextStyle()),
+                  Text(experienceList[index].name.toString(),
+                      style: boldTextStyle()),
                   SizedBox(height: 4),
-                  Text(experienceList[index].description.toString(), style: primaryTextStyle()),
+                  Text(experienceList[index].description.toString(),
+                      style: primaryTextStyle()),
                   SizedBox(height: 4),
-                  Text(experienceList[index].time.toString(), style: secondaryTextStyle())
+                  Text(experienceList[index].time.toString(),
+                      style: secondaryTextStyle())
                 ],
               ),
             ),
-            Visibility(visible: isEdit, child: IconButton(onPressed: () {}, icon: Icon(Icons.edit, color: textSecondaryColorGlobal))),
+            Visibility(
+                visible: isEdit,
+                child: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.edit, color: textSecondaryColorGlobal))),
           ],
         );
       },

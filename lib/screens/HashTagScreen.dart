@@ -5,7 +5,6 @@ import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 
 import '../models/WalkThroughModel.dart';
-import '../utils/AppColors.dart';
 import '../utils/AppCommon.dart';
 import '../utils/AppDataProvider.dart';
 import '../utils/Extensions/Commons.dart';
@@ -39,17 +38,22 @@ class _HashTagScreenState extends State<HashTagScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarCommon(context, widget.isHashTag == true ? "HashTags" : "Pages", () {
+      appBar: appBarCommon(
+          context, widget.isHashTag == true ? "HashTags" : "Pages", () {
         finish(context);
       }),
       body: ListView.separated(
         padding: EdgeInsets.all(12),
-        itemCount: widget.isHashTag == true ? hashTagList.length : pageList.length,
+        itemCount:
+            widget.isHashTag == true ? hashTagList.length : pageList.length,
         separatorBuilder: (BuildContext context, int index) {
-          return Visibility(visible: index != hashTagList.length - 1, child: Divider(thickness: 1, height: 20));
+          return Visibility(
+              visible: index != hashTagList.length - 1,
+              child: Divider(thickness: 1, height: 20));
         },
         itemBuilder: (context, i) {
-          WalkThroughModel data = widget.isHashTag == true ? hashTagList[i] : pageList[i];
+          WalkThroughModel data =
+              widget.isHashTag == true ? hashTagList[i] : pageList[i];
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 2),
             child: Row(
@@ -57,14 +61,19 @@ class _HashTagScreenState extends State<HashTagScreen> {
                 widget.isHashTag == true
                     ? Container(
                         padding: EdgeInsets.all(6),
-                        decoration: BoxDecoration(color: primaryColor.withOpacity(0.3), shape: BoxShape.circle),
+                        decoration: BoxDecoration(
+                            color: primaryColor.withOpacity(0.3),
+                            shape: BoxShape.circle),
                         child: Container(
                           padding: EdgeInsets.all(2),
-                          decoration: BoxDecoration(color: context.scaffoldBackgroundColor, shape: BoxShape.circle),
+                          decoration: BoxDecoration(
+                              color: context.scaffoldBackgroundColor,
+                              shape: BoxShape.circle),
                           child: Icon(Feather.hash),
                         ),
                       )
-                    : Image.asset(data.img.toString(), height: 40, width: 40, fit: BoxFit.cover),
+                    : Image.asset(data.img.toString(),
+                        height: 40, width: 40, fit: BoxFit.cover),
                 SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -72,11 +81,13 @@ class _HashTagScreenState extends State<HashTagScreen> {
                     children: [
                       Text('#${data.text}', style: boldTextStyle()),
                       SizedBox(height: 4),
-                      Text('${data.name} followers', style: secondaryTextStyle()),
+                      Text('${data.name} followers',
+                          style: secondaryTextStyle()),
                     ],
                   ),
                 ),
-                Text('Following', style: primaryTextStyle(color: textSecondaryColorGlobal)),
+                Text('Following',
+                    style: primaryTextStyle(color: textSecondaryColorGlobal)),
               ],
             ),
           );

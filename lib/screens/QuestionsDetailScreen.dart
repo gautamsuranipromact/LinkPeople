@@ -46,7 +46,9 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
               floating: true,
               pinned: true,
               elevation: 2,
-              title: innerBoxIsScrolled == true ? Text(widget.text.toString(), style: primaryTextStyle()) : SizedBox(),
+              title: innerBoxIsScrolled == true
+                  ? Text(widget.text.toString(), style: primaryTextStyle())
+                  : SizedBox(),
               backgroundColor: context.scaffoldBackgroundColor,
               iconTheme: IconThemeData(color: context.iconColor),
               automaticallyImplyLeading: true,
@@ -62,7 +64,8 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.text.toString(), style: boldTextStyle(size: 18)),
+                    Text(widget.text.toString(),
+                        style: boldTextStyle(size: 18)),
                     Text('Common Questions', style: primaryTextStyle()),
                   ],
                 ),
@@ -89,14 +92,18 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Unlock sample answers with expert feedback using LinkPeople Premium', style: primaryTextStyle()),
+                    Text(
+                        'Unlock sample answers with expert feedback using LinkPeople Premium',
+                        style: primaryTextStyle()),
                     Container(
                       height: 30,
                       width: 150,
                       margin: EdgeInsets.only(top: 8),
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(color: tanColor, borderRadius: radius(20)),
-                      child: Text('Try Free for 1 Month', style: primaryTextStyle()),
+                      decoration: BoxDecoration(
+                          color: tanColor, borderRadius: radius(20)),
+                      child: Text('Try Free for 1 Month',
+                          style: primaryTextStyle()),
                     ),
                   ],
                 ),
@@ -111,7 +118,10 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
                   itemBuilder: (context, i) {
                     AnswerModel data = ansList[i];
                     return Container(
-                      decoration: BoxDecoration(borderRadius: radius(6), border: Border.all(width: 0.5, color: textSecondaryColorGlobal)),
+                      decoration: BoxDecoration(
+                          borderRadius: radius(6),
+                          border: Border.all(
+                              width: 0.5, color: textSecondaryColorGlobal)),
                       width: context.width(),
                       margin: EdgeInsets.symmetric(vertical: 8),
                       padding: EdgeInsets.all(12),
@@ -119,10 +129,13 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(data.name.toString(), style: primaryTextStyle()),
-                          Text(data.subtext.toString(), style: primaryTextStyle(size: 14)),
-                          Text(data.view.toString(), style: secondaryTextStyle(size: 12)),
+                          Text(data.subtext.toString(),
+                              style: primaryTextStyle(size: 14)),
+                          Text(data.view.toString(),
+                              style: secondaryTextStyle(size: 12)),
                           SizedBox(height: 6),
-                          Text(data.text.toString(), style: secondaryTextStyle(size: 12)),
+                          Text(data.text.toString(),
+                              style: secondaryTextStyle(size: 12)),
                         ],
                       ),
                     );
@@ -136,7 +149,10 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
                     Text('Answer framework', style: boldTextStyle(size: 14)),
                     SizedBox(height: 8),
                     Container(
-                      decoration: BoxDecoration(borderRadius: radius(6), border: Border.all(width: 0.5, color: textSecondaryColorGlobal)),
+                      decoration: BoxDecoration(
+                          borderRadius: radius(6),
+                          border: Border.all(
+                              width: 0.5, color: textSecondaryColorGlobal)),
                       width: context.width(),
                       padding: EdgeInsets.all(12),
                       child: Row(
@@ -144,8 +160,10 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
                           Stack(
                             alignment: Alignment.center,
                             children: [
-                              Image.asset('Images/people/men3.jpg', height: 50, width: 50, fit: BoxFit.cover),
-                              Container(height: 50, width: 50, color: Colors.black26),
+                              Image.asset('Images/people/men3.jpg',
+                                  height: 50, width: 50, fit: BoxFit.cover),
+                              Container(
+                                  height: 50, width: 50, color: Colors.black26),
                               Icon(
                                 Icons.play_circle_outline_rounded,
                                 color: Colors.white,
@@ -156,18 +174,24 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("How to approach this question", style: primaryTextStyle()),
-                              Text("By Jenny Foss, Career Strategist", style: primaryTextStyle(size: 14)),
-                              Text("2 min 2 secs • 2,252,358 views", style: secondaryTextStyle(size: 12)),
+                              Text("How to approach this question",
+                                  style: primaryTextStyle()),
+                              Text("By Jenny Foss, Career Strategist",
+                                  style: primaryTextStyle(size: 14)),
+                              Text("2 min 2 secs • 2,252,358 views",
+                                  style: secondaryTextStyle(size: 12)),
                             ],
                           ),
                         ],
                       ),
                     ),
                     SizedBox(height: 12),
-                    Text("This is something you'll be asked a lot at the beginning of an interview. Here are three tips that'll help you nail the opener.", style: primaryTextStyle(size: 14)),
+                    Text(
+                        "This is something you'll be asked a lot at the beginning of an interview. Here are three tips that'll help you nail the opener.",
+                        style: primaryTextStyle(size: 14)),
                     SizedBox(height: 8),
-                    Text('Be succinct, honest and engaging.', style: boldTextStyle(size: 14)),
+                    Text('Be succinct, honest and engaging.',
+                        style: boldTextStyle(size: 14)),
                     Text(
                         'I call this the "SHE" formula, Resist the urge to give a detailed account of the last two decades of your career. The interviewer is looking for an answer that shows them...',
                         style: primaryTextStyle(size: 14)),
@@ -178,7 +202,9 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
               Center(
                 child: TextButton(
                   onPressed: () {},
-                  child: Text('See more', style: boldTextStyle(color: primaryColor), textAlign: TextAlign.center),
+                  child: Text('See more',
+                      style: boldTextStyle(color: primaryColor),
+                      textAlign: TextAlign.center),
                 ),
               ),
               Divider(thickness: 5),
@@ -203,9 +229,17 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
                 padding: EdgeInsets.all(12),
                 child: Row(
                   children: [
-                    Expanded(child: Text('Did you find this content helpful?', style: primaryTextStyle())),
-                    IconButton(onPressed: () {}, icon: Icon(SimpleLineIcons.like, color: textSecondaryColorGlobal)),
-                    IconButton(onPressed: () {}, icon: Icon(SimpleLineIcons.dislike, color: textSecondaryColorGlobal))
+                    Expanded(
+                        child: Text('Did you find this content helpful?',
+                            style: primaryTextStyle())),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(SimpleLineIcons.like,
+                            color: textSecondaryColorGlobal)),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(SimpleLineIcons.dislike,
+                            color: textSecondaryColorGlobal))
                   ],
                 ),
               ),
@@ -223,11 +257,14 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
               height: 40,
               width: context.width(),
               margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: boxDecorationWithShadowWidget(backgroundColor: primaryColor, borderRadius: radius(30)),
-              child: Text("Practice and get feedback", style: primaryTextStyle(color: Colors.white)),
+              decoration: boxDecorationWithShadowWidget(
+                  backgroundColor: primaryColor, borderRadius: radius(30)),
+              child: Text("Practice and get feedback",
+                  style: primaryTextStyle(color: Colors.white)),
             ),
             SizedBox(height: 12),
-            Text('8,539,763 people viewed this question', style: secondaryTextStyle()),
+            Text('8,539,763 people viewed this question',
+                style: secondaryTextStyle()),
             SizedBox(height: 12),
           ],
         ),

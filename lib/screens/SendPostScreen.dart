@@ -48,7 +48,9 @@ class _SendPostScreenState extends State<SendPostScreen> {
             height: 50,
             width: context.width(),
             padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(color: context.scaffoldBackgroundColor, boxShadow: [BoxShadow(blurRadius: 0.1)]),
+            decoration: BoxDecoration(
+                color: context.scaffoldBackgroundColor,
+                boxShadow: [BoxShadow(blurRadius: 0.1)]),
             child: Row(
               children: [
                 Expanded(
@@ -58,14 +60,17 @@ class _SendPostScreenState extends State<SendPostScreen> {
                     textStyle: primaryTextStyle(),
                     cursorHeight: 20,
                     cursorColor: Colors.black,
-                    decoration: outlineInputDecoration(context, label: "Type name or multiple names", prefixIcon: Text("To:", style: primaryTextStyle())),
+                    decoration: outlineInputDecoration(context,
+                        label: "Type name or multiple names",
+                        prefixIcon: Text("To:", style: primaryTextStyle())),
                   ),
                 ),
               ],
             ),
           ),
           SizedBox(height: 10),
-          Text('Suggested', style: boldTextStyle()).paddingOnly(left: 12,bottom: 8),
+          Text('Suggested', style: boldTextStyle())
+              .paddingOnly(left: 12, bottom: 8),
           ListView.separated(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -73,22 +78,30 @@ class _SendPostScreenState extends State<SendPostScreen> {
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             itemCount: invitationUsers.length,
             separatorBuilder: (BuildContext context, int index) {
-              return Divider(thickness: 1, indent: 60,height: 25);
+              return Divider(thickness: 1, indent: 60, height: 25);
             },
             itemBuilder: (context, i) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(backgroundImage: AssetImage(invitationUsers[i].imageUrl.toString()), maxRadius: 25, backgroundColor: context.cardColor),
+                  CircleAvatar(
+                      backgroundImage:
+                          AssetImage(invitationUsers[i].imageUrl.toString()),
+                      maxRadius: 25,
+                      backgroundColor: context.cardColor),
                   SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(invitationUsers[i].name.toString(), style: boldTextStyle()),
+                        Text(invitationUsers[i].name.toString(),
+                            style: boldTextStyle()),
                         SizedBox(height: 5),
-                        Text(invitationUsers[i].profession.toString(), style: secondaryTextStyle(size: 14), maxLines: 2, overflow: TextOverflow.ellipsis),
+                        Text(invitationUsers[i].profession.toString(),
+                            style: secondaryTextStyle(size: 14),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis),
                       ],
                     ),
                   ),

@@ -6,5 +6,11 @@ class EducationModel {
   String? endYear;
   String? img;
 
-  EducationModel({this.inName, this.degree, this.field, this.startYear, this.endYear, this.img});
+  EducationModel(
+      {this.inName,
+      this.degree,
+      this.field,
+      this.startYear,
+      this.endYear,
+      this.img});
 }

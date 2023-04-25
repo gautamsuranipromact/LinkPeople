@@ -48,7 +48,11 @@ class _SkillAssessmentsScreenState extends State<SkillAssessmentsScreen> {
                 Text('Search all assessments', style: secondaryTextStyle()),
               ],
             ),
-            Divider(height: 6, thickness: 1, color: textSecondaryColorGlobal, endIndent: 10)
+            Divider(
+                height: 6,
+                thickness: 1,
+                color: textSecondaryColorGlobal,
+                endIndent: 10)
           ],
         ),
       ),
@@ -73,10 +77,13 @@ class _SkillAssessmentsScreenState extends State<SkillAssessmentsScreen> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(left: 12, bottom: 8),
-                          child: Text('Check your skill level answer 15 multiple choice questions,score in the top 30%, and earn a skill badge. ', style: secondaryTextStyle()),
+                          child: Text(
+                              'Check your skill level answer 15 multiple choice questions,score in the top 30%, and earn a skill badge. ',
+                              style: secondaryTextStyle()),
                         ),
                       ),
-                      Image.asset(ic_skillAssessment, height: 170, width: 170, fit: BoxFit.fill),
+                      Image.asset(ic_skillAssessment,
+                          height: 170, width: 170, fit: BoxFit.fill),
                     ],
                   ),
                   SizedBox(height: 16),
@@ -97,17 +104,26 @@ class _SkillAssessmentsScreenState extends State<SkillAssessmentsScreen> {
                     padding: EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Container(padding: EdgeInsets.all(6), color: Colors.grey.withOpacity(0.5), child: Image.asset(data.image.toString(), height: 35, width: 35, fit: BoxFit.cover)),
+                        Container(
+                            padding: EdgeInsets.all(6),
+                            color: Colors.grey.withOpacity(0.5),
+                            child: Image.asset(data.image.toString(),
+                                height: 35, width: 35, fit: BoxFit.cover)),
                         SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(data.name.toString(), style: boldTextStyle()),
+                              Text(data.name.toString(),
+                                  style: boldTextStyle()),
                               SizedBox(height: 4),
-                              Text('Topics: ${data.subText}', style: secondaryTextStyle(), overflow: TextOverflow.ellipsis),
+                              Text('Topics: ${data.subText}',
+                                  style: secondaryTextStyle(),
+                                  overflow: TextOverflow.ellipsis),
                               SizedBox(height: 4),
-                              Text('${data.people} people took this', style: secondaryTextStyle(), overflow: TextOverflow.ellipsis),
+                              Text('${data.people} people took this',
+                                  style: secondaryTextStyle(),
+                                  overflow: TextOverflow.ellipsis),
                             ],
                           ),
                         )

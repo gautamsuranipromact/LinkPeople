@@ -4,6 +4,7 @@ import 'package:link_people/utils/AppCommon.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../utils/AppDataProvider.dart';
 import '../utils/Extensions/AppTextField.dart';
 import '../utils/Extensions/text_styles.dart';
@@ -61,7 +62,8 @@ class _SearchScreenState extends State<SearchScreen> {
             onPressed: () {
               QRCodeScreen().launch(context);
             },
-            icon: Icon(MaterialCommunityIcons.qrcode_scan, color: textSecondaryColorGlobal, size: 22),
+            icon: Icon(MaterialCommunityIcons.qrcode_scan,
+                color: textSecondaryColorGlobal, size: 22),
           ),
         ],
       ),
@@ -73,7 +75,10 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(padding: EdgeInsets.all(8.0), child: Text('Try searching for', style: secondaryTextStyle())),
+                  Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Try searching for',
+                          style: secondaryTextStyle())),
                   SizedBox(height: 8),
                   ListView.builder(
                       shrinkWrap: true,
@@ -88,10 +93,14 @@ class _SearchScreenState extends State<SearchScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
-                                Icon(Icons.search, size: 18, color: textSecondaryColorGlobal),
+                                Icon(Icons.search,
+                                    size: 18, color: textSecondaryColorGlobal),
                                 SizedBox(width: 8),
-                                Expanded(child: Text(list[i], style: secondaryTextStyle())),
-                                Icon(Feather.arrow_up_left, size: 18, color: textSecondaryColorGlobal),
+                                Expanded(
+                                    child: Text(list[i],
+                                        style: secondaryTextStyle())),
+                                Icon(Feather.arrow_up_left,
+                                    size: 18, color: textSecondaryColorGlobal),
                               ],
                             ),
                           ),
@@ -108,7 +117,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 12, right: 12, top: 12),
-                    child: Text("Today's news and views", style: primaryTextStyle()),
+                    child: Text("Today's news and views",
+                        style: primaryTextStyle()),
                   ),
                   ListView.separated(
                     shrinkWrap: true,
@@ -127,14 +137,17 @@ class _SearchScreenState extends State<SearchScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(newsList[i].name.toString(), style: boldTextStyle()),
+                                  Text(newsList[i].name.toString(),
+                                      style: boldTextStyle()),
                                   SizedBox(height: 8),
-                                  Text(newsList[i].subtext.toString(), style: secondaryTextStyle()),
+                                  Text(newsList[i].subtext.toString(),
+                                      style: secondaryTextStyle()),
                                 ],
                               ),
                             ),
                             SizedBox(width: 8),
-                            Image.asset(newsList[i].img.toString(), height: 100, width: 100)
+                            Image.asset(newsList[i].img.toString(),
+                                height: 100, width: 100)
                           ],
                         ),
                       );

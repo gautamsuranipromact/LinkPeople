@@ -37,22 +37,28 @@ class _ManageMyNetworkScreenState extends State<ManageMyNetworkScreen> {
         itemCount: networksList.length,
         shrinkWrap: true,
         separatorBuilder: (BuildContext context, int index) {
-          return Visibility(visible: index != networksList.length - 1, child: Divider(thickness: 1, height: 5));
+          return Visibility(
+              visible: index != networksList.length - 1,
+              child: Divider(thickness: 1, height: 5));
         },
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              if (networksList[index].screen != null) networksList[index].screen!.launch(context);
+              if (networksList[index].screen != null)
+                networksList[index].screen!.launch(context);
             },
             child: Padding(
-              padding: EdgeInsets.only(top: 15, bottom: 15, right: 12, left: 12),
+              padding:
+                  EdgeInsets.only(top: 15, bottom: 15, right: 12, left: 12),
               child: Row(
                 children: [
                   Icon(networksList[index].image, size: 20),
                   SizedBox(width: 15),
-                  Text(networksList[index].name.toString(), style: primaryTextStyle()),
+                  Text(networksList[index].name.toString(),
+                      style: primaryTextStyle()),
                   Spacer(),
-                  Text(networksList[index].total.toString(), style: primaryTextStyle())
+                  Text(networksList[index].total.toString(),
+                      style: primaryTextStyle())
                 ],
               ),
             ),

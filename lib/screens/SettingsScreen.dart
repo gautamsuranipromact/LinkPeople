@@ -53,25 +53,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
         color: context.scaffoldBackgroundColor,
         child: ListView(
           children: [
-            rowComponent(Icons.support_agent, "Account preference", "Options for managing your account and experience on LinkPeople", () {
+            rowComponent(Icons.support_agent, "Account preference",
+                "Options for managing your account and experience on LinkPeople",
+                () {
               AccountPreferences().launch(context);
             }),
-            rowComponent(Fontisto.locked, "Sign in & security", "options and controls for signing in and keeping your account safe", () {
+            rowComponent(Fontisto.locked, "Sign in & security",
+                "options and controls for signing in and keeping your account safe",
+                () {
               SignInSecurityScreen().launch(context);
             }),
-            rowComponent(Ionicons.eye, "Visibility", "Control who sees you activity and information on LinkPeople", () {
+            rowComponent(Ionicons.eye, "Visibility",
+                "Control who sees you activity and information on LinkPeople",
+                () {
               VisibilityScreen().launch(context);
             }),
-            rowComponent(Ionicons.ios_mail, "Communication", "Control for emails,invite, and notifications", () {
+            rowComponent(Ionicons.ios_mail, "Communication",
+                "Control for emails,invite, and notifications", () {
               CommunicationsScreen().launch(context);
             }),
-            rowComponent(MaterialIcons.privacy_tip, "Data privacy", "Control how LinkPeople uses your information for general site use and job seeking", () {
+            rowComponent(MaterialIcons.privacy_tip, "Data privacy",
+                "Control how LinkPeople uses your information for general site use and job seeking",
+                () {
               DataPrivacyScreen().launch(context);
             }),
-            rowComponent(Icons.newspaper_outlined, "Advertise data", "Control how LinkPeople uses your information to serve you ads", () {
+            rowComponent(Icons.newspaper_outlined, "Advertise data",
+                "Control how LinkPeople uses your information to serve you ads",
+                () {
               AdvertisingDataScreen().launch(context);
             }),
-            rowComponent(MaterialCommunityIcons.theme_light_dark, "Dark mode", "Control how linked looks when using this device", () {
+            rowComponent(MaterialCommunityIcons.theme_light_dark, "Dark mode",
+                "Control how linked looks when using this device", () {
               SelectThemeScreen().launch(context);
             }),
             textButtonComponent("Help Center", () {}),
@@ -85,8 +97,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 builder: (_, snap) {
                   if (snap.hasData) {
                     return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                      child: Text('VERSION ${snap.data!.version.toString()}', style: boldTextStyle(size: 14, color: textSecondaryColorGlobal)),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      child: Text('VERSION ${snap.data!.version.toString()}',
+                          style: boldTextStyle(
+                              size: 14, color: textSecondaryColorGlobal)),
                     );
                   }
                   return SizedBox();
@@ -115,7 +130,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(text, style: boldTextStyle()),
-                      Text(subtext, style: secondaryTextStyle(color: textSecondaryColorGlobal)),
+                      Text(subtext,
+                          style: secondaryTextStyle(
+                              color: textSecondaryColorGlobal)),
                     ],
                   ),
                 ),
@@ -135,7 +152,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           onTap: () {
             onTap();
           },
-          child: Text(text, style: boldTextStyle(size: 14, color: textSecondaryColorGlobal))),
+          child: Text(text,
+              style: boldTextStyle(size: 14, color: textSecondaryColorGlobal))),
     );
   }
 }

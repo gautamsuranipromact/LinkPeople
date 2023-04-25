@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:link_people/screens/ProfileScreen.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/decorations.dart';
 import 'package:styled_text/styled_text.dart';
+
 import '../models/ProfileAnalyticModel.dart';
 import '../screens/AddOrEditEducationScreen.dart';
 import '../screens/EducationScreen.dart';
-import '../screens/ViewProfileScreen.dart';
 import '../utils/AppColors.dart';
 import '../utils/AppDataProvider.dart';
 import '../utils/Extensions/text_styles.dart';
@@ -17,7 +18,8 @@ import 'EducationComponent.dart';
 
 List<String> languageList = ["English", "Sindhi", "Hindi"];
 
-Widget profileAnalyticBox(List<ProfileAnalyticModel> profileAnalyticModel, BuildContext context, text) {
+Widget profileAnalyticBox(List<ProfileAnalyticModel> profileAnalyticModel,
+    BuildContext context, text) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 20),
     child: Column(
@@ -52,13 +54,17 @@ Widget profileAnalyticBox(List<ProfileAnalyticModel> profileAnalyticModel, Build
                         children: [
                           Text(model.name.toString(), style: boldTextStyle()),
                           SizedBox(height: 3),
-                          Text(model.description.toString(), style: secondaryTextStyle()),
+                          Text(model.description.toString(),
+                              style: secondaryTextStyle()),
                         ],
                       ),
                     )
                   ],
                 ),
-                Visibility(visible: profileAnalyticModel != pAnalyticList || index != pAnalyticList.length - 1, child: Divider(thickness: 1, height: 30)),
+                Visibility(
+                    visible: profileAnalyticModel != pAnalyticList ||
+                        index != pAnalyticList.length - 1,
+                    child: Divider(thickness: 1, height: 30)),
               ],
             );
           },
@@ -70,7 +76,8 @@ Widget profileAnalyticBox(List<ProfileAnalyticModel> profileAnalyticModel, Build
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("Show all 5 resources", style: secondaryTextStyle()),
-              Icon(Icons.arrow_forward, size: 18, color: textSecondaryColorGlobal),
+              Icon(Icons.arrow_forward,
+                  size: 18, color: textSecondaryColorGlobal),
             ],
           ),
         )
@@ -79,7 +86,8 @@ Widget profileAnalyticBox(List<ProfileAnalyticModel> profileAnalyticModel, Build
   );
 }
 
-bottomSheetComponent(BuildContext context, {text, Function? onTap, IconData? icon, subtext, isSubtext = false}) {
+bottomSheetComponent(BuildContext context,
+    {text, Function? onTap, IconData? icon, subtext, isSubtext = false}) {
   return GestureDetector(
     onTap: () {
       finish(context);
@@ -89,14 +97,20 @@ bottomSheetComponent(BuildContext context, {text, Function? onTap, IconData? ico
       padding: EdgeInsets.symmetric(vertical: 12),
       child: Row(
         children: [
-          Icon(icon, color: textSecondaryColorGlobal, size: 22).visible(!isSubtext),
+          Icon(icon, color: textSecondaryColorGlobal, size: 22)
+              .visible(!isSubtext),
           SizedBox(width: 12).visible(!isSubtext),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(text, style: primaryTextStyle(color: textSecondaryColorGlobal)),
-                subtext != null ? Text(subtext, style: secondaryTextStyle(color: textSecondaryColorGlobal)) : SizedBox(),
+                Text(text,
+                    style: primaryTextStyle(color: textSecondaryColorGlobal)),
+                subtext != null
+                    ? Text(subtext,
+                        style:
+                            secondaryTextStyle(color: textSecondaryColorGlobal))
+                    : SizedBox(),
               ],
             ),
           ),
@@ -120,15 +134,20 @@ Widget profileActivityBox(BuildContext context, {isUser = false}) {
               children: [
                 Text("Activity", style: boldTextStyle()),
                 SizedBox(height: 4),
-                Text("12,224 followers", style: boldTextStyle(size: 14, color: primaryColor)),
+                Text("12,224 followers",
+                    style: boldTextStyle(size: 14, color: primaryColor)),
               ],
             ),
             Visibility(
               visible: isUser,
               child: Container(
                 padding: EdgeInsets.all(6),
-                decoration: BoxDecoration(color: context.scaffoldBackgroundColor, border: Border.all(width: 1, color: primaryColor), borderRadius: radius(16)),
-                child: Text('Start a post', style: primaryTextStyle(color: primaryColor, size: 14)),
+                decoration: BoxDecoration(
+                    color: context.scaffoldBackgroundColor,
+                    border: Border.all(width: 1, color: primaryColor),
+                    borderRadius: radius(16)),
+                child: Text('Start a post',
+                    style: primaryTextStyle(color: primaryColor, size: 14)),
               ),
             )
           ],
@@ -167,7 +186,8 @@ Widget profileActivityBox(BuildContext context, {isUser = false}) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("Show all Activity", style: secondaryTextStyle()),
-              Icon(Icons.arrow_forward, size: 18, color: textSecondaryColorGlobal),
+              Icon(Icons.arrow_forward,
+                  size: 18, color: textSecondaryColorGlobal),
             ],
           ),
         )
@@ -231,20 +251,35 @@ Widget peopleAlsoView(BuildContext context, onTap) {
           itemBuilder: (context, i) {
             return GestureDetector(
               onTap: () {
-                ViewProfileScreen(image: invitationUsers[i].imageUrl.toString(), name: invitationUsers[i].name.toString()).launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
+                ProfileScreen().launch(context);
+/*
+                ViewProfileScreen(
+                        image: invitationUsers[i].imageUrl.toString(),
+                        name: invitationUsers[i].name.toString())
+                    .launch(context,
+                        pageRouteAnimation: PageRouteAnimation.Slide);
+*/
               },
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    CircleAvatar(maxRadius: 30, backgroundColor: context.cardColor, backgroundImage: AssetImage(invitationUsers[i].imageUrl.toString())),
+                    CircleAvatar(
+                        maxRadius: 30,
+                        backgroundColor: context.cardColor,
+                        backgroundImage:
+                            AssetImage(invitationUsers[i].imageUrl.toString())),
                     SizedBox(width: 8),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(invitationUsers[i].name.toString(), style: primaryTextStyle(color: textSecondaryColorGlobal)),
-                          Text(invitationUsers[i].profession.toString(), style: secondaryTextStyle(color: textSecondaryColorGlobal)),
+                          Text(invitationUsers[i].name.toString(),
+                              style: primaryTextStyle(
+                                  color: textSecondaryColorGlobal)),
+                          Text(invitationUsers[i].profession.toString(),
+                              style: secondaryTextStyle(
+                                  color: textSecondaryColorGlobal)),
                         ],
                       ),
                     ),
@@ -257,8 +292,14 @@ Widget peopleAlsoView(BuildContext context, onTap) {
                           ? Text('Invited', style: secondaryTextStyle())
                           : Container(
                               padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: context.scaffoldBackgroundColor, border: Border.all(width: 1, color: textSecondaryColorGlobal)),
-                              child: Icon(FontAwesome.user_plus, color: textSecondaryColorGlobal, size: 18),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: context.scaffoldBackgroundColor,
+                                  border: Border.all(
+                                      width: 1,
+                                      color: textSecondaryColorGlobal)),
+                              child: Icon(FontAwesome.user_plus,
+                                  color: textSecondaryColorGlobal, size: 18),
                             ),
                     )
                   ],

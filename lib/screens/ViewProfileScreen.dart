@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:link_people/main.dart';
 import 'package:link_people/screens/AccountPreferences.dart';
 import 'package:link_people/screens/SearchScreen.dart';
 import 'package:link_people/utils/AppCommon.dart';
+import 'package:link_people/utils/AppConstants.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/text_styles.dart';
+
 import '../components/ExperienceComponent.dart';
 import '../components/ProfileBioComponent.dart';
 import '../components/ProfileBox.dart';
@@ -61,7 +64,10 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
         ],
         centerWidget: GestureDetector(
           onTap: () {
-            SearchScreen(text: widget.name ?? "Muskan Agrawal").launch(context);
+            SearchScreen(
+                    text: widget.name ??
+                        prefs.getString(SharePreferencesKey.LOGIN_FULL_NAME)!)
+                .launch(context);
           },
           child: Container(
             decoration: BoxDecoration(
@@ -75,7 +81,10 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
               children: [
                 Icon(FontAwesome.search, size: 16, color: context.iconColor),
                 SizedBox(width: 5),
-                Text(widget.name ?? "Muskan Agrawal", style: primaryTextStyle()),
+                Text(
+                    widget.name ??
+                        prefs.getString(SharePreferencesKey.LOGIN_FULL_NAME)!,
+                    style: primaryTextStyle()),
               ],
             ),
           ),

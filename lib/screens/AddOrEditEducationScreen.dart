@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:link_people/utils/AppCommon.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../components/EditEducationComponet.dart';
 import '../components/EditExperienceComponent.dart';
 import '../utils/AppColors.dart';
@@ -14,7 +15,8 @@ class AddOrEditEducationScreen extends StatefulWidget {
   AddOrEditEducationScreen({this.isExperience = false});
 
   @override
-  _AddOrEditEducationScreenState createState() => _AddOrEditEducationScreenState();
+  _AddOrEditEducationScreenState createState() =>
+      _AddOrEditEducationScreenState();
 }
 
 class _AddOrEditEducationScreenState extends State<AddOrEditEducationScreen> {
@@ -49,13 +51,16 @@ class _AddOrEditEducationScreenState extends State<AddOrEditEducationScreen> {
               },
               icon: Icon(Icons.close)),
         ),
-        body: widget.isExperience == true ? EditExperienceComponent() : EditEducationComponent(),
+        body: widget.isExperience == true
+            ? EditExperienceComponent()
+            : EditEducationComponent(),
         bottomNavigationBar: Container(
           alignment: Alignment.center,
           width: context.width(),
           height: 35,
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          decoration: BoxDecoration(color: primaryColor, borderRadius: radius(30)),
+          decoration:
+              BoxDecoration(color: primaryColor, borderRadius: radius(30)),
           child: Text("Save", style: boldTextStyle(color: Colors.white)),
         ));
   }

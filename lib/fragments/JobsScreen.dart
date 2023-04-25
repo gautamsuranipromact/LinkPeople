@@ -4,6 +4,7 @@ import 'package:link_people/main.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/decorations.dart';
+
 import '../components/JobListComponent.dart';
 import '../utils/Extensions/text_styles.dart';
 
@@ -68,8 +69,13 @@ class _JobsScreenState extends State<JobsScreen> {
                               height: 33,
                               width: context.width(),
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(color: context.scaffoldBackgroundColor, borderRadius: radius(20), border: Border.all(width: 0.8)),
-                              child: Text('Show all', style: boldTextStyle(color: textSecondaryColorGlobal)),
+                              decoration: BoxDecoration(
+                                  color: context.scaffoldBackgroundColor,
+                                  borderRadius: radius(20),
+                                  border: Border.all(width: 0.8)),
+                              child: Text('Show all',
+                                  style: boldTextStyle(
+                                      color: textSecondaryColorGlobal)),
                             ),
                           )
                         ],

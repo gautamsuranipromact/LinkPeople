@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../utils/AppColors.dart';
 import '../utils/AppCommon.dart';
 import '../utils/Extensions/AppTextField.dart';
@@ -50,7 +51,9 @@ class _EditEducationComponentState extends State<EditEducationComponent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Notify network', style: boldTextStyle()),
-                    Text('Turn on to notify your network about job and education changes. Updates can take up to 2 hours.', style: secondaryTextStyle()),
+                    Text(
+                        'Turn on to notify your network about job and education changes. Updates can take up to 2 hours.',
+                        style: secondaryTextStyle()),
                   ],
                 ),
               ),
@@ -122,7 +125,8 @@ class _EditEducationComponentState extends State<EditEducationComponent> {
                 },
                 showCursor: false,
                 enabled: true,
-                decoration: inputDecoration(context, label: "End date(or expected)"),
+                decoration:
+                    inputDecoration(context, label: "End date(or expected)"),
               ),
               SizedBox(height: 16),
               AppTextField(
@@ -138,7 +142,8 @@ class _EditEducationComponentState extends State<EditEducationComponent> {
                 textFieldType: TextFieldType.EMAIL,
                 keyboardType: TextInputType.emailAddress,
                 errorThisFieldRequired: errorThisFieldRequired,
-                decoration: inputDecoration(context, label: "Activities and societies"),
+                decoration:
+                    inputDecoration(context, label: "Activities and societies"),
               ),
               SizedBox(height: 8),
               AppTextField(
@@ -151,18 +156,23 @@ class _EditEducationComponentState extends State<EditEducationComponent> {
               SizedBox(height: 16),
               Text('Media', style: boldTextStyle()),
               SizedBox(height: 12),
-              Text('Add or link to external documents, photos, sites,videos and presentations.Learn more\n about media file type supported', style: primaryTextStyle()),
+              Text(
+                  'Add or link to external documents, photos, sites,videos and presentations.Learn more\n about media file type supported',
+                  style: primaryTextStyle()),
               SizedBox(height: 16),
               Container(
                 height: 34,
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(border: Border.all(color: primaryColor, width: 0.8), borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(
+                    border: Border.all(color: primaryColor, width: 0.8),
+                    borderRadius: BorderRadius.circular(20)),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.add, size: 20, color: primaryColor),
-                    Text('Add media', style: primaryTextStyle(color: primaryColor)),
+                    Text('Add media',
+                        style: primaryTextStyle(color: primaryColor)),
                   ],
                 ),
               ),

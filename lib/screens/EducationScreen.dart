@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:link_people/screens/AddOrEditEducationScreen.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../components/EducationComponent.dart';
 import '../components/ExperienceComponent.dart';
 import '../utils/AppCommon.dart';
@@ -36,7 +37,9 @@ class _EducationScreenState extends State<EducationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: context.dividerColor,
-        appBar: appBarCommon(context, widget.isExperience == true ? "Experience" : "Education", () {
+        appBar: appBarCommon(
+            context, widget.isExperience == true ? "Experience" : "Education",
+            () {
           finish(context);
         }, action: [
           IconButton(
@@ -48,6 +51,8 @@ class _EducationScreenState extends State<EducationScreen> {
         body: Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             color: context.scaffoldBackgroundColor,
-            child: widget.isExperience == true ? experienceComponent(context, isEdit: true) : educationComponent(isEdit: true)));
+            child: widget.isExperience == true
+                ? experienceComponent(context, isEdit: true)
+                : educationComponent(isEdit: true)));
   }
 }

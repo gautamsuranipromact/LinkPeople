@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
-import 'package:link_people/utils/Extensions/text_styles.dart';
 import 'package:link_people/utils/Extensions/string_extensions.dart';
+import 'package:link_people/utils/Extensions/text_styles.dart';
+
 import '../../main.dart';
 import '../AppColors.dart';
 
@@ -22,7 +23,8 @@ void hideKeyboard(context) => FocusScope.of(context).requestFocus(FocusNode());
 /// Custom scroll behaviour widget
 class SBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
   }
 }
@@ -37,7 +39,11 @@ extension DoubleExtensions on double? {
   double validate({double value = 0.0}) => this ?? value;
 }
 
-toast(String? value, {ToastGravity? gravity, length = Toast.LENGTH_SHORT, Color? bgColor, Color? textColor}) {
+toast(String? value,
+    {ToastGravity? gravity,
+    length = Toast.LENGTH_SHORT,
+    Color? bgColor,
+    Color? textColor}) {
   Fluttertoast.showToast(
     msg: value.validate(),
     toastLength: length,
@@ -49,12 +55,13 @@ toast(String? value, {ToastGravity? gravity, length = Toast.LENGTH_SHORT, Color?
   );
 }
 
-InputDecoration inputDecoration(BuildContext context, {String? label, Widget? prefixIcon, helperText}) {
+InputDecoration inputDecoration(BuildContext context,
+    {String? label, Widget? prefixIcon, helperText}) {
   return InputDecoration(
       alignLabelWithHint: true,
       labelText: label ?? "Sample Text",
       labelStyle: secondaryTextStyle(),
-      iconColor:textSecondaryColorGlobal ,
+      iconColor: textSecondaryColorGlobal,
       helperText: helperText,
       helperStyle: secondaryTextStyle(size: 12));
 }
@@ -81,7 +88,7 @@ Widget dotIndicator(list, i, {bool isPersonal = false}) {
                         ? Colors.black
                         : Colors.white,
                 shape: BoxShape.circle,
-                border: Border.all(width: 1,color: grey2)),
+                border: Border.all(width: 1, color: grey2)),
           );
         },
       ),

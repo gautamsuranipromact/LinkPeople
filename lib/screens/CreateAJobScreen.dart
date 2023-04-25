@@ -4,6 +4,7 @@ import 'package:link_people/utils/AppColors.dart';
 import 'package:link_people/utils/AppCommon.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:styled_text/styled_text.dart';
+
 import '../utils/Extensions/Commons.dart';
 import '../utils/Extensions/text_styles.dart';
 
@@ -50,13 +51,19 @@ class _CreateAJobScreenState extends State<CreateAJobScreen> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Text('Find a great hire, fast', style: primaryTextStyle(size: 14)),
+            child: Text('Find a great hire, fast',
+                style: primaryTextStyle(size: 14)),
           ),
-          component("Job title", 'Add job title', AntDesign.pluscircleo, () {}, primaryColor),
-          component("Workplace type", 'on-site', Feather.edit_2, () {}, textPrimaryColorGlobal),
-          component("Job Location", 'Childersburg,United States', Feather.edit_2, () {}, textPrimaryColorGlobal),
-          component("Company", 'Add company', AntDesign.pluscircleo, () {}, primaryColor),
-          component("Job type", 'Full-time', Feather.edit_2, () {}, textPrimaryColorGlobal),
+          component("Job title", 'Add job title', AntDesign.pluscircleo, () {},
+              primaryColor),
+          component("Workplace type", 'on-site', Feather.edit_2, () {},
+              textPrimaryColorGlobal),
+          component("Job Location", 'Childersburg,United States',
+              Feather.edit_2, () {}, textPrimaryColorGlobal),
+          component("Company", 'Add company', AntDesign.pluscircleo, () {},
+              primaryColor),
+          component("Job type", 'Full-time', Feather.edit_2, () {},
+              textPrimaryColorGlobal),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Column(
@@ -70,11 +77,19 @@ class _CreateAJobScreenState extends State<CreateAJobScreen> {
                   decoration: InputDecoration(
                       alignLabelWithHint: true,
                       hintMaxLines: 2,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(6), borderSide: BorderSide(color: textSecondaryColorGlobal)),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(6), borderSide: BorderSide(color: textSecondaryColorGlobal)),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide:
+                              BorderSide(color: textSecondaryColorGlobal)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide:
+                              BorderSide(color: textSecondaryColorGlobal)),
                       labelStyle: secondaryTextStyle(),
-                      hintText: "Add skills and requirements you're looking for."),
+                      hintText:
+                          "Add skills and requirements you're looking for."),
                 ),
               ],
             ),
@@ -89,10 +104,14 @@ class _CreateAJobScreenState extends State<CreateAJobScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Screening Questions", style: primaryTextStyle()),
-                    Text("Complete all the fields above to add question.", style: secondaryTextStyle()),
+                    Text("Complete all the fields above to add question.",
+                        style: secondaryTextStyle()),
                   ],
                 ),
-                IconButton(onPressed: () {}, icon: Icon(AntDesign.pluscircle, color: textSecondaryColorGlobal.withOpacity(0.3)))
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(AntDesign.pluscircle,
+                        color: textSecondaryColorGlobal.withOpacity(0.3)))
               ],
             ),
           )
@@ -105,9 +124,15 @@ class _CreateAJobScreenState extends State<CreateAJobScreen> {
           Container(
             margin: EdgeInsets.all(16),
             child: StyledText(
-              text: "By continuing, you agree with LinkPeople's" + "<b>Jobs Terms and Conditions</b>" + "including our" + "<b>policies prohibiting discriminatory job posts.</b>",
+              text: "By continuing, you agree with LinkPeople's" +
+                  "<b>Jobs Terms and Conditions</b>" +
+                  "including our" +
+                  "<b>policies prohibiting discriminatory job posts.</b>",
               style: secondaryTextStyle(),
-              tags: {'b': StyledTextTag(style: boldTextStyle(color: primaryColor, size: 14))},
+              tags: {
+                'b': StyledTextTag(
+                    style: boldTextStyle(color: primaryColor, size: 14))
+              },
             ),
           ),
         ],
@@ -127,7 +152,8 @@ class _CreateAJobScreenState extends State<CreateAJobScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title + "*", style: primaryTextStyle()),
-                  Text(subtitle, style: secondaryTextStyle(color: color, size: 12)),
+                  Text(subtitle,
+                      style: secondaryTextStyle(color: color, size: 12)),
                 ],
               ),
               IconButton(

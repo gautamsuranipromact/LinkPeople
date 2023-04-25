@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:link_people/utils/Extensions/int_extensions.dart';
+
 import 'Colors.dart';
 import 'Constants.dart';
 
@@ -31,24 +32,28 @@ extension GetDurationUtils on Duration {
   Future<void> get delay => Future.delayed(this);
 }
 
-Route<T> buildPageRoute<T>(Widget child, PageRouteAnimation? pageRouteAnimation, Duration? duration) {
+Route<T> buildPageRoute<T>(
+    Widget child, PageRouteAnimation? pageRouteAnimation, Duration? duration) {
   if (pageRouteAnimation != null) {
     if (pageRouteAnimation == PageRouteAnimation.Fade) {
       return PageRouteBuilder(
         pageBuilder: (c, a1, a2) => child,
-        transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+        transitionsBuilder: (c, anim, a2, child) =>
+            FadeTransition(opacity: anim, child: child),
         transitionDuration: duration ?? 1000.milliseconds,
       );
     } else if (pageRouteAnimation == PageRouteAnimation.Rotate) {
       return PageRouteBuilder(
         pageBuilder: (c, a1, a2) => child,
-        transitionsBuilder: (c, anim, a2, child) => RotationTransition(child: child, turns: ReverseAnimation(anim)),
+        transitionsBuilder: (c, anim, a2, child) =>
+            RotationTransition(child: child, turns: ReverseAnimation(anim)),
         transitionDuration: duration ?? 700.milliseconds,
       );
     } else if (pageRouteAnimation == PageRouteAnimation.Scale) {
       return PageRouteBuilder(
         pageBuilder: (c, a1, a2) => child,
-        transitionsBuilder: (c, anim, a2, child) => ScaleTransition(child: child, scale: anim),
+        transitionsBuilder: (c, anim, a2, child) =>
+            ScaleTransition(child: child, scale: anim),
         transitionDuration: duration ?? 700.milliseconds,
       );
     } else if (pageRouteAnimation == PageRouteAnimation.Slide) {
@@ -56,7 +61,8 @@ Route<T> buildPageRoute<T>(Widget child, PageRouteAnimation? pageRouteAnimation,
         pageBuilder: (c, a1, a2) => child,
         transitionsBuilder: (c, anim, a2, child) => SlideTransition(
           child: child,
-          position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(anim),
+          position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0))
+              .animate(anim),
         ),
         transitionDuration: duration ?? 500.milliseconds,
       );
@@ -65,7 +71,8 @@ Route<T> buildPageRoute<T>(Widget child, PageRouteAnimation? pageRouteAnimation,
         pageBuilder: (c, a1, a2) => child,
         transitionsBuilder: (c, anim, a2, child) => SlideTransition(
           child: child,
-          position: Tween(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0)).animate(anim),
+          position: Tween(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0))
+              .animate(anim),
         ),
         transitionDuration: duration ?? 500.milliseconds,
       );
@@ -95,7 +102,9 @@ Decoration boxDecorationDefaultWidget({
   DecorationImage? image,
 }) {
   return BoxDecoration(
-    borderRadius: (shape != null && shape == BoxShape.circle) ? null : (borderRadius ?? radiusWidget()),
+    borderRadius: (shape != null && shape == BoxShape.circle)
+        ? null
+        : (borderRadius ?? radiusWidget()),
     boxShadow: boxShadow ?? defaultBoxShadow(),
     color: color ?? Colors.white,
     gradient: gradient,
@@ -118,7 +127,8 @@ Decoration boxDecorationWithRoundedCornersWidget({
 }) {
   return BoxDecoration(
     color: backgroundColor,
-    borderRadius: boxShape == BoxShape.circle ? null : (borderRadius ?? radiusWidget()),
+    borderRadius:
+        boxShape == BoxShape.circle ? null : (borderRadius ?? radiusWidget()),
     gradient: gradient,
     border: border,
     boxShadow: boxShadow,
@@ -160,14 +170,14 @@ Decoration boxDecorationWithShadowWidget({
 
 /// rounded box decoration with shadow
 Decoration boxDecorationRoundedWithShadowWidget(
-    int radiusAll, {
-      Color backgroundColor = whiteColor,
-      Color? shadowColor,
-      double? blurRadius,
-      double? spreadRadius,
-      Offset offset = const Offset(0.0, 0.0),
-      LinearGradient? gradient,
-    }) {
+  int radiusAll, {
+  Color backgroundColor = whiteColor,
+  Color? shadowColor,
+  double? blurRadius,
+  double? spreadRadius,
+  Offset offset = const Offset(0.0, 0.0),
+  LinearGradient? gradient,
+}) {
   return BoxDecoration(
     boxShadow: defaultBoxShadow(
       shadowColor: shadowColor ?? shadowColorGlobal,

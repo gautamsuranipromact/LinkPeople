@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../utils/AppColors.dart';
 import '../utils/AppCommon.dart';
 import '../utils/Extensions/Commons.dart';
@@ -39,10 +40,13 @@ class _PagesScreenState extends State<PagesScreen> {
               children: [
                 Container(
                   padding: EdgeInsets.all(6),
-                  decoration: BoxDecoration(color: primaryColor.withOpacity(0.3), shape: BoxShape.circle),
+                  decoration: BoxDecoration(
+                      color: primaryColor.withOpacity(0.3),
+                      shape: BoxShape.circle),
                   child: Container(
                     padding: EdgeInsets.all(2),
-                    decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                        color: Colors.white, shape: BoxShape.circle),
                   ),
                 ),
                 SizedBox(width: 6),
@@ -54,7 +58,8 @@ class _PagesScreenState extends State<PagesScreen> {
                     ],
                   ),
                 ),
-                Text('Following', style: primaryTextStyle(color: textSecondaryColorGlobal)),
+                Text('Following',
+                    style: primaryTextStyle(color: textSecondaryColorGlobal)),
               ],
             );
           }),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+
 import '../utils/AppColors.dart';
 import '../utils/AppCommon.dart';
 import '../utils/Extensions/Commons.dart';
@@ -76,8 +77,12 @@ class _CreateAPollScreenState extends State<CreateAPollScreen> {
                   height: 30,
                   width: 110,
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(color: context.scaffoldBackgroundColor, border: Border.all(width: 0.8, color: primaryColor), borderRadius: radius(20)),
-                  child: Text('+ Add Option', style: primaryTextStyle(color: primaryColor)),
+                  decoration: BoxDecoration(
+                      color: context.scaffoldBackgroundColor,
+                      border: Border.all(width: 0.8, color: primaryColor),
+                      borderRadius: radius(20)),
+                  child: Text('+ Add Option',
+                      style: primaryTextStyle(color: primaryColor)),
                 ),
               ),
             ),
@@ -87,7 +92,9 @@ class _CreateAPollScreenState extends State<CreateAPollScreen> {
             GestureDetector(
               onTap: () {
                 showModalBottomSheet(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(25))),
                     context: context,
                     builder: (c) {
                       return Container(
@@ -100,10 +107,16 @@ class _CreateAPollScreenState extends State<CreateAPollScreen> {
                           magnification: 1.5,
                           selectionOverlay: Container(
                             alignment: Alignment.center,
-                            decoration: BoxDecoration(border: Border.all(width: 0.5)),
+                            decoration:
+                                BoxDecoration(border: Border.all(width: 0.5)),
                           ),
-                          scrollController: FixedExtentScrollController(initialItem: 2),
-                          children: List.generate(data.length, (index) => Text(data[index],style: primaryTextStyle()),),
+                          scrollController:
+                              FixedExtentScrollController(initialItem: 2),
+                          children: List.generate(
+                            data.length,
+                            (index) =>
+                                Text(data[index], style: primaryTextStyle()),
+                          ),
                           onSelectedItemChanged: (value) {
                             setState(() {
                               selectedValue = value;
@@ -117,15 +130,24 @@ class _CreateAPollScreenState extends State<CreateAPollScreen> {
                 height: 40,
                 width: context.width(),
                 padding: EdgeInsets.all(6),
-                decoration: BoxDecoration(border: Border.all(width: 0.8, color: textSecondaryColorGlobal), borderRadius: radius(6)),
+                decoration: BoxDecoration(
+                    border:
+                        Border.all(width: 0.8, color: textSecondaryColorGlobal),
+                    borderRadius: radius(6)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text(data[selectedValue], style: secondaryTextStyle()), Icon(Ionicons.caret_down_sharp, color: textSecondaryColorGlobal, size: 18)],
+                  children: [
+                    Text(data[selectedValue], style: secondaryTextStyle()),
+                    Icon(Ionicons.caret_down_sharp,
+                        color: textSecondaryColorGlobal, size: 18)
+                  ],
                 ),
               ),
             ),
             SizedBox(height: 40),
-            Text("We don't allow requests for political opinions, medical information or other sensitive data.", style: primaryTextStyle()),
+            Text(
+                "We don't allow requests for political opinions, medical information or other sensitive data.",
+                style: primaryTextStyle()),
           ],
         ),
       ),
@@ -146,8 +168,12 @@ class _CreateAPollScreenState extends State<CreateAPollScreen> {
               alignLabelWithHint: true,
               hintMaxLines: 2,
               contentPadding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(6), borderSide: BorderSide(color: textSecondaryColorGlobal)),
-              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(6), borderSide: BorderSide(color: textSecondaryColorGlobal)),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: BorderSide(color: textSecondaryColorGlobal)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: BorderSide(color: textSecondaryColorGlobal)),
               labelStyle: secondaryTextStyle(),
               hintText: hintText),
         ),

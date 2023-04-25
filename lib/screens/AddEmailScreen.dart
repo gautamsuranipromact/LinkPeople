@@ -15,23 +15,26 @@ import 'SetPasswordScreen.dart';
 
 class AddEmailScreen extends StatefulWidget {
   final bool? isSignIn;
+  TextEditingController? firstNameCont = TextEditingController();
+  TextEditingController? lastNameCont = TextEditingController();
 
-  AddEmailScreen({this.isSignIn = false});
+  AddEmailScreen(
+      {this.firstNameCont, this.lastNameCont, this.isSignIn = false});
 
   @override
   _AddEmailScreenState createState() => _AddEmailScreenState();
 }
 
 class _AddEmailScreenState extends State<AddEmailScreen> {
+  TextEditingController emailCont = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     init();
   }
 
-  void init() async {
-    //
-  }
+  void init() async {}
 
   @override
   void setState(fn) {
@@ -45,7 +48,12 @@ class _AddEmailScreenState extends State<AddEmailScreen> {
           backgroundColor: context.scaffoldBackgroundColor,
           elevation: 0.0,
           automaticallyImplyLeading: false,
-          title: Padding(padding: EdgeInsets.only(left: 0, top: 16), child: appStore.isDarkMode ? Image.asset(ic_logo_light, height: 15, fit: BoxFit.cover) : Image.asset(ic_logo, height: 15, fit: BoxFit.cover),)),
+          title: Padding(
+            padding: EdgeInsets.only(left: 0, top: 16),
+            child: appStore.isDarkMode
+                ? Image.asset(ic_logo_light, height: 15, fit: BoxFit.cover)
+                : Image.asset(ic_logo, height: 15, fit: BoxFit.cover),
+          )),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -55,7 +63,11 @@ class _AddEmailScreenState extends State<AddEmailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.isSignIn == true ? "Join LinkPeople" : "Add your email or phone", style: primaryTextStyle(size: 30)),
+                Text(
+                    widget.isSignIn == true
+                        ? "Join LinkPeople"
+                        : "Add your email or phone",
+                    style: primaryTextStyle(size: 30)),
                 Visibility(
                   visible: widget.isSignIn == true,
                   child: Column(
@@ -66,18 +78,27 @@ class _AddEmailScreenState extends State<AddEmailScreen> {
                           onTap: () {
                             finish(context);
                           },
-                          child: Text("Or sign in", style: boldTextStyle(size: 14, color: primaryColor))),
+                          child: Text("Or sign in",
+                              style: boldTextStyle(
+                                  size: 14, color: primaryColor))),
                     ],
                   ),
                 ),
                 SizedBox(height: widget.isSignIn == true ? 20 : 30),
-                TextFormField(decoration: InputDecoration(labelText: "Email or Phone*", labelStyle: secondaryTextStyle(), focusedBorder: UnderlineInputBorder())),
+                TextFormField(
+                    controller: emailCont,
+                    decoration: InputDecoration(
+                        labelText: "Email*",
+                        labelStyle: secondaryTextStyle(),
+                        focusedBorder: UnderlineInputBorder())),
                 SizedBox(height: 30),
               ],
             ),
           ),
           appButton(context, "Continue", onTap: () {
-            SetPasswordScreen().launch(context);
+            SetPasswordScreen(
+                    widget.firstNameCont!, widget.lastNameCont!, emailCont)
+                .launch(context);
           }),
           12.height,
           Row(
@@ -94,12 +115,17 @@ class _AddEmailScreenState extends State<AddEmailScreen> {
             width: context.width(),
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: boxDecorationWithShadowWidget(
-                backgroundColor: context.scaffoldBackgroundColor, borderRadius: radius(30), blurRadius: 0, spreadRadius: 0, border: Border.all(width: 1, color: textSecondaryColorGlobal)),
+                backgroundColor: context.scaffoldBackgroundColor,
+                borderRadius: radius(30),
+                blurRadius: 0,
+                spreadRadius: 0,
+                border: Border.all(width: 1, color: textSecondaryColorGlobal)),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(ic_google, height: 25, width: 25, fit: BoxFit.cover),
+                Image.asset(ic_google,
+                    height: 25, width: 25, fit: BoxFit.cover),
                 8.width,
                 Text('Continue with Google', style: boldTextStyle()),
               ],

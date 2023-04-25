@@ -7,14 +7,15 @@ import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/decorations.dart';
-import '../models/TimeLinePostModel.dart';
+
+import '../models/post_model.dart';
 import '../utils/AppDataProvider.dart';
 import '../utils/AppImages.dart';
 import '../utils/Extensions/AppTextField.dart';
 import '../utils/Extensions/text_styles.dart';
 
 class CommentScreen extends StatefulWidget {
-  final TimelinePost post;
+  final PostModel post;
 
   CommentScreen(this.post);
 
@@ -53,7 +54,9 @@ class _CommentScreenState extends State<CommentScreen> {
               children: [
                 TimeLinePostBox(widget.post, isShare: true),
                 SizedBox(height: 10),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), child: Text('Reaction', style: boldTextStyle())),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: Text('Reaction', style: boldTextStyle())),
                 SizedBox(
                   height: 50,
                   child: ListView.builder(
@@ -69,7 +72,9 @@ class _CommentScreenState extends State<CommentScreen> {
                               Container(
                                 height: 50,
                                 width: 50,
-                                decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle),
                                 child: Image.asset(
                                   invitationUsers[i].imageUrl.toString(),
                                   fit: BoxFit.cover,
@@ -88,9 +93,11 @@ class _CommentScreenState extends State<CommentScreen> {
                       SizedBox(height: 20),
                       Row(
                         children: [
-                          Expanded(child: Text('Comments', style: boldTextStyle())),
+                          Expanded(
+                              child: Text('Comments', style: boldTextStyle())),
                           Text('Most relevant', style: secondaryTextStyle()),
-                          Icon(MaterialIcons.expand_less, color: textSecondaryColorGlobal),
+                          Icon(MaterialIcons.expand_less,
+                              color: textSecondaryColorGlobal),
                         ],
                       ),
                       ListView.builder(
@@ -103,26 +110,54 @@ class _CommentScreenState extends State<CommentScreen> {
                               padding: EdgeInsets.symmetric(vertical: 8),
                               child: Row(
                                 children: [
-                                  ClipRRect(borderRadius: radius(25), child: Image.asset(invitationUsers[i].imageUrl.toString(), height: 50, width: 50, fit: BoxFit.cover)),
+                                  ClipRRect(
+                                      borderRadius: radius(25),
+                                      child: Image.asset(
+                                          invitationUsers[i]
+                                              .imageUrl
+                                              .toString(),
+                                          height: 50,
+                                          width: 50,
+                                          fit: BoxFit.cover)),
                                   SizedBox(width: 8),
                                   Expanded(
                                     child: Container(
-                                      decoration: BoxDecoration(borderRadius: radius(8), color: context.dividerColor),
+                                      decoration: BoxDecoration(
+                                          borderRadius: radius(8),
+                                          color: context.dividerColor),
                                       padding: EdgeInsets.all(12),
                                       width: context.width(),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(invitationUsers[i].name.toString(), style: boldTextStyle()),
-                                                  Text(invitationUsers[i].profession.toString(), style: primaryTextStyle(size: 12)),
-                                                  Text(invitationUsers[i].time.toString(), style: secondaryTextStyle(size: 12)),
+                                                  Text(
+                                                      invitationUsers[i]
+                                                          .name
+                                                          .toString(),
+                                                      style: boldTextStyle()),
+                                                  Text(
+                                                      invitationUsers[i]
+                                                          .profession
+                                                          .toString(),
+                                                      style: primaryTextStyle(
+                                                          size: 12)),
+                                                  Text(
+                                                      invitationUsers[i]
+                                                          .time
+                                                          .toString(),
+                                                      style: secondaryTextStyle(
+                                                          size: 12)),
                                                 ],
                                               ),
                                               PopupMenuButton(
@@ -130,9 +165,13 @@ class _CommentScreenState extends State<CommentScreen> {
                                                   PopupMenuItem(
                                                     child: Row(
                                                       children: [
-                                                        Icon(Entypo.share, color: textSecondaryColorGlobal),
+                                                        Icon(Entypo.share,
+                                                            color:
+                                                                textSecondaryColorGlobal),
                                                         SizedBox(width: 4),
-                                                        Text("Share via..", style: secondaryTextStyle()),
+                                                        Text("Share via..",
+                                                            style:
+                                                                secondaryTextStyle()),
                                                       ],
                                                     ),
                                                     value: 1,
@@ -140,9 +179,15 @@ class _CommentScreenState extends State<CommentScreen> {
                                                   PopupMenuItem(
                                                     child: Row(
                                                       children: [
-                                                        Icon(MaterialCommunityIcons.flag_variant, color: textSecondaryColorGlobal),
+                                                        Icon(
+                                                            MaterialCommunityIcons
+                                                                .flag_variant,
+                                                            color:
+                                                                textSecondaryColorGlobal),
                                                         SizedBox(width: 4),
-                                                        Text("Report comment", style: secondaryTextStyle()),
+                                                        Text("Report comment",
+                                                            style:
+                                                                secondaryTextStyle()),
                                                       ],
                                                     ),
                                                     value: 2,
@@ -152,7 +197,8 @@ class _CommentScreenState extends State<CommentScreen> {
                                             ],
                                           ),
                                           SizedBox(height: 4),
-                                          Text('Is this part time?', style: primaryTextStyle()),
+                                          Text('Is this part time?',
+                                              style: primaryTextStyle()),
                                         ],
                                       ),
                                     ),
@@ -175,7 +221,8 @@ class _CommentScreenState extends State<CommentScreen> {
             color: context.cardColor,
             child: Row(
               children: [
-                CircleAvatar(backgroundImage: AssetImage(ic_profile), maxRadius: 15),
+                CircleAvatar(
+                    backgroundImage: AssetImage(ic_profile), maxRadius: 15),
                 Expanded(
                   child: AppTextField(
                     keyboardType: TextInputType.multiline,
@@ -183,7 +230,8 @@ class _CommentScreenState extends State<CommentScreen> {
                     textStyle: primaryTextStyle(),
                     cursorHeight: 20,
                     cursorColor: Colors.black,
-                    decoration: outlineInputDecoration(context, label: "Leave your thoughts here..."),
+                    decoration: outlineInputDecoration(context,
+                        label: "Leave your thoughts here..."),
                   ),
                 ),
                 Text('@', style: boldTextStyle()),

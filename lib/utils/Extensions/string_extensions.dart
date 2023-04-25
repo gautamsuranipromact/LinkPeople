@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:link_people/utils/Extensions/pattern.dart';
 
 import 'Commons.dart';
@@ -16,7 +17,10 @@ extension StringExtension on String? {
   bool validateURL() => hasMatch(this, Patterns.url);
 
   /// Returns true if given String is null or isEmpty
-  bool get isEmptyOrNull => this == null || (this != null && this!.isEmpty) || (this != null && this! == 'null');
+  bool get isEmptyOrNull =>
+      this == null ||
+      (this != null && this!.isEmpty) ||
+      (this != null && this! == 'null');
 
   // Check null string, return given value if null
   String validate({String value = ''}) {
@@ -28,9 +32,9 @@ extension StringExtension on String? {
   }
 
   /// Capitalize given String
-  String capitalizeFirstLetter() => (validate().length >= 1) ? (this!.substring(0, 1).toUpperCase() + this!.substring(1).toLowerCase()) : validate();
-
-
+  String capitalizeFirstLetter() => (validate().length >= 1)
+      ? (this!.substring(0, 1).toUpperCase() + this!.substring(1).toLowerCase())
+      : validate();
 
   /// Return true if given String is Digit
   bool isDigit() {
@@ -134,8 +138,10 @@ extension StringExtension on String? {
     if (trimWhitespaces) url = url.trim();
 
     for (var exp in [
-      RegExp(r"^https:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([_\-a-zA-Z0-9]{11}).*$"),
-      RegExp(r"^https:\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11}).*$"),
+      RegExp(
+          r"^https:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([_\-a-zA-Z0-9]{11}).*$"),
+      RegExp(
+          r"^https:\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11}).*$"),
       RegExp(r"^https:\/\/youtu\.be\/([_\-a-zA-Z0-9]{11}).*$")
     ]) {
       Match? match = exp.firstMatch(url);

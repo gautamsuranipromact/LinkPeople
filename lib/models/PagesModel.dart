@@ -5,5 +5,10 @@ class PagesModel {
   String? coverPhoto;
   bool? isFollow;
 
-  PagesModel({this.name, this.followers, this.image, this.coverPhoto, this.isFollow = false});
+  PagesModel(
+      {this.name,
+      this.followers,
+      this.image,
+      this.coverPhoto,
+      this.isFollow = false});
 }

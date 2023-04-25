@@ -45,13 +45,17 @@ class _JobAlertScreenState extends State<JobAlertScreen> {
           SizedBox(height: 8),
           Text('Get notified about new jobs', style: boldTextStyle()),
           SizedBox(height: 8),
-          Text("Once you create job alerts, you'll find them here.", style: primaryTextStyle()),
+          Text("Once you create job alerts, you'll find them here.",
+              style: primaryTextStyle()),
           SizedBox(height: 8),
           Container(
             height: 30,
             width: 130,
             alignment: Alignment.center,
-            decoration: BoxDecoration(color: context.scaffoldBackgroundColor, border: Border.all(width: 0.8, color: textSecondaryColorGlobal), borderRadius: radius(20)),
+            decoration: BoxDecoration(
+                color: context.scaffoldBackgroundColor,
+                border: Border.all(width: 0.8, color: textSecondaryColorGlobal),
+                borderRadius: radius(20)),
             child: Text('Search for jobs', style: secondaryTextStyle()),
           ),
           SizedBox(height: 50),
@@ -68,9 +72,13 @@ class _JobAlertScreenState extends State<JobAlertScreen> {
                       Text('Job recommendations', style: boldTextStyle()),
                       Row(
                         children: [
-                          Expanded(child: Text('Based on your job alerts, activity, and profile.', style: secondaryTextStyle())),
+                          Expanded(
+                              child: Text(
+                                  'Based on your job alerts, activity, and profile.',
+                                  style: secondaryTextStyle())),
                           SizedBox(width: 8),
-                          Text(isAlert == true ? "On" : "Off", style: secondaryTextStyle()),
+                          Text(isAlert == true ? "On" : "Off",
+                              style: secondaryTextStyle()),
                         ],
                       ),
                     ],
