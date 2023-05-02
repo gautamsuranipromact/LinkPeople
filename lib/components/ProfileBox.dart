@@ -78,7 +78,7 @@ class ProfileBox extends StatelessWidget {
                                     bottomSheetComponent(context,
                                         text: "upload from Photos",
                                         subtext:
-                                            "On LinkPeople, we require members to use their real identities, so upload a photo of yourself",
+                                            "On Find My CoFounder, we require members to use their real identities, so upload a photo of yourself",
                                         onTap: () {},
                                         icon: Ionicons.images_outline,
                                         isSubtext: false),

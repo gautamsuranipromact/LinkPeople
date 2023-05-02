@@ -89,7 +89,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                   Text.rich(
                     TextSpan(
                       text:
-                          "By clicking Agree & join, you agree to the LinkPeople ",
+                          "By clicking Agree & join, you agree to the Find My CoFounder ",
                       style: TextStyle(
                           color: Colors.grey, fontSize: 14, letterSpacing: 0),
                       children: <InlineSpan>[

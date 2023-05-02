@@ -179,7 +179,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     SizedBox(height: 30),
                     StyledText(
                       text: "By continuing, you agree with " +
-                          "<b>LinkPeople's policy</b>",
+                          "<b>Find My CoFounder's policy</b>",
                       style: secondaryTextStyle(size: 12),
                       tags: {
                         'b': StyledTextTag(
@@ -188,7 +188,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     ),
                     SizedBox(height: 20),
                     StyledText(
-                      text: "Make the most of LinkPeople Events." +
+                      text: "Make the most of Find My CoFounder Events." +
                           "<b>Learn More</b>",
                       style: secondaryTextStyle(size: 12),
                       tags: {

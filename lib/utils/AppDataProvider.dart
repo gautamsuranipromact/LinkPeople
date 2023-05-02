@@ -572,7 +572,7 @@ List<AnswerModel> ansList = [
       text:
           "From a very early age I've been a problem solver, 1 was that hid who would take apart anything so I could see how it worked-and then try to put it back together...",
       name: "Sample answer 1",
-      subtext: "By Jenny Foss, Career Strategist at LinkPeople-corp ",
+      subtext: "By Jenny Foss, Career Strategist at Find My CoFounder-corp ",
       view: "3,904,815 views Includes video"),
   AnswerModel(
       text:

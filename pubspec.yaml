@@ -45,12 +45,15 @@ dependencies:
   onesignal_flutter: 3.4.1
 
   #Firebase
-  firebase_database: ^10.1.0
   firebase_core: ^2.9.0
   firebase_auth: ^4.4.2
+  cloud_firestore: ^4.5.3
   firebase_storage: ^11.1.1
 
   url_launcher: ^6.1.10
+  newsfeed_multiple_imageview: ^1.0.1
+  video_player: ^2.6.1
+  event_bus_plus: ^0.6.1
 
 
 dev_dependencies:

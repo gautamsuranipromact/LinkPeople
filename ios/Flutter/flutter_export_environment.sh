@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=C:\Users\admin\Downloads\flutter_windows_3.7.9-stable\flutter"
-export "FLUTTER_APPLICATION_PATH=C:\Users\admin\Projects\LinkPeople\LinkPeople"
+export "FLUTTER_APPLICATION_PATH=C:\Users\admin\Projects\Find My CoFounder\Find My CoFounder"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"

@@ -30,7 +30,7 @@ class _NotificationViewSettingState extends State<NotificationViewSetting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarCommon(context, "On LinkPeople", () {
+      appBar: appBarCommon(context, "On Find My CoFounder", () {
         finish(context);
       }),
       body: Column(
@@ -39,7 +39,7 @@ class _NotificationViewSettingState extends State<NotificationViewSetting> {
           SizedBox(height: 8),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Text('Received via LinkPeople web and app',
+            child: Text('Received via Find My CoFounder web and app',
                 style: secondaryTextStyle()),
           ),
           Divider(thickness: 1),

@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:link_people/main.dart';
+import 'package:link_people/screens/DashboardScreen.dart';
+import 'package:link_people/utils/AppConstants.dart';
 import 'package:link_people/utils/AppImages.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 
@@ -20,11 +23,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void init() async {
     Timer(Duration(seconds: 2), () {
-      //if (prefs.getString(SharePreferencesKey.USERID)! == "") {
-      WalkThroughScreen().launch(context, isNewTask: true);
-      /*} else {
-        DashboardScreen().launch(context, isNewTask: true);
-      }*/
+      String? userId = prefs.getString(SharePreferencesKey.USERID);
+      if (userId != null) {
+        if (userId.isNotEmpty) {
+          DashboardScreen().launch(context, isNewTask: true);
+        } else {
+          WalkThroughScreen().launch(context, isNewTask: true);
+        }
+      } else {
+        WalkThroughScreen().launch(context, isNewTask: true);
+      }
     });
   }
 

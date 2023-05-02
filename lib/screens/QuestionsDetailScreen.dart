@@ -93,7 +93,7 @@ class _QuestionsDetailScreenState extends State<QuestionsDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        'Unlock sample answers with expert feedback using LinkPeople Premium',
+                        'Unlock sample answers with expert feedback using Find My CoFounder Premium',
                         style: primaryTextStyle()),
                     Container(
                       height: 30,

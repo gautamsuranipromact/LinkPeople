@@ -1,11 +1,11 @@
 import 'package:custom_line_indicator_bottom_navbar/custom_line_indicator_bottom_navbar.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/fragments/HomeScreen.dart';
 import 'package:link_people/fragments/PostScreen.dart';
 import 'package:link_people/screens/SkillAssessmentsScreen.dart';
+import 'package:link_people/screens/WalkThroughScreen.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
@@ -62,38 +62,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     //widgets.add(NotificationScreen());
     widgets.add(Container(child: Text("Coming Soon...")));
     //widgets.add(JobsScreen());
-    addDetailsToProfileTable();
-  }
-
-  void addDetailsToProfileTable() async {
-    String userId = prefs.getString(SharePreferencesKey.USERID)!;
-    DatabaseReference ref = FirebaseDatabase.instance.ref("profile/$userId");
-    ref.onValue.listen((DatabaseEvent event) {
-      print("Profile Data:" + event.snapshot.value.toString());
-      if (event.snapshot.value == null) {
-        ref.set({
-          "firstname": prefs.getString(SharePreferencesKey.FIRSTNAME)!,
-          "lastname": prefs.getString(SharePreferencesKey.LASTNAME)!,
-          "profile": prefs.getString(SharePreferencesKey.PROFILE)!,
-          "designation": "",
-          "lookingFor": "",
-          "aboutMe": "",
-          "aboutStartup": "",
-          "startupAge": "",
-          "stage": "",
-          "funding": "",
-          "website": "",
-          "coreSkills": "",
-          "education": [],
-          "experience": [],
-          "linkedIn": "",
-          "facebook": "",
-          "twitter": "",
-        }).whenComplete(() {
-          print("Blank Data Added To Profile Table");
-        });
-      }
-    });
   }
 
   @override
@@ -259,7 +227,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           prefs.setString(SharePreferencesKey.PROFILE, "");
                           finish(context);
 
-                          SignInScreen().launch(context,
+                          WalkThroughScreen().launch(context,
                               pageRouteAnimation: PageRouteAnimation.Scale,
                               isNewTask: true);
                         },
@@ -289,7 +257,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               setState(() {});
               return Future.value(true);
             },
-            child: widgets[currentIndex]),
+            child: IndexedStack(
+              children: widgets,
+              index: currentIndex,
+            )),
         bottomNavigationBar: CustomLineIndicatorBottomNavbar(
           onTap: (i) async {
             preIndex = currentIndex;

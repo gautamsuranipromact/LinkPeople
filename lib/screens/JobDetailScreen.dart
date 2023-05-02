@@ -278,7 +278,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                   ),
                   SizedBox(height: 12),
                   Text(
-                      'Information Technology & Services • 11 - 50 employees • 19 on LinkPeople',
+                      'Information Technology & Services • 11 - 50 employees • 19 on Find My CoFounder',
                       style: primaryTextStyle(size: 14)),
                   SizedBox(height: 20),
                   Text(

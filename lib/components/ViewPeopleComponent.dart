@@ -247,7 +247,7 @@ class _ViewPeopleComponentState extends State<ViewPeopleComponent> {
               Divider(),
               GestureDetector(
                   onTap: () {
-                    ProfileScreen().launch(context);
+                    ProfileScreen(false,"").launch(context);
 /*
                     ViewProfileScreen(
                             name: widget.name.toString(),

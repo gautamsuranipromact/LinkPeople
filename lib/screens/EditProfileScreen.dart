@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -26,7 +26,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  late Map<dynamic, dynamic> map = Map();
+  late Map<dynamic, dynamic> data = Map();
   List<EducationModel> educationList = [];
   List<ExperienceModel> experienceList = [];
 
@@ -52,6 +52,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   bool isEducation = false;
   bool isExperience = false;
+  bool isProfileRunning = false;
+
+  String selectedUserType = 'Founder';
+  String selectedLookingFor = 'Mentor';
+
+  var userTypes = [
+    'Founder',
+    'Co-Founder',
+    'CxO',
+    'Mentor',
+  ];
 
   checkNullValue(value) {
     return value == null ? "" : value;
@@ -61,90 +72,55 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return value == null ? [] : value;
   }
 
-  Future<String> uploadPic() async {
-    FirebaseStorage _storage = FirebaseStorage.instance;
-
-    XFile? s = await ImagePicker()
-        .pickImage(source: ImageSource.camera, maxWidth: 1800, maxHeight: 1800);
-
-    String fileName = path.basename(s!.path);
-
-    //Create a reference to the location you want to upload to in firebase
-    Reference reference = _storage.ref().child("images/profile/" +
-        prefs.getString(SharePreferencesKey.USERID)! +
-        "/" +
-        fileName);
-
-    //Upload the file to firebase
-    UploadTask uploadTask = reference.putFile(File(s.path));
-
-    TaskSnapshot snapshot = await uploadTask;
-    String imageUrl = await snapshot.ref.getDownloadURL();
-
-    //returns the download url
-    return imageUrl;
-  }
-
   @override
   void initState() {
     super.initState();
+    selectedUserType = prefs.getString(SharePreferencesKey.USER_TYPE)!;
+    selectedLookingFor = prefs.getString(SharePreferencesKey.LOOKING_FOR)!;
     readDataFromProfileTable();
   }
 
-  Future<String> readDataFromProfileTable() async {
+  void readDataFromProfileTable() async {
     String userId = prefs.getString(SharePreferencesKey.USERID)!;
-    DatabaseReference ref = FirebaseDatabase.instance.ref("profile/$userId");
-    ref.onValue.listen((DatabaseEvent event) {
-      educationList.clear();
-      experienceList.clear();
-      print("Profile Data:" + event.snapshot.value.toString());
-      map = event.snapshot.value as Map<dynamic, dynamic>;
 
-      map.forEach((key, value) {
-        print("Key: " + key.toString());
-        print("Value:" + value.toString());
-      });
-      print("Education:" + map['education'].toString());
-      final educationMap = map["education"] == null
-          ? Map()
-          : map["education"] as Map<dynamic, dynamic>;
-      final experienceMap = map["experience"] == null
-          ? Map()
-          : map["experience"] as Map<dynamic, dynamic>;
-      educationMap.forEach((key, value) {
-        educationList.add(EducationModel(
-            key: key,
-            image: value['image'],
-            degree: value['degree'],
-            name: value['name']));
-      });
-      experienceMap.forEach((key, value) {
-        experienceList.add(ExperienceModel(
-            key: key,
-            image: value['image'],
-            duration: value['duration'],
-            company: value['company'],
-            designation: value['designation']));
-      });
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('profile');
+    DocumentSnapshot snapshot = await users.doc(userId).get();
+    data = snapshot.data() as Map<String, dynamic>;
+    final educationListData =
+    data["education"] == null ? [] : data["education"] as List<dynamic>;
+    final experienceListData =
+    data["experience"] == null ? [] : data["experience"] as List<dynamic>;
+    for (int i = 0; i < educationListData.length; i++) {
+      final map = educationListData.elementAt(i);
+      educationList.add(EducationModel(
+          image: map['image'], degree: map['degree'], name: map['name']));
+    }
+    for (int i = 0; i < experienceListData.length; i++) {
+      final map = experienceListData.elementAt(i);
+      experienceList.add(ExperienceModel(
+          image: map['image'],
+          duration: map['duration'],
+          company: map['company'],
+          designation: map['designation']));
+    }
 
-      firstNameCont.text = checkNullValue(map['firstname']);
-      lastNameCont.text = checkNullValue(map['lastname']);
-      designationCont.text = checkNullValue(map['designation']);
-      lookingForCont.text = checkNullValue(map['lookingFor']);
-      aboutMeCont.text = checkNullValue(map['aboutMe']);
-      aboutStartUpCont.text = checkNullValue(map['aboutStartup']);
-      startUpAgeCont.text = checkNullValue(map['startupAge']);
-      stageCont.text = checkNullValue(map['stage']);
-      fundingCont.text = checkNullValue(map['funding']);
-      websiteCont.text = checkNullValue(map['website']);
-      coreSkillsCont.text = checkNullValue(map['coreSkills']);
-      linkedInCont.text = checkNullValue(map['linkedIn']);
-      facebookCont.text = checkNullValue(map['facebook']);
-      twitterCont.text = checkNullValue(map['twitter']);
+    firstNameCont.text = checkNullValue(data['firstname']);
+    lastNameCont.text = checkNullValue(data['lastname']);
+    designationCont.text = checkNullValue(data['designation']);
+    lookingForCont.text = checkNullValue(data['lookingFor']);
+    aboutMeCont.text = checkNullValue(data['aboutMe']);
+    aboutStartUpCont.text = checkNullValue(data['aboutStartup']);
+    startUpAgeCont.text = checkNullValue(data['startupAge']);
+    stageCont.text = checkNullValue(data['stage']);
+    fundingCont.text = checkNullValue(data['funding']);
+    websiteCont.text = checkNullValue(data['website']);
+    coreSkillsCont.text = checkNullValue(data['coreSkills']);
+    linkedInCont.text = checkNullValue(data['linkedIn']);
+    facebookCont.text = checkNullValue(data['facebook']);
+    twitterCont.text = checkNullValue(data['twitter']);
 
-      setState(() {});
-    });
-    return "";
+    setState(() {});
   }
 
   @override
@@ -157,9 +133,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           Navigator.pop(context);
         },
         centerWidget: Container(
-          child: Text("Edit Profile", style: TextStyle(color: Colors.white)),
+          child: Text("Edit Profile", style: TextStyle(color: Colors.black)),
         ),
-        isNew: true,
+        isNew: false,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -176,7 +152,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(ic_microsoft), fit: BoxFit.fill)),
+                            image: NetworkImage(
+                                "https://images.fastcompany.net/image/upload/w_596,c_limit,q_auto:best,f_auto/wp-cms/uploads/2021/03/LinkedIn-Default-Background-2020-.jpg"),
+                            fit: BoxFit.fill)),
                     height: 150,
                   ),
 
@@ -224,10 +202,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       icon: Ionicons.camera,
                                       isSubtext: false),
                                   bottomSheetComponent(context,
-                                      text: "upload from Photos",
+                                      text: "Upload from Photos",
                                       subtext:
-                                          "On LinkPeople, we require members to use their real identities, so upload a photo of yourself",
-                                      onTap: () {},
+                                          "On Find My CoFounder, we require members to use their real identities, so upload a photo of yourself",
+                                      onTap: () => getFromGallery(),
                                       icon: Ionicons.images_outline,
                                       isSubtext: false),
                                 ],
@@ -253,6 +231,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           width: 0.8,
                         ),
                       ),
+                      child: isProfileRunning
+                          ? Center(child: CircularProgressIndicator())
+                          : Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(100)),
+                                child: Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                  size: 12,
+                                ),
+                              ),
+                            ),
                     ),
                   ),
                 ],
@@ -268,6 +262,78 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text("I am a", style: primaryTextStyle(size: 12)),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                          color: greyColor, style: BorderStyle.solid, width: 1),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        isExpanded: true,
+                        value: selectedUserType,
+                        // Down Arrow Icon
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        // Array list of items
+                        items: userTypes.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        // After selecting the desired option,it will
+                        // change button value to selected value
+                        onChanged: (String? value) {
+                          setState(() {
+                            selectedUserType = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child:
+                        Text("Looking for", style: primaryTextStyle(size: 12)),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                          color: greyColor, style: BorderStyle.solid, width: 1),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        isExpanded: true,
+                        value: selectedLookingFor,
+                        // Down Arrow Icon
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        // Array list of items
+                        items: userTypes.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        // After selecting the desired option,it will
+                        // change button value to selected value
+                        onChanged: (String? value) {
+                          setState(() {
+                            selectedLookingFor = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+
                   /// FirstName
                   Text(
                     "First Name",
@@ -351,7 +417,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                   /// Looking For...
                   Text(
-                    "Looking for",
+                    "Looking for in detail",
                     style: TextStyle(
                         fontSize: 12,
                         color: lightBlackColor,
@@ -658,8 +724,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             SizedBox(height: 10),
                             ElevatedButton(
                                 onPressed: () {
-                                  addEducation(educationInstituteCont.text, "",
-                                      educationDegreeCont.text);
+                                  educationList.add(EducationModel(
+                                      name: educationInstituteCont.text,
+                                      image: "",
+                                      degree: educationDegreeCont.text));
+                                  addEducation();
                                   setState(() {
                                     isEducation = false;
                                   });
@@ -680,6 +749,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ListView.builder(
                       itemCount: educationList.length,
                       shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         EducationModel data = educationList[index];
                         return Column(
@@ -704,7 +774,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         checkNullValue(
                                             checkNullValue(data.name)),
                                         style: TextStyle(
-                                          color: coverColor,
+                                          color: lightBlackColor,
                                           fontSize: 14,
                                           fontFamily: robotoRegular,
                                         ),
@@ -713,7 +783,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       Text(
                                         checkNullValue(data.degree),
                                         style: TextStyle(
-                                          color: coverColor,
+                                          color: lightBlackColor,
                                           fontSize: 12,
                                           fontFamily: robotoRegular,
                                         ),
@@ -723,7 +793,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ),
                                 InkWell(
                                     onTap: () {
-                                      removeEducation(checkNullValue(data.key));
+                                      educationList.removeAt(index);
+                                      addEducation();
                                     },
                                     child: Icon(
                                       Icons.delete,
@@ -855,11 +926,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             SizedBox(height: 10),
                             ElevatedButton(
                                 onPressed: () {
-                                  addExperience(
-                                      experienceDesignationCont.text,
-                                      "",
-                                      experienceCompanyCont.text,
-                                      experienceDurationCont.text);
+                                  experienceList.add(ExperienceModel(
+                                      image: "",
+                                      company: experienceCompanyCont.text,
+                                      designation:
+                                          experienceDesignationCont.text,
+                                      duration: experienceDurationCont.text));
+                                  addExperience();
                                   setState(() {
                                     isExperience = false;
                                   });
@@ -880,6 +953,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ListView.builder(
                       itemCount: experienceList.length,
                       shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         ExperienceModel data = experienceList[index];
                         return Column(
@@ -904,7 +978,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       Text(
                                         checkNullValue(data.designation),
                                         style: TextStyle(
-                                          color: coverColor,
+                                          color: lightBlackColor,
                                           fontSize: 14,
                                           fontFamily: robotoRegular,
                                         ),
@@ -915,7 +989,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             "\n" +
                                             checkNullValue(data.duration),
                                         style: TextStyle(
-                                          color: coverColor,
+                                          color: lightBlackColor,
                                           fontSize: 12,
                                           fontFamily: robotoRegular,
                                         ),
@@ -925,8 +999,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ),
                                 InkWell(
                                     onTap: () {
-                                      removeExperience(
-                                          checkNullValue(data.key));
+                                      experienceList.removeAt(index);
+                                      addExperience();
                                     },
                                     child: Icon(
                                       Icons.delete,
@@ -1056,14 +1130,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   void updateProfile() async {
     String userId = prefs.getString(SharePreferencesKey.USERID)!;
-    DatabaseReference refUser = FirebaseDatabase.instance.ref("users/$userId");
-    refUser.update({
+
+    prefs.setString(SharePreferencesKey.USER_TYPE, selectedUserType);
+    prefs.setString(SharePreferencesKey.LOOKING_FOR, selectedLookingFor);
+    CollectionReference refUser =
+        FirebaseFirestore.instance.collection('users');
+    refUser.doc(userId).update({
       "firstname": firstNameCont.text,
       "lastname": lastNameCont.text,
       "profile": prefs.getString(SharePreferencesKey.PROFILE)!,
+      "type": selectedUserType,
+      "lookingFor": selectedLookingFor,
     });
-    DatabaseReference ref = FirebaseDatabase.instance.ref("profile/$userId");
-    ref.update({
+
+    CollectionReference ref = FirebaseFirestore.instance.collection('profile');
+    ref.doc(userId).update({
       "firstname": firstNameCont.text,
       "lastname": lastNameCont.text,
       "profile": prefs.getString(SharePreferencesKey.PROFILE)!,
@@ -1085,25 +1166,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     });
   }
 
-  void addEducation(name, image, degree) {
-    educationList.clear();
-    experienceList.clear();
+  void addEducation() {
     String userId = prefs.getString(SharePreferencesKey.USERID)!;
-    DatabaseReference ref =
-        FirebaseDatabase.instance.ref("profile/$userId/education");
-    DatabaseReference newEducationRef = ref.push();
-    newEducationRef.set({
-      "name": name,
-      "image": image,
-      "degree": degree,
-    }).whenComplete(() {
+
+    CollectionReference education =
+        FirebaseFirestore.instance.collection('profile');
+    List<dynamic> array = [];
+    for (int i = 0; i < educationList.length; i++) {
+      array.add({
+        "name": educationList.elementAt(i).name,
+        "image": educationList.elementAt(i).image,
+        "degree": educationList.elementAt(i).degree,
+      });
+    }
+    education.doc(userId).update({"education": array}).then((value) {
       educationInstituteCont.text = "";
       educationDegreeCont.text = "";
       print("Education Updated");
+      setState(() {});
+    }).catchError((error) {
+      setState(() {});
     });
   }
 
-  void removeEducation(key) {
+  /*void removeEducation(key) {
     educationList.clear();
     experienceList.clear();
     String userId = prefs.getString(SharePreferencesKey.USERID)!;
@@ -1112,9 +1198,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     ref.remove().then((value) {
       print("Education Removed of $key");
     });
-  }
+  }*/
 
-  void addExperience(designation, image, company, duration) {
+  /*void addExperience(designation, image, company, duration) {
     educationList.clear();
     experienceList.clear();
     String userId = prefs.getString(SharePreferencesKey.USERID)!;
@@ -1132,9 +1218,38 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       experienceDurationCont.text = "";
       print("Education Updated");
     });
+  }*/
+
+  void addExperience() {
+    String userId = prefs.getString(SharePreferencesKey.USERID)!;
+
+    CollectionReference experience =
+        FirebaseFirestore.instance.collection('profile');
+
+    List<dynamic> array = [];
+    for (int i = 0; i < experienceList.length; i++) {
+      array.add({
+        "designation": experienceList.elementAt(i).designation,
+        "image": experienceList.elementAt(i).image,
+        "company": experienceList.elementAt(i).company,
+        "duration": experienceList.elementAt(i).duration,
+      });
+    }
+
+    experience.doc(userId).update({
+      "experience": array,
+    }).then((value) {
+      experienceCompanyCont.text = "";
+      experienceDesignationCont.text = "";
+      experienceDurationCont.text = "";
+      print("Education Updated");
+      setState(() {});
+    }).catchError((error) {
+      setState(() {});
+    });
   }
 
-  void removeExperience(key) {
+  /*void removeExperience(key) {
     educationList.clear();
     experienceList.clear();
     String userId = prefs.getString(SharePreferencesKey.USERID)!;
@@ -1143,83 +1258,54 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     ref.remove().then((value) {
       print("Experience Removed of $key");
     });
-  }
-
-  void addDetailsToProfileTable() async {
-    String userId = prefs.getString(SharePreferencesKey.USERID)!;
-    DatabaseReference ref = FirebaseDatabase.instance.ref("profile/$userId");
-    await ref.set({
-      "firstname": prefs.getString(SharePreferencesKey.FIRSTNAME)!,
-      "lastname": prefs.getString(SharePreferencesKey.LASTNAME)!,
-      "profile": prefs.getString(SharePreferencesKey.PROFILE)!,
-      "designation": "Chief Executive Officer at Microsoft",
-      "lookingFor":
-          "I am a Founder looking for a Non-Tech Co-Founder who has a Branding and Marketing background. He should have experience in E-com, B2B sales and networking. He should be ready to relocate to Vadodara full time. ",
-      "aboutMe":
-          "I am an IIT graduate in Computer Science and have worked with Fortune 500 companies like IBM and Apple as their Tech Lead. I love cricket and football. I like to read in my free time. I am also interested in learning about physics and philosophy.",
-      "aboutStartup":
-          "My startup is a bootstrapped startup operating in kids’ furniture and toys. It is a revenue generating and profitable startup. I am willing to offer equity but no compensation till we hit certain profitability benchmarks. ",
-      "startupAge": "19 years",
-      "stage": "Revenue Generating",
-      "funding": "Bootstrapped",
-      "website": "www.about.meta.com",
-      "coreSkills":
-          "Equanimity, Critical thinking, Problem-solving, Effective communication, Assertiveness",
-      "education": [
-        {
-          "image": "",
-          "name": "Manipal Institute of Technology",
-          "degree": "Bachelor’s Degree, Electrical Engineering"
-        },
-        {
-          "image": "",
-          "name": "University of Wisconsin-Milwaukee",
-          "degree": "Master’s Degree, Computer Science"
-        },
-      ],
-      "experience": [
-        {
-          "image": "",
-          "name": "Chairman and CEO",
-          "company": "Microsoft",
-          "duration": "Feb 2014 - Present · 9 yrs 3 mos"
-        },
-        {
-          "image": "",
-          "name": "Chairman",
-          "company": "The Business Council U.S.",
-          "duration": "2021 - Present · 2 yrs 4 mos"
-        },
-        {
-          "image": "",
-          "name": "Member Board Of Trustees",
-          "company": "University of Chicago",
-          "duration": "2018 - Present · 5 yrs 4 mos"
-        },
-        {
-          "image": "",
-          "name": "Board Member",
-          "company": "Starbucks",
-          "duration": "2017 - Present · 6 yrs 4 mos"
-        },
-        {
-          "image": "",
-          "name": "Board Member",
-          "company": "Fred Hutch",
-          "duration": "2016 - 2022 · 6 yrs"
-        },
-      ],
-    }).whenComplete(() {
-      print("Profile Submitted successfully");
-    });
-  }
+  }*/
 
   getFromCamera() async {
-    String path = await uploadPic();
-    if (path != null) {
+    XFile? s = await ImagePicker()
+        .pickImage(source: ImageSource.camera, maxWidth: 1800, maxHeight: 1800);
+    String path = await uploadPic(s);
+    if (path.isNotEmpty) {
       prefs.setString(SharePreferencesKey.PROFILE, path);
       setState(() {});
     }
+  }
+
+  void getFromGallery() async {
+    XFile? s = await ImagePicker().pickImage(
+        source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);
+    String path = await uploadPic(s);
+    if (path.isNotEmpty) {
+      prefs.setString(SharePreferencesKey.PROFILE, path);
+      setState(() {});
+    }
+  }
+
+  Future<String> uploadPic(XFile? s) async {
+    setState(() {
+      isProfileRunning = true;
+    });
+    String imageUrl = "";
+    try {
+      FirebaseStorage _storage = FirebaseStorage.instance;
+
+      String fileName = path.basename(s!.path);
+
+      //Create a reference to the location you want to upload to in firebase
+      Reference reference = _storage.ref().child("images/profile/" +
+          prefs.getString(SharePreferencesKey.USERID)! +
+          "/" +
+          fileName);
+
+      //Upload the file to firebase
+      UploadTask uploadTask = reference.putFile(File(s.path));
+
+      TaskSnapshot snapshot = await uploadTask;
+      imageUrl = await snapshot.ref.getDownloadURL();
+    } catch (e) {}
+    setState(() {
+      isProfileRunning = false;
+    });
+    return imageUrl;
   }
 }
 

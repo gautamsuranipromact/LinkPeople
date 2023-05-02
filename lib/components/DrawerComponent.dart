@@ -30,7 +30,9 @@ Widget drawerComponent(BuildContext context, onTap) {
               onTap: () {
                 finish(context);
                 //ViewProfileScreen(isUser: true).launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
-                ProfileScreen().launch(context);
+                ProfileScreen(
+                        true, prefs.getString(SharePreferencesKey.USERID)!)
+                    .launch(context);
               },
               child: Padding(
                 padding: EdgeInsets.only(left: 8),

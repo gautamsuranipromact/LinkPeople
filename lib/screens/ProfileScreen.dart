@@ -1,12 +1,14 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/main.dart';
 import 'package:link_people/screens/EditProfileScreen.dart';
+import 'package:link_people/utils/AppColors.dart';
 import 'package:link_people/utils/AppCommon.dart';
 import 'package:link_people/utils/AppConstants.dart';
 import 'package:link_people/utils/Extensions/Colors.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
+import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,60 +16,54 @@ import 'package:url_launcher/url_launcher.dart';
 import '../utils/AppImages.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final bool isMe;
+  final String? userId;
+
+  const ProfileScreen(this.isMe, this.userId, {Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late Map<dynamic, dynamic> map = Map();
+  late Map<dynamic, dynamic> data = Map();
   List<EducationModel> educationList = [];
   List<ExperienceModel> experienceList = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     readDataFromProfileTable();
   }
 
-  void readDataFromProfileTable() {
-    String userId = prefs.getString(SharePreferencesKey.USERID)!;
-    DatabaseReference ref = FirebaseDatabase.instance.ref("profile/$userId");
-    ref.onValue.listen((DatabaseEvent event) {
-      educationList.clear();
-      experienceList.clear();
-      print("Profile Data:" + event.snapshot.value.toString());
-      map = event.snapshot.value as Map<dynamic, dynamic>;
-      map.forEach((key, value) {
-        print("Key: " + key.toString());
-        print("Value:" + value.toString());
-      });
-      print("Education:" + map['education'].toString());
-      final educationMap = map["education"] == null
-          ? Map()
-          : map["education"] as Map<dynamic, dynamic>;
-      final experienceMap = map["experience"] == null
-          ? Map()
-          : map["experience"] as Map<dynamic, dynamic>;
-      educationMap.forEach((key, value) {
-        educationList.add(EducationModel(
-            key: key,
-            image: value['image'],
-            degree: value['degree'],
-            name: value['name']));
-      });
-      experienceMap.forEach((key, value) {
-        experienceList.add(ExperienceModel(
-            key: key,
-            image: value['image'],
-            duration: value['duration'],
-            company: value['company'],
-            designation: value['designation']));
-      });
-      setState(() {});
-    });
+  void readDataFromProfileTable() async {
+    String? userId = widget.userId;
+    educationList.clear();
+    experienceList.clear();
+
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('profile');
+    DocumentSnapshot snapshot = await users.doc(userId).get();
+    data = snapshot.data() as Map<String, dynamic>;
+
+    final educationListData =
+        data["education"] == null ? [] : data["education"] as List<dynamic>;
+    final experienceListData =
+        data["experience"] == null ? [] : data["experience"] as List<dynamic>;
+    for (int i = 0; i < educationListData.length; i++) {
+      final map = educationListData.elementAt(i);
+      educationList.add(EducationModel(
+          image: map['image'], degree: map['degree'], name: map['name']));
+    }
+    for (int i = 0; i < experienceListData.length; i++) {
+      final map = experienceListData.elementAt(i);
+      experienceList.add(ExperienceModel(
+          image: map['image'],
+          duration: map['duration'],
+          company: map['company'],
+          designation: map['designation']));
+    }
+    setState(() {});
   }
 
   checkNullValue(value) {
@@ -96,11 +92,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: primaryColor.withOpacity(0.09),
               borderRadius: BorderRadius.circular(5),
             ),
             height: 40,
-            margin: EdgeInsets.only(right: 10),
             padding: EdgeInsets.all(6),
             width: MediaQuery.of(context).size.width,
             child: Row(
@@ -113,22 +108,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         action: [
-          InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return EditProfileScreen();
-              }));
-            },
-            child: Container(
-                padding: EdgeInsets.only(right: 10),
-                child: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                  size: 20,
-                )),
-          )
+          widget.isMe
+              ? InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return EditProfileScreen();
+                    })).then((_) => readDataFromProfileTable());
+                  },
+                  child: Container(
+                      padding: EdgeInsets.only(right: 10, left: 10),
+                      child: Icon(
+                        Icons.edit,
+                        color: textSecondaryColorGlobal,
+                        size: 20,
+                      )),
+                )
+              : Container()
         ],
-        isNew: true,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -145,7 +142,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(ic_microsoft), fit: BoxFit.fill)),
+                            image: NetworkImage(
+                                "https://images.fastcompany.net/image/upload/w_596,c_limit,q_auto:best,f_auto/wp-cms/uploads/2021/03/LinkedIn-Default-Background-2020-.jpg"),
+                            fit: BoxFit.fill)),
                     height: 150,
                   ),
 
@@ -164,8 +163,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: const Color(0xff7c94b6),
                       image: DecorationImage(
                         //image: AssetImage(ic_placeHolder),
-                        image: NetworkImage(
-                            prefs.getString(SharePreferencesKey.PROFILE)!),
+                        image: widget.isMe
+                            ? NetworkImage(
+                                prefs.getString(SharePreferencesKey.PROFILE)!)
+                            : data['profile'] != null
+                                ? NetworkImage(data['profile'])
+                                : NetworkImage(
+                                    "https://findmycofounders.com//wp-content//plugins//socialv-api////assets//images//default-avatar.jpg"),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(50.0)),
@@ -177,27 +181,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
 
                   /// Connect Button
-                  Container(
-                    margin: EdgeInsets.only(left: 15),
-                    alignment: Alignment.bottomLeft,
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Container(
-                          height: 26,
-                          width: 100,
-                          child: Center(
-                            child: Text("CONNECT",
-                                style: TextStyle(
-                                    fontFamily: robotoRegular,
-                                    color: Colors.white,
-                                    fontSize: 12)),
-                          ),
-                          decoration: BoxDecoration(
-                              color: orangeColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                        )),
-                  )
+                  widget.isMe
+                      ? Container()
+                      : Container(
+                          margin: EdgeInsets.only(left: 15),
+                          alignment: Alignment.bottomLeft,
+                          child: TextButton(
+                              onPressed: () {},
+                              child: Container(
+                                height: 26,
+                                width: 100,
+                                child: Center(
+                                  child: Text("CONNECT",
+                                      style: TextStyle(
+                                          fontFamily: robotoRegular,
+                                          color: Colors.white,
+                                          fontSize: 12)),
+                                ),
+                                decoration: BoxDecoration(
+                                    color: orangeColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                              )),
+                        )
                 ],
               ),
             ),
@@ -212,11 +218,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   /// Name
-                  checkNullValue(map['firstname']) != ""
+                  checkNullValue(data['firstname']) != ""
                       ? Text(
-                          checkNullValue(map['firstname']) +
+                          checkNullValue(data['firstname']) +
                               " " +
-                              checkNullValue(map['lastname']),
+                              checkNullValue(data['lastname']),
                           style: TextStyle(
                               fontSize: 18,
                               fontFamily: robotoBold,
@@ -226,9 +232,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: 5),
 
                   /// Designation
-                  checkNullValue(map['designation']) != ""
+                  checkNullValue(data['designation']) != ""
                       ? Text(
-                          checkNullValue(map['designation']),
+                          checkNullValue(data['designation']),
                           style: TextStyle(
                               color: lightBlackColor,
                               fontSize: 14,
@@ -237,7 +243,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       : Container(),
 
                   /// Looking For...
-                  checkNullValue(map['lookingFor']) != ""
+                  checkNullValue(data['lookingFor']) != ""
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -251,7 +257,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Looking for",
+                                    "Looking for in detail",
                                     style: TextStyle(
                                         color: lightGreyColor,
                                         fontSize: 14,
@@ -259,7 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   SizedBox(height: 5),
                                   Text(
-                                    checkNullValue(map['lookingFor']),
+                                    checkNullValue(data['lookingFor']),
                                     style: TextStyle(
                                         color: lightBlackColor,
                                         fontSize: 14,
@@ -273,8 +279,84 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         )
                       : Container(),
 
+                  /// Stage and Funding
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "I am a",
+                                style: TextStyle(
+                                  color: lightGreyColor,
+                                  fontSize: 14,
+                                  fontFamily: robotoRegular,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                prefs.getString(
+                                            SharePreferencesKey.USER_TYPE) ==
+                                        null
+                                    ? ""
+                                    : prefs.getString(
+                                        SharePreferencesKey.USER_TYPE)!,
+                                style: TextStyle(
+                                  color: lightBlackColor,
+                                  fontSize: 14,
+                                  fontFamily: robotoRegular,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        color: viewLineColor,
+                        width: 1,
+                        height: 40,
+                      ),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Looking for",
+                                style: TextStyle(
+                                  color: lightGreyColor,
+                                  fontSize: 14,
+                                  fontFamily: robotoRegular,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                prefs.getString(
+                                            SharePreferencesKey.LOOKING_FOR) ==
+                                        null
+                                    ? ""
+                                    : prefs.getString(
+                                        SharePreferencesKey.LOOKING_FOR)!,
+                                style: TextStyle(
+                                  color: lightBlackColor,
+                                  fontSize: 14,
+                                  fontFamily: robotoRegular,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+
                   /// About Me
-                  checkNullValue(map['aboutMe']) != ""
+                  checkNullValue(data['aboutMe']) != ""
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -289,7 +371,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                             /// Description
                             Text(
-                              checkNullValue(map['aboutMe']),
+                              checkNullValue(data['aboutMe']),
                               style: TextStyle(
                                 color: lightBlackColor,
                                 fontSize: 13,
@@ -302,7 +384,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       : Container(),
 
                   /// About Startup
-                  checkNullValue(map['aboutStartup']) != ""
+                  checkNullValue(data['aboutStartup']) != ""
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -317,7 +399,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                             /// Description
                             Text(
-                              checkNullValue(map['aboutStartup']),
+                              checkNullValue(data['aboutStartup']),
                               style: TextStyle(
                                 color: lightBlackColor,
                                 fontSize: 13,
@@ -337,7 +419,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       : Container(),
 
                   /// Startup Age
-                  checkNullValue(map['startupAge']) != ""
+                  checkNullValue(data['startupAge']) != ""
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -351,7 +433,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(height: 5),
                               Text(
-                                checkNullValue(map['startupAge']),
+                                checkNullValue(data['startupAge']),
                                 style: TextStyle(
                                   color: lightBlackColor,
                                   fontSize: 14,
@@ -370,7 +452,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      checkNullValue(map['stage']) != ""
+                      checkNullValue(data['stage']) != ""
                           ? Expanded(
                               child: Container(
                                 margin: EdgeInsets.only(top: 10),
@@ -387,7 +469,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      checkNullValue(map['stage']),
+                                      checkNullValue(data['stage']),
                                       style: TextStyle(
                                         color: lightBlackColor,
                                         fontSize: 14,
@@ -399,15 +481,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             )
                           : Container(),
-                      checkNullValue(map['stage']) != "" &&
-                              checkNullValue(map['funding']) != ""
+                      checkNullValue(data['stage']) != "" &&
+                              checkNullValue(data['funding']) != ""
                           ? Container(
                               color: viewLineColor,
                               width: 1,
                               height: 40,
                             )
                           : Container(),
-                      checkNullValue(map['funding']) != ""
+                      checkNullValue(data['funding']) != ""
                           ? Expanded(
                               child: Container(
                                 padding: EdgeInsets.all(10),
@@ -425,7 +507,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      checkNullValue(map['funding']),
+                                      checkNullValue(data['funding']),
                                       style: TextStyle(
                                         color: lightBlackColor,
                                         fontSize: 14,
@@ -441,7 +523,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
 
                   /// Website
-                  checkNullValue(map['website']) != ""
+                  checkNullValue(data['website']) != ""
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -467,7 +549,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      checkNullValue(map['website']),
+                                      checkNullValue(data['website']),
                                       style: TextStyle(
                                         color: linkColor,
                                         fontSize: 14,
@@ -478,7 +560,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    openUrl(checkNullValue(map["website"]));
+                                    _launchUrl(checkNullValue(data["website"]));
                                   },
                                   child: Align(
                                       alignment: Alignment.centerRight,
@@ -500,7 +582,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       : Container(),
 
                   /// Core Skills
-                  checkNullValue(map['coreSkills']) != ""
+                  checkNullValue(data['coreSkills']) != ""
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -515,7 +597,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             SizedBox(height: 5),
                             Text(
-                              checkNullValue(map['coreSkills']),
+                              checkNullValue(data['coreSkills']),
                               style: TextStyle(
                                 color: lightBlackColor,
                                 fontSize: 14,
@@ -544,6 +626,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ListView.builder(
                                 itemCount: educationList.length,
                                 shrinkWrap: true,
+                                physics: ClampingScrollPhysics(),
                                 itemBuilder: (BuildContext context, int index) {
                                   EducationModel data = educationList[index];
                                   return Column(
@@ -569,7 +652,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 Text(
                                                   checkNullValue(data.name)!,
                                                   style: TextStyle(
-                                                    color: coverColor,
+                                                    color: lightBlackColor,
                                                     fontSize: 14,
                                                     fontFamily: robotoRegular,
                                                   ),
@@ -578,7 +661,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 Text(
                                                   checkNullValue(data.degree)!,
                                                   style: TextStyle(
-                                                    color: coverColor,
+                                                    color: lightBlackColor,
                                                     fontSize: 12,
                                                     fontFamily: robotoRegular,
                                                   ),
@@ -614,6 +697,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ListView.builder(
                                 itemCount: experienceList.length,
                                 shrinkWrap: true,
+                                physics: ClampingScrollPhysics(),
                                 itemBuilder: (BuildContext context, int index) {
                                   ExperienceModel data = experienceList[index];
                                   return Column(
@@ -642,7 +726,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   checkNullValue(
                                                       data.designation!),
                                                   style: TextStyle(
-                                                    color: coverColor,
+                                                    color: lightBlackColor,
                                                     fontSize: 14,
                                                     fontFamily: robotoRegular,
                                                   ),
@@ -654,7 +738,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       checkNullValue(
                                                           data.duration),
                                                   style: TextStyle(
-                                                    color: coverColor,
+                                                    color: lightBlackColor,
                                                     fontSize: 12,
                                                     fontFamily: robotoRegular,
                                                   ),
@@ -674,9 +758,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       : Container(),
 
                   /// Social Profile
-                  checkNullValue(map["linkedIn"]) != "" ||
-                          checkNullValue(map["facebook"]) != "" ||
-                          checkNullValue(map["twitter"]) != ""
+                  checkNullValue(data["linkedIn"]) != "" ||
+                          checkNullValue(data["facebook"]) != "" ||
+                          checkNullValue(data["twitter"]) != ""
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -692,7 +776,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Row(
                               children: [
                                 /// Linkedin
-                                checkNullValue(map["linkedIn"]) != ""
+                                checkNullValue(data["linkedIn"]) != ""
                                     ? Column(
                                         children: [
                                           InkWell(
@@ -711,8 +795,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               ),
                                             ),
                                             onTap: () {
-                                              openUrl(checkNullValue(
-                                                  map["linkedIn"]));
+                                              _launchUrl(checkNullValue(
+                                                  data["linkedIn"]));
                                             },
                                           ),
                                         ],
@@ -722,7 +806,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(width: 10),
 
                                 /// Facebook
-                                checkNullValue(map["facebook"]) != ""
+                                checkNullValue(data["facebook"]) != ""
                                     ? Column(
                                         children: [
                                           InkWell(
@@ -741,8 +825,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               ),
                                             ),
                                             onTap: () {
-                                              openUrl(checkNullValue(
-                                                  map["facebook"]));
+                                              _launchUrl(checkNullValue(
+                                                  data["facebook"]));
                                             },
                                           ),
                                         ],
@@ -751,13 +835,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(width: 10),
 
                                 /// Twitter
-                                checkNullValue(map["twitter"]) != ""
+                                checkNullValue(data["twitter"]) != ""
                                     ? Column(
                                         children: [
                                           InkWell(
                                             onTap: () {
-                                              openUrl(checkNullValue(
-                                                  map["twitter"]));
+                                              _launchUrl(checkNullValue(
+                                                  data["twitter"]));
                                             },
                                             child: Container(
                                               width: 40.0,
@@ -792,7 +876,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future<void> _launchUrl(url) async {
+  Future<void> _launchUrl(String url) async {
+    if (!url.contains("http")) {
+      url = "https://" + url;
+    }
     Uri uri = Uri.parse(url);
     if (url == "") {
       toast("URL not found...");
@@ -805,7 +892,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> openUrl(String url) async {
     final _url = Uri.parse(url);
-    if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
+    if (!await launchUrl(_url, mode: LaunchMode.platformDefault)) {
       // <--
       throw Exception('Could not launch $_url');
     }

@@ -1,5 +1,5 @@
 /// App Name
-const APP_NAME = "LinkPeople";
+const APP_NAME = "Find My CoFounder";
 
 /// App Icon src
 const APP_ICON = "assets/app_icon.png";

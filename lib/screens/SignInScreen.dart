@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:link_people/screens/DashboardScreen.dart';
 import 'package:link_people/utils/AppColors.dart';
@@ -12,11 +12,9 @@ import 'package:link_people/utils/Extensions/string_extensions.dart';
 import '../main.dart';
 import '../utils/AppCommon.dart';
 import '../utils/AppImages.dart';
-import '../utils/AppWidget.dart';
 import '../utils/Extensions/AppTextField.dart';
 import '../utils/Extensions/Commons.dart';
 import '../utils/Extensions/Constants.dart';
-import '../utils/Extensions/decorations.dart';
 import '../utils/Extensions/text_styles.dart';
 import 'ForgotPasswordScreen.dart';
 
@@ -31,7 +29,7 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailCon = TextEditingController();
   TextEditingController passCon = TextEditingController();
 
-  //bool isRemember = false;
+  bool isAPIRunning = false;
 
   @override
   void initState() {
@@ -116,7 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ],
                 ),
               ),
-              Row(
+              /*Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   CustomTheme(
@@ -135,7 +133,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   Text('Learn More',
                       style: boldTextStyle(color: primaryColor, size: 14)),
                 ],
-              ),
+              ),*/
               20.height,
               GestureDetector(
                   onTap: () {
@@ -145,28 +143,30 @@ class _SignInScreenState extends State<SignInScreen> {
                           style: boldTextStyle(color: primaryColor, size: 14))
                       .paddingSymmetric(horizontal: 16)),
               8.height,
-              appButton(context, 'Continue', onTap: () {
-                if (loginFormKey.currentState!.validate()) {
-                  loginFormKey.currentState!.save();
-                  hideKeyboard(context);
-                  /*Map request = {
+              isAPIRunning
+                  ? Center(child: CircularProgressIndicator())
+                  : appButton(context, 'Continue', onTap: () {
+                      if (loginFormKey.currentState!.validate()) {
+                        loginFormKey.currentState!.save();
+                        hideKeyboard(context);
+                        /*Map request = {
                     Users.username: emailCon.text.trim().validate(),
                     Users.password: passCon.text.trim().validate(),
                   };
                   login(request);*/
-                  if (emailCon.text.isEmpty) {
-                    toast("Please enter email");
-                  } else if (passCon.text.isEmpty) {
-                    toast("Please enter password");
-                  } else {
-                    signInUsingEmailPassword(emailCon.text, passCon.text);
-                  }
-                } else {
-                  appStore.setLoading(false);
-                }
-              }),
+                        if (emailCon.text.isEmpty) {
+                          toast("Please enter email");
+                        } else if (passCon.text.isEmpty) {
+                          toast("Please enter password");
+                        } else {
+                          signInUsingEmailPassword(emailCon.text, passCon.text);
+                        }
+                      } else {
+                        appStore.setLoading(false);
+                      }
+                    }),
               12.height,
-              Row(
+              /*Row(
                 children: [
                   Divider(indent: 10, endIndent: 20, thickness: 1).expand(),
                   Text('Or', style: secondaryTextStyle()),
@@ -218,7 +218,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Text('Sign in with Apple', style: boldTextStyle()),
                   ],
                 ),
-              ),
+              ),*/
             ],
           ),
         ),
@@ -229,7 +229,9 @@ class _SignInScreenState extends State<SignInScreen> {
   void signInUsingEmailPassword(String email, String password) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
-
+    setState(() {
+      isAPIRunning = true;
+    });
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: email,
@@ -238,13 +240,16 @@ class _SignInScreenState extends State<SignInScreen> {
       user = userCredential.user;
       readDataFromUserTable(user!);
     } on FirebaseAuthException catch (e) {
+      setState(() {
+        isAPIRunning = false;
+      });
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
         toast('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided.');
         toast('Wrong password provided.');
-      }else if (e.code == 'email-already-in-use') {
+      } else if (e.code == 'email-already-in-use') {
         print('Email already in use.');
         toast('Email already in use.');
       } else {
@@ -258,71 +263,33 @@ class _SignInScreenState extends State<SignInScreen> {
     return value == null ? "" : value;
   }
 
-  void readDataFromUserTable(User user) {
+  void readDataFromUserTable(User user) async {
     String userId = user.uid;
-    DatabaseReference ref = FirebaseDatabase.instance.ref('users/$userId');
-    ref.onValue.listen((DatabaseEvent event) {
-      print("User Data:" + event.snapshot.value.toString());
-      final map = event.snapshot.value as Map<dynamic, dynamic>;
-      prefs.setString(SharePreferencesKey.USERID, checkNullValue(user.uid));
-      prefs.setString(
-          SharePreferencesKey.FIRSTNAME, checkNullValue(map['firstname']));
-      prefs.setString(
-          SharePreferencesKey.LASTNAME, checkNullValue(map['lastname']));
-      prefs.setString(SharePreferencesKey.EMAIL, checkNullValue(map['email']));
-      prefs.setString(
-          SharePreferencesKey.USERNAME, checkNullValue(map['username']));
-      prefs.setString(
-          SharePreferencesKey.PROFILE, checkNullValue(map['profile']));
-
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return DashboardScreen();
-      }));
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    DocumentSnapshot snapshot = await users.doc(userId).get();
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    prefs.setString(SharePreferencesKey.USERID, checkNullValue(user.uid));
+    prefs.setString(
+        SharePreferencesKey.FIRSTNAME, checkNullValue(data['firstname']));
+    prefs.setString(
+        SharePreferencesKey.LASTNAME, checkNullValue(data['lastname']));
+    prefs.setString(SharePreferencesKey.EMAIL, checkNullValue(data['email']));
+    prefs.setString(
+        SharePreferencesKey.USERNAME, checkNullValue(data['username']));
+    prefs.setString(
+        SharePreferencesKey.PROFILE, checkNullValue(data['profile']));
+    prefs.setString(SharePreferencesKey.USER_TYPE, checkNullValue(data['type']));
+    prefs.setString(
+        SharePreferencesKey.LOOKING_FOR, checkNullValue(data['lookingFor']));
+    setState(() {
+      isAPIRunning = false;
     });
+    Navigator.pushAndRemoveUntil<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) => DashboardScreen(),
+      ),
+      (route) => false, //if you want to disable back feature set to false
+    );
   }
 }
-
-/*
-  Future<void> login({required Map req, bool isSocialLogin = false}) async {
-    appStore.setLoading(true);
-
-    hideKeyboard(context);
-
-    await loginUser(request: req, isSocialLogin: isSocialLogin)
-        .then((value) async {
-
-      /// Set Prefrences
-      prefs.setString(SharePreferencesKey.TOKEN, value.token!);
-      prefs.setString(SharePreferencesKey.LOGIN_EMAIL, value.userEmail!);
-      prefs.setString(
-          SharePreferencesKey.LOGIN_DISPLAY_NAME, value.userNickname!);
-      prefs.setString(
-          SharePreferencesKey.LOGIN_FULL_NAME, value.userDisplayName!);
-
-      appStore.setPassword(passCon.text.validate());
-      getMemberById();
-    }).catchError((e) {
-      appStore.setLoading(false);
-      toast(e.toString());
-    });
-  }
-
-  Future<void> getMemberById() async {
-    await getLoginMember().then((value) {
-      appStore.setLoginUserId(value.id.toString());
-      appStore.setLoginAvatarUrl(value.avatarUrls!.full.validate());
-      appStore.setLoading(false);
-
-      prefs.setString(SharePreferencesKey.LOGIN_USER_ID, value.id.toString());
-      prefs.setString(
-          SharePreferencesKey.LOGIN_AVATAR_URL, value.avatarUrls!.full!);
-
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return DashboardScreen();
-      }));
-    }).catchError((e) {
-      appStore.setLoading(false);
-      toast(e.toString());
-    });
-  }
-*/

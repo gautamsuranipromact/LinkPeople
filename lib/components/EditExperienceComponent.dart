@@ -177,7 +177,7 @@ class _EditExperienceComponentState extends State<EditExperienceComponent> {
               ),
               SizedBox(height: 12),
               Text(
-                  'LinkPeople uses industry information to provide more relevant recommendations',
+                  'Find My CoFounder uses industry information to provide more relevant recommendations',
                   style: secondaryTextStyle()),
               SizedBox(height: 16),
               AppTextField(

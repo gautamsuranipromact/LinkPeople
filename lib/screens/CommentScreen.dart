@@ -1,16 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/components/TimeLineList.dart';
+import 'package:link_people/main.dart';
+import 'package:link_people/models/InvitationUsersModel.dart';
+import 'package:link_people/models/LikeUser.dart';
 import 'package:link_people/utils/AppCommon.dart';
+import 'package:link_people/utils/AppConstants.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
-import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
+import 'package:link_people/utils/Extensions/date_time_extension.dart';
 import 'package:link_people/utils/Extensions/decorations.dart';
 
 import '../models/post_model.dart';
-import '../utils/AppDataProvider.dart';
-import '../utils/AppImages.dart';
 import '../utils/Extensions/AppTextField.dart';
 import '../utils/Extensions/text_styles.dart';
 
@@ -24,6 +27,10 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
+  List<LikeUser> likeUser = [];
+  List<InvitationUsers> invitationUsers = [];
+  TextEditingController commentCon = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -31,7 +38,8 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   void init() async {
-    //
+    //getLikes();
+    getComments();
   }
 
   @override
@@ -52,9 +60,9 @@ class _CommentScreenState extends State<CommentScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TimeLinePostBox(widget.post, isShare: true),
+                TimeLinePostBox(widget.post, isShare: false),
                 SizedBox(height: 10),
-                Padding(
+                /* Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: Text('Reaction', style: boldTextStyle())),
                 SizedBox(
@@ -62,7 +70,7 @@ class _CommentScreenState extends State<CommentScreen> {
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.symmetric(horizontal: 8),
-                      itemCount: invitationUsers.length,
+                      itemCount: likeUser.length,
                       itemBuilder: (c, i) {
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4),
@@ -75,8 +83,8 @@ class _CommentScreenState extends State<CommentScreen> {
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     shape: BoxShape.circle),
-                                child: Image.asset(
-                                  invitationUsers[i].imageUrl.toString(),
+                                child: Image.network(
+                                  likeUser[i].imageUrl.toString(),
                                   fit: BoxFit.cover,
                                 ).cornerRadiusWithClipRRect(25),
                               ),
@@ -85,7 +93,7 @@ class _CommentScreenState extends State<CommentScreen> {
                           ),
                         );
                       }),
-                ),
+                ),*/
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Column(
@@ -112,7 +120,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                 children: [
                                   ClipRRect(
                                       borderRadius: radius(25),
-                                      child: Image.asset(
+                                      child: Image.network(
                                           invitationUsers[i]
                                               .imageUrl
                                               .toString(),
@@ -160,7 +168,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                                           size: 12)),
                                                 ],
                                               ),
-                                              PopupMenuButton(
+                                              /*PopupMenuButton(
                                                 itemBuilder: (context) => [
                                                   PopupMenuItem(
                                                     child: Row(
@@ -193,11 +201,11 @@ class _CommentScreenState extends State<CommentScreen> {
                                                     value: 2,
                                                   ),
                                                 ],
-                                              )
+                                              )*/
                                             ],
                                           ),
                                           SizedBox(height: 4),
-                                          Text('Is this part time?',
+                                          Text(invitationUsers[i].comment!,
                                               style: primaryTextStyle()),
                                         ],
                                       ),
@@ -222,9 +230,12 @@ class _CommentScreenState extends State<CommentScreen> {
             child: Row(
               children: [
                 CircleAvatar(
-                    backgroundImage: AssetImage(ic_profile), maxRadius: 15),
+                    backgroundImage: NetworkImage(
+                        prefs.getString(SharePreferencesKey.PROFILE)!),
+                    maxRadius: 15),
                 Expanded(
                   child: AppTextField(
+                    controller: commentCon,
                     keyboardType: TextInputType.multiline,
                     textFieldType: TextFieldType.OTHER,
                     textStyle: primaryTextStyle(),
@@ -234,14 +245,97 @@ class _CommentScreenState extends State<CommentScreen> {
                         label: "Leave your thoughts here..."),
                   ),
                 ),
-                Text('@', style: boldTextStyle()),
+                /*Text('@', style: boldTextStyle()),*/
                 SizedBox(width: 30),
-                Text('Post', style: secondaryTextStyle()),
+                GestureDetector(
+                    onTap: () => addComment(),
+                    child: Text('Post', style: secondaryTextStyle())),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  addComment() {
+    hideKeyboard(context);
+    String postId = widget.post.postId!;
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
+
+    CollectionReference postComments =
+        FirebaseFirestore.instance.collection('postComments');
+    DocumentReference reference = postComments.doc();
+    reference.set({
+      "commentId": reference.id,
+      "userId": prefs.getString(SharePreferencesKey.USERID),
+      "postId": widget.post.postId,
+      "comment": commentCon.text,
+      "searchText": prefs.getString(SharePreferencesKey.USERID)! +
+          "" +
+          widget.post.postId! +
+          "",
+      "timestamp": timestamp
+    }).then((value) {
+      widget.post.commentCount = widget.post.commentCount! + 1;
+
+      CollectionReference post = FirebaseFirestore.instance.collection('posts');
+      post.doc(postId).update({
+        "comment": widget.post.commentCount,
+      });
+      setState(() {
+        invitationUsers.insert(
+            0,
+            InvitationUsers(
+                name: prefs.getString(SharePreferencesKey.FIRSTNAME)! +
+                    " " +
+                    prefs.getString(SharePreferencesKey.LASTNAME)!,
+                imageUrl: prefs.getString(SharePreferencesKey.PROFILE)!,
+                profession: "I am a " +
+                    prefs.getString(SharePreferencesKey.USER_TYPE)! +
+                    " and Looking for " +
+                    prefs.getString(SharePreferencesKey.LOOKING_FOR)!,
+                comment: commentCon.text,
+                time: DateTime.now().timeAgo()));
+      });
+      commentCon.text = "";
+    }).catchError((error) => print("Failed to add user: $error"));
+  }
+
+  void getComments() async {
+    try {
+      Query<Map<String, dynamic>> _postComments = FirebaseFirestore.instance
+          .collection('postComments')
+          .where("postId", isEqualTo: widget.post.postId);
+
+      QuerySnapshot<Map<String, dynamic>> _postCommentsSnapshot =
+          await _postComments.get();
+
+      for (var doc in _postCommentsSnapshot.docs) {
+        String userId = doc.get("userId");
+        int timestamp = doc.get("timestamp");
+        CollectionReference users =
+            FirebaseFirestore.instance.collection('users');
+        DocumentSnapshot snapshot = await users.doc(userId).get();
+        Map<String, dynamic> userMap = snapshot.data() as Map<String, dynamic>;
+        String profile = userMap['profile'];
+        String name = userMap['firstname'] + " " + userMap['lastname'];
+        String userType = userMap['type'];
+        String lookingFor = userMap['lookingFor'];
+        String time =
+            DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000).timeAgo();
+        setState(() {
+          invitationUsers.add(InvitationUsers(
+              name: name,
+              imageUrl: profile,
+              profession:
+                  "I am a " + userType + " and Looking for " + lookingFor,
+              comment: doc.get("comment"),
+              time: time));
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

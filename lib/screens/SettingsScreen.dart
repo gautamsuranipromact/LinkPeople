@@ -54,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: ListView(
           children: [
             rowComponent(Icons.support_agent, "Account preference",
-                "Options for managing your account and experience on LinkPeople",
+                "Options for managing your account and experience on Find My CoFounder",
                 () {
               AccountPreferences().launch(context);
             }),
@@ -64,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SignInSecurityScreen().launch(context);
             }),
             rowComponent(Ionicons.eye, "Visibility",
-                "Control who sees you activity and information on LinkPeople",
+                "Control who sees you activity and information on Find My CoFounder",
                 () {
               VisibilityScreen().launch(context);
             }),
@@ -73,12 +73,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               CommunicationsScreen().launch(context);
             }),
             rowComponent(MaterialIcons.privacy_tip, "Data privacy",
-                "Control how LinkPeople uses your information for general site use and job seeking",
+                "Control how Find My CoFounder uses your information for general site use and job seeking",
                 () {
               DataPrivacyScreen().launch(context);
             }),
             rowComponent(Icons.newspaper_outlined, "Advertise data",
-                "Control how LinkPeople uses your information to serve you ads",
+                "Control how Find My CoFounder uses your information to serve you ads",
                 () {
               AdvertisingDataScreen().launch(context);
             }),

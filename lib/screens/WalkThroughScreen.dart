@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:link_people/screens/DashboardScreen.dart';
 import 'package:link_people/utils/AppColors.dart';
+import 'package:link_people/utils/AppConstants.dart';
 import 'package:link_people/utils/AppImages.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
@@ -25,11 +27,6 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
   @override
   void initState() {
     super.initState();
-    init();
-  }
-
-  void init() async {
-    //
   }
 
   @override
@@ -60,7 +57,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
               appButton(context, 'Join now', onTap: () {
                 JoinNowScreen().launch(context);
               }),
-              Container(
+              /*Container(
                 alignment: Alignment.center,
                 height: 45,
                 width: context.width(),
@@ -80,7 +77,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                         style: boldTextStyle(color: textSecondaryColorGlobal)),
                   ],
                 ),
-              ),
+              ),*/
               TextButton(
                   onPressed: () {
                     SignInScreen().launch(context);

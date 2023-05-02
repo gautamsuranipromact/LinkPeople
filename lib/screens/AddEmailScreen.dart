@@ -65,7 +65,7 @@ class _AddEmailScreenState extends State<AddEmailScreen> {
               children: [
                 Text(
                     widget.isSignIn == true
-                        ? "Join LinkPeople"
+                        ? "Join Find My CoFounder"
                         : "Add your email or phone",
                     style: primaryTextStyle(size: 30)),
                 Visibility(

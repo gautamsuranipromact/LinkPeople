@@ -1,23 +1,25 @@
-class PostMediaModel {
-  int? id;
-  String? type;
-  String? url;
+import 'dart:io';
 
-  PostMediaModel({this.id, this.type, this.url});
+import 'package:video_player/video_player.dart';
+
+class PostMediaModel {
+  String type;
+  File file;
+  VideoPlayerController? controller;
+
+  PostMediaModel({required this.type, required this.file, this.controller});
 
   factory PostMediaModel.fromJson(Map<String, dynamic> json) {
     return PostMediaModel(
-      id: json['id'],
       type: json['type'],
-      url: json['url'],
+      file: json['file'],
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
     data['type'] = this.type;
-    data['url'] = this.url;
+    data['file'] = this.file;
     return data;
   }
 }

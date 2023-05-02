@@ -53,7 +53,7 @@ class _CommunicationsScreenState extends State<CommunicationsScreen> {
               textColor: textPrimaryColorGlobal,
               isIcon: false),
           component(
-              context, "On LinkPeople", "Received via LinkPeople web and app"),
+              context, "On Find My CoFounder", "Received via Find My CoFounder web and app"),
           component(context, "Email", 'Received via your primary email'),
           component(context, "Who can reach you",
               "Manage who you'd like get communications from",
@@ -68,7 +68,7 @@ class _CommunicationsScreenState extends State<CommunicationsScreen> {
               "Choose what invitations you'd like to receive from your network"),
           component(context, "Messages", "Allow select people to message you"),
           component(context, "Research invites",
-              "Choose if you want to get invite to get from LinkPeople to participate in research"),
+              "Choose if you want to get invite to get from Find My CoFounder to participate in research"),
           component(context, "Who can reach you",
               "Manage who you'd like get communications from",
               color: context.dividerColor,

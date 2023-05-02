@@ -37,7 +37,7 @@ appBarCommon(BuildContext context, title, onTap,
     elevation,
     bool isNew = false}) {
   return AppBar(
-    backgroundColor: headerColor,
+    backgroundColor: whiteColor,
     elevation: elevation ?? 0.5,
     iconTheme: IconThemeData(color: textSecondaryColorGlobal),
     leading: leading ??

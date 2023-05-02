@@ -4,6 +4,7 @@ class InvitationUsers {
   int? mutualFriends;
   String? time;
   String? imageUrl;
+  String? comment;
   bool? isInvite;
   bool? isFollow;
 
@@ -13,6 +14,7 @@ class InvitationUsers {
       this.mutualFriends,
       this.time,
       this.imageUrl,
+      this.comment,
       this.isInvite = false,
       this.isFollow = false});
 }

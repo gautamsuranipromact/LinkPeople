@@ -3,15 +3,21 @@ import 'package:link_people/models/common_models/post_mdeia_model.dart';
 import 'package:link_people/models/get_post_likes_model.dart';
 
 class PostModel {
+  String? postId;
   int? activityId;
   int? commentCount;
   List<CommentModel>? comments;
   String? content;
+  String? subContent;
   String? dateRecorded;
+  int? timestamp;
   bool? isFavorites;
   bool? isLiked;
+  String? likeId;
+  String? commentId;
   int? likeCount;
   List<String>? mediaList;
+  List<String>? imageMediaList;
   String? mediaType;
   String? postIn;
   String? userEmail;
@@ -30,14 +36,20 @@ class PostModel {
 
   PostModel({
     this.activityId,
+    this.postId,
     this.commentCount,
     this.comments,
     this.content,
+    this.subContent,
     this.dateRecorded,
+    this.timestamp,
     this.isFavorites,
     this.isLiked,
+    this.likeId,
+    this.commentId,
     this.likeCount,
     this.mediaList,
+    this.imageMediaList,
     this.mediaType,
     this.postIn,
     this.userEmail,
@@ -65,6 +77,7 @@ class PostModel {
               .toList()
           : null,
       content: json['content'],
+      subContent: json['subContent'],
       dateRecorded: json['date_recorded'],
       isFavorites: json['is_favorites'],
       isLiked: json['is_liked'],
@@ -103,11 +116,16 @@ class PostModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['activity_id'] = this.activityId;
+    data['postId'] = this.postId;
     data['comment_count'] = this.commentCount;
+    data['timestamp'] = this.timestamp;
     data['content'] = this.content;
+    data['subContent'] = this.subContent;
     data['date_recorded'] = this.dateRecorded;
     data['is_favorites'] = this.isFavorites;
     data['is_liked'] = this.isLiked;
+    data['like_id'] = this.likeId;
+    data['comment_id'] = this.commentId;
     data['like_count'] = this.likeCount;
     data['media_type'] = this.mediaType;
     data['post_in'] = this.postIn;
@@ -126,6 +144,9 @@ class PostModel {
     }
     if (this.mediaList != null) {
       data['media_list'] = this.mediaList;
+    }
+    if (this.imageMediaList != null) {
+      data['image_media_list'] = this.imageMediaList;
     }
     if (this.usersWhoLiked != null) {
       data['users_who_liked'] =

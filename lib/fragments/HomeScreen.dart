@@ -1,11 +1,12 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:link_people/components/TimeLineList.dart';
+import 'package:link_people/main.dart';
+import 'package:link_people/models/AppEvent.dart';
 import 'package:link_people/models/post_model.dart';
 import 'package:link_people/screens/DashboardScreen.dart';
 import 'package:link_people/utils/AppConstants.dart';
 import 'package:nb_utils/nb_utils.dart';
-
-import '../components/TimeLineList.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,6 +26,8 @@ class _HomeScreenState extends State<HomeScreen>
 
   final ScrollController controller = ScrollController();
 
+  bool isAPIRunning = false;
+
   @override
   void initState() {
     //future = getPostList();
@@ -36,7 +39,9 @@ class _HomeScreenState extends State<HomeScreen>
 
     super.initState();
 
-    //setStatusBarColorBasedOnTheme();
+    eventBus.on<PostAppEvent>().listen((e) {
+      readDataFromPostsTable();
+    });
 
     /*widget.*/
     controller.addListener(() {
@@ -69,64 +74,116 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.separated(
-        itemCount: postList.length,
-        shrinkWrap: true,
-        separatorBuilder: (BuildContext context, int index) {
-          return Divider(thickness: 5);
-        },
-        itemBuilder: (BuildContext context, int index) {
-          //TimelinePost post = timeLineList[index];
-          PostModel post = postList[index];
-          return TimeLinePostBox(post, isShare: true);
-        },
+      body: Stack(
+        children: [
+          Visibility(
+            visible: !isAPIRunning,
+            child: ListView.separated(
+              itemCount: postList.length,
+              shrinkWrap: true,
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(thickness: 5);
+              },
+              itemBuilder: (BuildContext context, int index) {
+                //TimelinePost post = timeLineList[index];
+                PostModel post = postList[index];
+                return TimeLinePostBox(post, isShare: true);
+              },
+            ),
+          ),
+          Visibility(
+              visible: isAPIRunning,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ))
+        ],
       ),
     );
   }
 
-  void readDataFromPostsTable() {
+  void readDataFromPostsTable() async {
+    setState(() {
+      isAPIRunning = true;
+    });
+
+    Query<Map<String, dynamic>> _posts =
+        FirebaseFirestore.instance.collection('posts').orderBy("timestamp",descending: true);
+
+    QuerySnapshot querySnapshot = await _posts.get();
+
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    print(allData);
+
     postList.clear();
-    DatabaseReference ref = FirebaseDatabase.instance.ref('posts');
-    ref.onValue.listen((DatabaseEvent event) {
-      print("Posts Data:" + event.snapshot.value.toString());
-      final map = event.snapshot.value as Map<dynamic, dynamic>;
-      map.forEach((key, value) {
-        print("$key: $value");
-        postList.add(PostModel(
-            content: checkNullValue(value['content']),
-            userEmail: checkNullValue(value['email']),
-            userImage: checkNullValue(value['profile']),
-            userName: checkNullValue(value['firstname']) +
-                " " +
-                checkNullValue(value['lastname']),
-            userId: checkNullValue(value['userid'])));
-        setState(() {});
-      });
+
+    for (int i = 0; i < allData.length; i++) {
+      dynamic post = allData.elementAt(i);
+      String userId = post["userid"];
+
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
+      DocumentSnapshot snapshot = await users.doc(userId).get();
+      Map<String, dynamic> userMap = snapshot.data() as Map<String, dynamic>;
+
+      String userType = userMap['type'];
+      String lookingFor = userMap['lookingFor'];
+      String time = checkNullValue(post['postTime']);
+      DateTime parsedDate = DateTime.parse(time);
+      List<Object?> imageMediaObject = [];
+      if (post['images'] != null) {
+        imageMediaObject = post['images'];
+      }
+      List<String> imageMediaList = [];
+      for (int i = 0; i < imageMediaObject.length; i++) {
+        imageMediaList.add(imageMediaObject.elementAt(i).toString());
+      }
+      bool isLiked = false;
+      String likeId = "";
+      try {
+        Query<Map<String, dynamic>> postLikes = FirebaseFirestore.instance
+            .collection('postLikes')
+            .where("searchText",
+                isEqualTo: prefs.getString(SharePreferencesKey.USERID)! +
+                    "" +
+                    post['postId'] +
+                    "true");
+        QuerySnapshot<Map<String, dynamic>> postLikesSnapshot =
+            await postLikes.get();
+
+        for (var doc in postLikesSnapshot.docs) {
+          likeId = doc.get('likeId');
+          isLiked = true;
+        }
+      } catch (e) {
+        print(e);
+      }
+
+      postList.add(PostModel(
+          postId: post['postId'],
+          content: checkNullValue(post['content']),
+          userEmail: checkNullValue(userMap['email']),
+          userImage: checkNullValue(userMap['profile']),
+          userName: checkNullValue(userMap['firstname']) +
+              " " +
+              checkNullValue(userMap['lastname']),
+          userId: checkNullValue(userId),
+          subContent: "I am a " + userType + " and Looking for " + lookingFor,
+          dateRecorded: parsedDate.timeAgo,
+          likeCount: post['like'],
+          commentCount: post['comment'],
+          imageMediaList: imageMediaList,
+          isLiked: isLiked,
+          likeId: likeId,
+          timestamp: post['timestamp']));
+    }
+
+    setState(() {
+      isAPIRunning = false;
     });
   }
 
   checkNullValue(value) {
     return value == null ? "" : value;
   }
-
-/*Future<List<PostModel>> getPostList() async {
-    appStore.setLoading(true);
-    await getPost(page: mPage, type: PostRequestType.timeline).then((value) {
-      if (mPage == 1) postList.clear();
-
-      mIsLastPage = value.length != PER_PAGE;
-      postList.addAll(value);
-      setState(() {});
-
-      appStore.setLoading(false);
-    }).catchError((e) {
-      isError = true;
-      appStore.setLoading(false);
-      toast(e.toString(), print: true);
-
-      setState(() {});
-    });
-
-    return postList;
-  }*/
 }

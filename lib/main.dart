@@ -1,3 +1,4 @@
+import 'package:event_bus_plus/event_bus_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 late SharedPreferences sharedPreferences;
 late SharedPreferences prefs;
 String currentPackageName = '';
+late IEventBus eventBus;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +31,7 @@ Future<void> main() async {
 
   prefs = await SharedPreferences.getInstance();
   sharedPreferences = await SharedPreferences.getInstance();
+  eventBus = EventBus();
 
 /*  await OneSignal.shared.getDeviceState().then((deviceState) {
     print(deviceState!.jsonRepresentation());
@@ -61,8 +64,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   void init() async {
-    SharedPreferences.setMockInitialValues({});
-    prefs = await SharedPreferences.getInstance();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: appStore.isDarkMode
             ? darkScaffoldColor

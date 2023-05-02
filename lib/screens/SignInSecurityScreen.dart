@@ -65,7 +65,7 @@ class _SignInSecurityScreenState extends State<SignInSecurityScreen> {
           component(context, "Two-step verification",
               "Active this feature for enhanced account security"),
           component(context, "App lock",
-              'Make access to the LinkPeople app more secure'),
+              'Make access to the Find My CoFounder app more secure'),
         ],
       ),
     );

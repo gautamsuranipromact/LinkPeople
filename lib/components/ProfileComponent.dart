@@ -251,7 +251,7 @@ Widget peopleAlsoView(BuildContext context, onTap) {
           itemBuilder: (context, i) {
             return GestureDetector(
               onTap: () {
-                ProfileScreen().launch(context);
+                ProfileScreen(false,"").launch(context);
 /*
                 ViewProfileScreen(
                         image: invitationUsers[i].imageUrl.toString(),

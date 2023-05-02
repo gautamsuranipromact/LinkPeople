@@ -1,5 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:link_people/network/rest_apis.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/int_extensions.dart';
@@ -19,6 +19,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final forgetPassFormKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
+  bool isAPIRunning = false;
 
   @override
   Widget build(BuildContext context) {
@@ -65,26 +66,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ],
                 ),
               ),
-              GestureDetector(
-                child: appButton(context, 'Reset Password', onTap: () async {
-                  hideKeyboard(context);
-                  if (!appStore.isLoading) {
-                    if (forgetPassFormKey.currentState!.validate()) {
-                      forgetPassFormKey.currentState!.save();
-                      appStore.setLoading(true);
-                      await forgetPassword(email: emailController.text.trim())
-                          .then((value) {
-                        appStore.setLoading(false);
-                        toast(value.message);
-                        finish(context);
-                      }).catchError((e) {
-                        appStore.setLoading(false);
-                        toast(e.toString());
-                      });
-                    }
-                  }
-                }),
-              ),
+              isAPIRunning
+                  ? Center(child: CircularProgressIndicator())
+                  : GestureDetector(
+                      child:
+                          appButton(context, 'Reset Password', onTap: () async {
+                        hideKeyboard(context);
+                        forgotPassword();
+                      }),
+                    ),
             ],
           ),
         ),
@@ -96,5 +86,35 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   void dispose() {
     appStore.setLoading(false);
     super.dispose();
+  }
+
+  void forgotPassword() async {
+    setState(() {
+      isAPIRunning = true;
+    });
+    try {
+      FirebaseAuth _authService = FirebaseAuth.instance;
+      await _authService.sendPasswordResetEmail(
+          email: emailController.text.trim());
+      toast("Reset email sent successfully please check your email box");
+    } on FirebaseAuthException catch (e) {
+      if (e.code.toString() == 'invalid-email') {
+        // setState(() {message 'Invalid email address.';});
+        toast("Invalid email address.");
+      }
+
+      if (e.code.toString() == 'missing-email') {
+        toast("Email address not found.");
+      }
+
+      if (e.code.toString() == 'user-not-found') {
+        toast("User not found.");
+      }
+    } catch (e) {
+      toast("Something want wrong.");
+    }
+    setState(() {
+      isAPIRunning = false;
+    });
   }
 }

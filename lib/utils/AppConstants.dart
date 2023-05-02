@@ -1,6 +1,6 @@
 import 'package:html/parser.dart';
 
-const AppName = "Link People";
+const AppName = "Find My CoFounder";
 
 /// DO NOT CHANGE THIS PACKAGE NAME
 const APP_PACKAGE_NAME = "com.mighty.link_people";
@@ -69,6 +69,8 @@ class SharePreferencesKey {
   static const EMAIL = 'EMAIL';
   static const USERNAME = 'USERNAME';
   static const PROFILE = 'PROFILE';
+  static const USER_TYPE = 'USER_TYPE';
+  static const LOOKING_FOR = 'LOOKING_FOR';
 
   static const TOKEN = 'TOKEN';
   static const NONCE = 'NONCE';

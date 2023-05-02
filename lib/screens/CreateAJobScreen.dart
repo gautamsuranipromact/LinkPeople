@@ -124,7 +124,7 @@ class _CreateAJobScreenState extends State<CreateAJobScreen> {
           Container(
             margin: EdgeInsets.all(16),
             child: StyledText(
-              text: "By continuing, you agree with LinkPeople's" +
+              text: "By continuing, you agree with Find My CoFounder's" +
                   "<b>Jobs Terms and Conditions</b>" +
                   "including our" +
                   "<b>policies prohibiting discriminatory job posts.</b>",
