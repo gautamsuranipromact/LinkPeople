@@ -116,7 +116,6 @@ class _HomeScreenState extends State<HomeScreen>
     print(allData);
 
     postList.clear();
-
     for (int i = 0; i < allData.length; i++) {
       dynamic post = allData.elementAt(i);
       String userId = post["userid"];
