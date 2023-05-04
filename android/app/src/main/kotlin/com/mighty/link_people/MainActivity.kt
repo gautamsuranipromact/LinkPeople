@@ -1,4 +1,4 @@
-package com.mighty.link_people
+package com.findmycofounders
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void init() async {
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(seconds: 0), () {
       String? userId = prefs.getString(SharePreferencesKey.USERID);
       if (userId != null) {
         if (userId.isNotEmpty) {
@@ -45,8 +45,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: CircleAvatar(
-            backgroundImage: AssetImage(ic_appLogo), maxRadius: 75),
+        child: Image.asset(
+          ic_SplashScreen,
+          height: 200,
+          width: 200,
+        ),
       ),
     );
   }

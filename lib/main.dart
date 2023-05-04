@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:link_people/models/common_models.dart';
+import 'package:link_people/screens/DashboardScreen.dart';
 import 'package:link_people/screens/SplashScreen.dart';
+import 'package:link_people/screens/WalkThroughScreen.dart';
 import 'package:link_people/store/AppStore.dart';
 import 'package:link_people/utils/AppColors.dart';
 import 'package:link_people/utils/AppConstants.dart';
@@ -33,25 +35,23 @@ Future<void> main() async {
   sharedPreferences = await SharedPreferences.getInstance();
   eventBus = EventBus();
 
-/*  await OneSignal.shared.getDeviceState().then((deviceState) {
-    print(deviceState!.jsonRepresentation());
-    prefs.setString(
-        SharePreferencesKey.ONE_SIGNAL_PLAYER_ID, deviceState.userId!);
-    //setValue(SharePreferencesKey.ONE_SIGNAL_PLAYER_ID, status?.userId.validate());
-  });*/
-/* Chirag Changes
- if (!isWeb) {
-    int themeModeIndex = getIntAsync(THEME_MODE_INDEX);
-    if (themeModeIndex == appThemeMode.themeModeLight) {
-      appStore.setDarkMode(false);
-    } else if (themeModeIndex == appThemeMode.themeModeDark) {
-      appStore.setDarkMode(true);
+  String? userId = prefs.getString(SharePreferencesKey.USERID);
+  if (userId != null) {
+    if (userId.isNotEmpty) {
+      runApp(MyApp(true));
+    } else {
+      runApp(MyApp(false));
     }
-  }*/
-  runApp(MyApp());
+  } else {
+    runApp(MyApp(false));
+  }
 }
 
 class MyApp extends StatefulWidget {
+  bool isLoggedIn;
+
+  MyApp(this.isLoggedIn);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-        home: SplashScreen(),
+        home: widget.isLoggedIn ? DashboardScreen() : WalkThroughScreen(),
       ),
     );
   }

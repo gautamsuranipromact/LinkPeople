@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:link_people/screens/DashboardScreen.dart';
 import 'package:link_people/utils/AppColors.dart';
-import 'package:link_people/utils/AppConstants.dart';
 import 'package:link_people/utils/AppImages.dart';
-import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
-import 'package:link_people/utils/Extensions/int_extensions.dart';
 
 import '../main.dart';
 import '../utils/AppCommon.dart';
-import '../utils/Extensions/decorations.dart';
 import '../utils/Extensions/text_styles.dart';
 import 'JoinNowScreen.dart';
 import 'SignInScreen.dart';
@@ -49,7 +44,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
               ? Image.asset(ic_logo_light, height: 65, fit: BoxFit.cover)
               : Image.asset(ic_logo, height: 65, fit: BoxFit.cover),
           SizedBox(height: 80),
-          Text('Join a trusted community of 800M professionals',
+          Text('Join a trusted community of many professionals',
               style: boldTextStyle(size: 22), textAlign: TextAlign.center),
           SizedBox(height: 100),
           Column(

@@ -299,8 +299,32 @@ class _PostScreenState extends State<PostScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 12),
                           child: GestureDetector(
                               onTap: () {
-                                controller.text = "#";
-                                setState(() {});
+                                /*controller.text = controller.text + "#";
+                                controller.selection = TextSelection.collapsed(
+                                    offset: controller.text.length);*/
+                                var cursorPos =
+                                    controller.selection.base.offset;
+
+                                // Right text of cursor position
+                                String suffixText =
+                                controller.text.substring(cursorPos);
+
+                                // Add new text on cursor position
+                                String specialChars = '#';
+                                int length = specialChars.length;
+
+                                // Get the left text of cursor
+                                String prefixText =
+                                controller.text.substring(0, cursorPos);
+
+                                controller.text =
+                                    prefixText + specialChars + suffixText;
+
+                                // Cursor move to end of added text
+                                controller.selection = TextSelection(
+                                  baseOffset: cursorPos + length,
+                                  extentOffset: cursorPos + length,
+                                );
                               },
                               child: Text("Add hashtag",
                                   style: primaryTextStyle(

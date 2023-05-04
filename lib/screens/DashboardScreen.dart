@@ -24,7 +24,6 @@ import 'CreateAJobScreen.dart';
 import 'InterviewPrepareScreen.dart';
 import 'JobAlertScreen.dart';
 import 'MyJobsSrceen.dart';
-import 'SignInScreen.dart';
 
 int selectedIndex = 0;
 
@@ -252,15 +251,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ),
               ),
-        body: RefreshIndicator(
-            onRefresh: () {
-              setState(() {});
-              return Future.value(true);
-            },
-            child: IndexedStack(
-              children: widgets,
-              index: currentIndex,
-            )),
+        body: IndexedStack(
+          children: widgets,
+          index: currentIndex,
+        ),
         bottomNavigationBar: CustomLineIndicatorBottomNavbar(
           onTap: (i) async {
             preIndex = currentIndex;

@@ -56,13 +56,13 @@ class _JoinNowScreenState extends State<JoinNowScreen> {
           title: Padding(
               padding: EdgeInsets.only(left: 0, top: 16),
               child: appStore.isDarkMode
-                  ? Image.asset(ic_logo_light, height: 15, fit: BoxFit.cover)
-                  : Image.asset(ic_logo, height: 15, fit: BoxFit.cover))),
+                  ? Image.asset(ic_logo_light, height: 25, fit: BoxFit.cover)
+                  : Image.asset(ic_logo, height: 25, fit: BoxFit.cover))),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              padding: EdgeInsets.only(left: 16,right: 16, bottom: 20,top: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

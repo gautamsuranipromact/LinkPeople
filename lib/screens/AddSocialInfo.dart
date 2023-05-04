@@ -42,8 +42,8 @@ class _AddSocialInfoState extends State<AddSocialInfo> {
           title: Padding(
               padding: EdgeInsets.only(left: 0, top: 16),
               child: appStore.isDarkMode
-                  ? Image.asset(ic_logo_light, height: 15, fit: BoxFit.cover)
-                  : Image.asset(ic_logo, height: 15, fit: BoxFit.cover))),
+                  ? Image.asset(ic_logo_light, height: 25, fit: BoxFit.cover)
+                  : Image.asset(ic_logo, height: 25, fit: BoxFit.cover))),
       body: SingleChildScrollView(
         child: Column(
           children: [

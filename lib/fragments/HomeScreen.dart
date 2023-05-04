@@ -19,14 +19,17 @@ class _HomeScreenState extends State<HomeScreen>
 
   List<PostModel> postList = [];
   late Future<List<PostModel>> future;
+  List<DocumentSnapshot> documentList = [];
 
   int mPage = 1;
+  int mPageSize = 4;
   bool mIsLastPage = false;
   bool isError = false;
 
   final ScrollController controller = ScrollController();
 
   bool isAPIRunning = false;
+  bool isPaginationAPIRunning = false;
 
   @override
   void initState() {
@@ -40,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
 
     eventBus.on<PostAppEvent>().listen((e) {
+      mPage = 1;
       readDataFromPostsTable();
     });
 
@@ -51,18 +55,10 @@ class _HomeScreenState extends State<HomeScreen>
             controller.position.maxScrollExtent) {
           if (!mIsLastPage) {
             mPage++;
-            setState(() {});
-
-            //future = getPostList();
+            readDataFromPostsTable();
           }
         }
       }
-    });
-
-    LiveStream().on(OnAddPost, (p0) {
-      postList.clear();
-      mPage = 1;
-      //future = getPostList();
     });
   }
 
@@ -78,17 +74,44 @@ class _HomeScreenState extends State<HomeScreen>
         children: [
           Visibility(
             visible: !isAPIRunning,
-            child: ListView.separated(
-              itemCount: postList.length,
-              shrinkWrap: true,
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(thickness: 5);
-              },
-              itemBuilder: (BuildContext context, int index) {
-                //TimelinePost post = timeLineList[index];
-                PostModel post = postList[index];
-                return TimeLinePostBox(post, isShare: true);
-              },
+            child: SingleChildScrollView(
+              controller: controller,
+              child: Column(
+                children: [
+                  ListView.separated(
+                    itemCount: postList.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider(thickness: 5);
+                    },
+                    itemBuilder: (BuildContext context, int index) {
+                      //TimelinePost post = timeLineList[index];
+                      PostModel post = postList[index];
+                      return TimeLinePostBox(post, isShare: true);
+                    },
+                  ),
+                  !mIsLastPage
+                      ? Container(
+                          margin: const EdgeInsets.symmetric(vertical: 30),
+                          child: Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Loading more..  "),
+                                SizedBox(
+                                    child: CircularProgressIndicator(),
+                                    height: 20,
+                                    width: 20),
+                              ],
+                            ),
+                          ),
+                        )
+                      : Container()
+                ],
+              ),
             ),
           ),
           Visibility(
@@ -102,20 +125,42 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void readDataFromPostsTable() async {
-    setState(() {
-      isAPIRunning = true;
-    });
+    print("Pagination: " + mPage.toString());
+    if (mPage == 1) {
+      postList.clear();
+      setState(() {
+        isAPIRunning = true;
+      });
+    } else {
+      setState(() {
+        isPaginationAPIRunning = true;
+      });
+    }
 
-    Query<Map<String, dynamic>> _posts =
-        FirebaseFirestore.instance.collection('posts').orderBy("timestamp",descending: true);
+    Query<Map<String, dynamic>> _posts;
+    if (mPage == 1) {
+      _posts = FirebaseFirestore.instance
+          .collection('posts')
+          .orderBy("timestamp", descending: true)
+          .limit(mPageSize);
+    } else {
+      _posts = FirebaseFirestore.instance
+          .collection('posts')
+          .orderBy("timestamp", descending: true)
+          .startAfterDocument(documentList[documentList.length - 1])
+          .limit(mPageSize);
+    }
 
     QuerySnapshot querySnapshot = await _posts.get();
 
+    documentList.addAll(querySnapshot.docs);
+
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-    print(allData);
+    if (allData.length != mPageSize) {
+      mIsLastPage = true;
+    }
 
-    postList.clear();
     for (int i = 0; i < allData.length; i++) {
       dynamic post = allData.elementAt(i);
       String userId = post["userid"];
@@ -179,6 +224,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     setState(() {
       isAPIRunning = false;
+      isPaginationAPIRunning = false;
     });
   }
 

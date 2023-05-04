@@ -3,7 +3,7 @@ import 'package:html/parser.dart';
 const AppName = "Find My CoFounder";
 
 /// DO NOT CHANGE THIS PACKAGE NAME
-const APP_PACKAGE_NAME = "com.mighty.link_people";
+const APP_PACKAGE_NAME = "com.findmycofounders";
 
 AppThemeMode appThemeMode = AppThemeMode();
 

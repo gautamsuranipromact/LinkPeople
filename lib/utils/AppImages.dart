@@ -1,7 +1,7 @@
 const ic_appLogo = "Images/ic_appLogo.png";
 const ic_logo = 'Images/ic_linkPeopleLogo.png';
 const ic_logo_light = "Images/ic_linkPeopleLogo_light.png";
-const ic_SplashScreen = "Images/ic_logo.jpg";
+const ic_SplashScreen = "Images/ic_logo.png";
 
 const ic_placeHolder = "Images/ic_placeholder.png";
 const ic_walk1 = "Images/ic_getStarted.jpg";
