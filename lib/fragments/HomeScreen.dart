@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen>
   List<DocumentSnapshot> documentList = [];
 
   int mPage = 1;
-  int mPageSize = 4;
+  int mPageSize = 10;
   bool mIsLastPage = false;
   bool isError = false;
 
@@ -78,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen>
               controller: controller,
               child: Column(
                 children: [
+                  Divider(thickness: 5),
                   ListView.separated(
                     itemCount: postList.length,
                     shrinkWrap: true,

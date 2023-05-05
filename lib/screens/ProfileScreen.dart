@@ -1,16 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/main.dart';
 import 'package:link_people/screens/EditProfileScreen.dart';
-import 'package:link_people/utils/AppColors.dart';
 import 'package:link_people/utils/AppCommon.dart';
 import 'package:link_people/utils/AppConstants.dart';
 import 'package:link_people/utils/Extensions/Colors.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
 import 'package:link_people/utils/Extensions/Constants.dart';
-import 'package:link_people/utils/Extensions/context_extensions.dart';
-import 'package:link_people/utils/Extensions/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/AppImages.dart';
@@ -90,7 +86,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //   return SearchScreen(text: "Search");
             // }));
           },
-          child: Container(
+          child: Center(
+              child: Padding(
+            padding: widget.isMe
+                ? const EdgeInsets.only(right: 0)
+                : const EdgeInsets.only(right: 40),
+            child: Image.asset(ic_logo, height: 30),
+          )) /*Container(
             decoration: BoxDecoration(
               color: primaryColor.withOpacity(0.09),
               borderRadius: BorderRadius.circular(5),
@@ -105,7 +107,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text("Search", style: primaryTextStyle()),
               ],
             ),
-          ),
+          )*/
+          ,
         ),
         action: [
           widget.isMe
@@ -184,7 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   widget.isMe
                       ? Container()
                       : Container(
-                          margin: EdgeInsets.only(left: 15),
+                          /*margin: EdgeInsets.only(left: 15),
                           alignment: Alignment.bottomLeft,
                           child: TextButton(
                               onPressed: () {},
@@ -202,8 +205,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     color: orangeColor,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5))),
-                              )),
-                        )
+                              )),*/
+                          )
                 ],
               ),
             ),

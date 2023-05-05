@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "118497620690-8b5kn6ne9nf3t4rvri7om7qvfiht1k5h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.findmycofounders",
+            "certificate_hash": "600b6d846c8c31987b3a8e65105bafd65c007dd1"
+          }
+        },
+        {
           "client_id": "118497620690-8jsfnnoemen0k9nknuqgi86uuk90mj86.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -23,7 +31,7 @@
           }
         },
         {
-          "client_id": "118497620690-tsmjio0d2824ljk6prgqc2td92v2mj0n.apps.googleusercontent.com",
+          "client_id": "118497620690-vfrg6g24co1g4h7h0tkb39guh9iqsrfn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -60,7 +68,7 @@
           }
         },
         {
-          "client_id": "118497620690-tsmjio0d2824ljk6prgqc2td92v2mj0n.apps.googleusercontent.com",
+          "client_id": "118497620690-vfrg6g24co1g4h7h0tkb39guh9iqsrfn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

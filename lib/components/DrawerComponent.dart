@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:link_people/main.dart';
 import 'package:link_people/utils/AppDataProvider.dart';
 import 'package:link_people/utils/AppImages.dart';
 import 'package:link_people/utils/Extensions/Commons.dart';
-import 'package:link_people/utils/Extensions/Constants.dart';
 import 'package:link_people/utils/Extensions/Widget_extensions.dart';
 import 'package:link_people/utils/Extensions/context_extensions.dart';
 import 'package:link_people/utils/Extensions/text_styles.dart';
 
 import '../screens/ProfileScreen.dart';
-import '../utils/AppColors.dart';
 import '../utils/AppConstants.dart';
 
 bool isExpand = false;
@@ -89,7 +86,7 @@ Widget drawerComponent(BuildContext context, onTap) {
                       ),
                     )
                     .toList()),
-            TextButton(
+            /*TextButton(
                 onPressed: () {
                   // finish(context);
                   // GroupScreen().launch(context,
@@ -128,10 +125,10 @@ Widget drawerComponent(BuildContext context, onTap) {
                                 textAlign: TextAlign.start)),
                       ),
                     )
-                    .toList()),
+                    .toList()),*/
           ],
         ),
-        Column(
+        /*Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(visible: !isExpanded, child: Divider(thickness: 1)),
@@ -165,7 +162,7 @@ Widget drawerComponent(BuildContext context, onTap) {
               ),
             )
           ],
-        )
+        )*/
       ],
     ),
   );

@@ -50,16 +50,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void init() async {
     widgets.add(HomeScreen());
-    widgets.add(Container(
-        child: Text(
-      "Coming Soon...",
-      style: TextStyle(color: Colors.black),
-    )));
-    //widgets.add(MyNetworkScreen());
+    //widgets.add(Container(child: Text("Coming Soon...")));
+    /*widgets.add(MyNetworkScreen());*/
     widgets.add(PostScreen());
-    widgets.add(Container(child: Text("Coming Soon...")));
+    //widgets.add(Container(child: Text("Coming Soon...")));
     //widgets.add(NotificationScreen());
-    widgets.add(Container(child: Text("Coming Soon...")));
+    //widgets.add(Container(child: Text("Coming Soon...")));
     //widgets.add(JobsScreen());
   }
 
@@ -119,7 +115,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       onTap: () {
                         //SearchScreen().launch(context);
                       },
-                      child: Container(
+                      child: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Image.asset(ic_logo, height: 30),
+                      )) /*Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             color: primaryColor.withOpacity(0.09)),
@@ -134,7 +134,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Text("Search", style: secondaryTextStyle()),
                           ],
                         ),
-                      ),
+                      )*/
+                      ,
                     ),
                     actions: [
                       Visibility(
@@ -144,19 +145,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 showModalBottomSheet(
                                     context: context,
                                     shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25))),
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(25)),
+                                    ),
                                     builder: (_) {
                                       return Container(
                                         padding: EdgeInsets.only(
-                                            right: 16,
-                                            left: 16,
+                                            right: 24,
+                                            left: 24,
                                             top: 20,
                                             bottom: 16),
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: radiusCircular(16),
-                                                topRight: radiusCircular(16))),
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: radiusCircular(16),
+                                              topRight: radiusCircular(16)),
+                                        ),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
@@ -260,7 +263,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             preIndex = currentIndex;
             currentIndex = i;
             setState(() {});
-            if (currentIndex == 2) {
+            if (currentIndex == 1) {
               bool res = await showModalBottomSheet(
                   context: context,
                   enableDrag: false,
@@ -287,11 +290,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           selectedColor: appStore.isDarkMode ? Colors.white : Colors.black,
           customBottomBarItems: [
             CustomBottomBarItems(icon: FontAwesome.home, label: 'Home'),
-            CustomBottomBarItems(icon: FontAwesome.users, label: 'My Network'),
+            /*CustomBottomBarItems(icon: FontAwesome.users, label: 'My Network'),*/
             CustomBottomBarItems(icon: MaterialIcons.add_box, label: 'Post'),
-            CustomBottomBarItems(
+            /*CustomBottomBarItems(
                 icon: Ionicons.ios_notifications, label: 'Notifications'),
-            CustomBottomBarItems(icon: Icons.work, label: 'Jobs'),
+            CustomBottomBarItems(icon: Icons.work, label: 'Jobs'),*/
           ],
         ),
         drawer: Drawer(
